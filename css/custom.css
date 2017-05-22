@@ -1,8 +1,45 @@
-.logo-spin {
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    perspective: 1000px;
+.btn{
+    margin: 0 auto;
+    display: inline-block;
+    border-radius: 10%;
+    box-shadow:
+            0px 7px 12px 0px rgba(0, 0, 0, .3),
+            inset 0px 4px 1px 1px white,
+            inset 0px -3px 1px 1px rgba(204,198,197,.5);
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+
+.btn:hover{
+    background-image: -webkit-linear-gradient(top, #fff, #f4f1ee);
+    background-image: linear-gradient(top, #fff, #f4f1ee);
+    color:#0088cc;
+}
+
+.btn:active{
+    background-image: -webkit-linear-gradient(top, #efedec, #f7f4f4);
+    background-image: linear-gradient(top, #efedec, #f7f4f4);
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5);
+}
+
+.btn span{
+    display: inline-block;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 12px;
+    text-align: center;
+    color: #3A474D;
+    font-weight: 700;
+    font-size: 24px;
+    text-shadow:0px -1px 1px #bdb5b4;
+}
+
+.btn span:hover {
+    color: #00D1B2;
+    cursor: pointer;
+    text-shadow: 0px 1px 1px #00FFFF;
+}
+.button:active span{
+    -webkit-transform: translate(0, 5px);
 }
