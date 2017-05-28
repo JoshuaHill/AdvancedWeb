@@ -1,3 +1,8 @@
+.center-card{
+    margin: auto;
+    width: 50%;
+}
+
 .btn{
     margin: 0 auto;
     display: inline-block;
@@ -24,10 +29,10 @@
 
 .btn span{
     display: inline-block;
-    padding-top: 20px;
+    padding-top: 5px;
     padding-right: 20px;
     padding-left: 20px;
-    padding-bottom: 12px;
+    padding-bottom: 0px;
     text-align: center;
     color: #3A474D;
     font-weight: 700;

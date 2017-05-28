@@ -2,8 +2,23 @@
  * Created by joshuahill on 29.04.2017.
  */
 
+/***
+ * Globale Variablen
+ */
+// Bilder für Galerie
+var galerie = [
+    "../images/gallery/placeholder1.png",
+    "../images/gallery/placeholder2.png",
+    "../images/gallery/placeholder3.png"
+];
 
 
+
+/**
+ *
+ * Howl TEST
+ *
+ */
 
 var sound = new Howl({
     volume: 0.5,
@@ -21,6 +36,15 @@ var dataArray = new Uint8Array(bufferLength);
 
 
 
+/*******************************************************************************
+ *
+ * Event-Handler
+ *
+ *******************************************************************************/
+
+/**
+ * Music / Visualization Controls
+ */
 $('#playBtn').click(function () {
     sound.play();
 
@@ -34,6 +58,72 @@ $('#playBtn').click(function () {
 $('#stopBtn').click(function () {
     sound.stop();
 });
+
+/**
+ * Gallery Controls
+ */
+// zeigt das erste Bild der Galerie an
+$('#btn-gal-first').click(function () {
+    document.getElementById('gal-img-counter').innerHTML = 1;
+    document.getElementById('gal-image').setAttribute('src', '../images/gallery/placeholder1.png');
+});
+
+// startet die automatische Wiedergabe der Slideshow
+$('#btn-gal-play').click(function () {
+    var ctr;
+    var currentImage = document.getElementById('gal-image').getAttribute('src');
+    for(let i = 0; i < galerie.length - 1; i++) {
+        if(galerie[i].localeCompare(currentImage) == 0) {
+            ctr = i;
+        }
+    }
+    console.log(ctr);
+    galleryPlayback(ctr);
+});
+
+// zeigt das nächste Bild der Galerie an
+$('#btn-gal-forward').click(function () {
+    var currentImage = document.getElementById('gal-image').getAttribute('src');
+    for(let i = 0; i < galerie.length - 1; i++) {
+        if(galerie[i].localeCompare(currentImage) == 0) {
+            // document.getElementById('gal-img-counter').innerHTML = i+2;
+            // document.getElementById('gal-image').setAttribute('src', galerie[i+1]);
+            setGalleryImage(i+2, i+1);
+        }
+    }
+});
+
+// zeigt das vorhergehende Bild an
+$('#btn-gal-rewind').click(function () {
+    var currentImage = document.getElementById('gal-image').getAttribute('src');
+    for(let i = galerie.length-1; i > 0; i--) {
+        if(galerie[i].localeCompare(currentImage) == 0) {
+            // document.getElementById('gal-img-counter').innerHTML = i;
+            // document.getElementById('gal-image').setAttribute('src', galerie[i-1]);
+            setGalleryImage(i, i-1);
+        }
+    }
+});
+
+// pausiert die Wiedergabe der Diashow
+$('#btn-gal-pause').click(function () {
+
+});
+
+function galleryPlayback(ctr) {
+
+    if(ctr < galerie.length) {
+        setTimeout(setGalleryImage(ctr+2, ctr+1), 3000);
+        setTimeout(galleryPlayback(ctr+1), 3000);
+    }
+
+}
+//
+function setGalleryImage(counter, image) {
+    document.getElementById('gal-img-counter').innerHTML = counter;
+    document.getElementById('gal-image').setAttribute('src', galerie[image]);
+}
+
 
 function draw() {
     console.log("DRAW");
