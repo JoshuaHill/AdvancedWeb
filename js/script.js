@@ -78,7 +78,10 @@ $('#btn-gal-play').click(function () {
         }
     }
     console.log(ctr);
-    galleryPlayback(ctr);
+    setTimeout(function () {
+        console.log("Hallo");
+    }, 3000);
+   galleryPlayback(ctr);
 });
 
 // zeigt das nächste Bild der Galerie an
@@ -86,8 +89,6 @@ $('#btn-gal-forward').click(function () {
     var currentImage = document.getElementById('gal-image').getAttribute('src');
     for(let i = 0; i < galerie.length - 1; i++) {
         if(galerie[i].localeCompare(currentImage) == 0) {
-            // document.getElementById('gal-img-counter').innerHTML = i+2;
-            // document.getElementById('gal-image').setAttribute('src', galerie[i+1]);
             setGalleryImage(i+2, i+1);
         }
     }
@@ -98,8 +99,6 @@ $('#btn-gal-rewind').click(function () {
     var currentImage = document.getElementById('gal-image').getAttribute('src');
     for(let i = galerie.length-1; i > 0; i--) {
         if(galerie[i].localeCompare(currentImage) == 0) {
-            // document.getElementById('gal-img-counter').innerHTML = i;
-            // document.getElementById('gal-image').setAttribute('src', galerie[i-1]);
             setGalleryImage(i, i-1);
         }
     }
@@ -112,9 +111,9 @@ $('#btn-gal-pause').click(function () {
 
 function galleryPlayback(ctr) {
 
-    if(ctr < galerie.length) {
-        setTimeout(setGalleryImage(ctr+2, ctr+1), 3000);
-        setTimeout(galleryPlayback(ctr+1), 3000);
+    if(ctr+1 < galerie.length) {
+        setTimeout(function(){setGalleryImage(ctr+2, ctr+1);}, 3000);
+        setTimeout(function(){galleryPlayback(ctr+1);}, 3500);
     }
 
 }
