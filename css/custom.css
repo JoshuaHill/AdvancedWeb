@@ -1,3 +1,14 @@
+.nav-text{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#section-sign{
+    font-size: large;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
 .center-card{
     margin: auto;
     width: 50%;
