@@ -14,6 +14,44 @@
     width: 50%;
 }
 
+.about-tabs{
+    margin-bottom: auto;
+    padding-top: 50px;
+    padding-left: 10%;
+    background-color: #95A5A6;
+    color: #FFFFFF;
+}
+
+.title {
+    color: #FFFFFF;
+
+}
+
+.title-bar{
+    margin-bottom: auto;
+    padding: auto;
+    padding-top: 25px;
+    width: 100%;
+    background-color: #95A5A6;
+    text-align: center;
+}
+
+.tabs-text {
+    color: white;
+}
+
+.is-active .tabs-text{
+    color: black;
+}
+.tabs.is-boxed a:hover{
+    background-color: gray;
+}
+.tabs.is-boxed a:hover > * {
+   color: #00D1B2;
+}
+
+
+
 .btn{
     margin: 0 auto;
     display: inline-block;
