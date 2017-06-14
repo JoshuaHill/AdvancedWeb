@@ -22,9 +22,14 @@
     color: #FFFFFF;
 }
 
-.title {
+.title-bar > .title {
     color: #FFFFFF;
 
+}
+
+.about-subtitle {
+    padding-top: 30px;
+    font-weight: bold;
 }
 
 .title-bar{
