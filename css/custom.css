@@ -34,7 +34,7 @@
 
 .title-bar > .title {
     color: #FFFFFF;
-
+    padding-bottom: 10px;
 }
 
 
@@ -66,6 +66,13 @@
    color: #00D1B2;
 }
 
+#open {
+    color: #96d885;
+}
+
+#closed {
+    color: red;
+}
 
 
 .btn{

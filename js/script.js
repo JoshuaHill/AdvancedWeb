@@ -64,11 +64,106 @@ $('#about-info').on('click', function(event) {
     "<h3>Verwendete Libraries</h3>" +
     "<div>" +
     "<ul>" +
-        "<li>Bulma</li>" +
-    "<li>jQuery</li>" +
-    "<li>jQuery UI</li>" +
-    "<li>D3</li>" +
-            "<li>Howler</li>" +
+        "<li class=\"lib-list\">" +
+        "<a href=\"http://bulma.io\">" +
+        "<article class=\"media\">" +
+        "<figure class=\"media-left\">" +
+        "<p class=\"image is-64x64\">" +
+        "<img src=\"../images/logos/bulma-logo-small.png\">" +
+        "</p>" +
+        "</figure>" +
+        "<div class=\"media-content\">" +
+        "<div class=\"content\">" +
+        "<p>" +
+        "<strong>Bulma</strong>" +
+        "<br>" +
+        "Bulma is an open source CSS framework based on Flexbox and built with Sass. It's 100% responsive, fully modular, and available for free." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "</article>" +
+    "</a>" +
+    "</li>" +
+    "<li class=\"lib-list\">" +
+    "<a href=\"https://jquery.com/\">" +
+    "<article class=\"media\">" +
+    "<figure class=\"media-left\">" +
+    "<p class=\"image is-64x64\">" +
+    "<img src=\"../images/logos/jquery-logo-small.png\">" +
+    "</p>" +
+    "</figure>" +
+    "<div class=\"media-content\">" +
+    "<div class=\"content\">" +
+    "<p>" +
+    "<strong>jQuery</strong>" +
+    "<br>" +
+    "jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "</article>" +
+    "</a>" +
+    "</li>" +
+    "<li class=\"lib-list\">" +
+    "<a href=\"https://jqueryui.com/\">" +
+    "<article class=\"media\">" +
+    "<figure class=\"media-left\">" +
+    "<p class=\"image is-64x64\">" +
+    "<img src=\"../images/logos/jqueryui-logo-small.png\">" +
+    "</p>" +
+    "</figure>" +
+    "<div class=\"media-content\">" +
+    "<div class=\"content\">" +
+    "<p>" +
+    "<strong>jQuery UI</strong>" +
+    "<br>" +
+    "jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "</article>" +
+    "</a>" +
+    "</li>" +
+    "<li class=\"lib-list\">" +
+    "<a href=\"https://d3js.org/\">" +
+    "<article class=\"media\">" +
+    "<figure class=\"media-left\">" +
+    "<p class=\"image is-64x64\">" +
+    "<img src=\"../images/logos/d3-logo-small.png\">" +
+    "</p>" +
+    "</figure>" +
+    "<div class=\"media-content\">" +
+    "<div class=\"content\">" +
+    "<p>" +
+    "<strong>D3.js</strong>" +
+    "<br>" +
+    "D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "</article>" +
+    "</a>" +
+    "</li>" +
+    "<li class=\"lib-list\">" +
+    "<a href=\"https://howlerjs.com/\">" +
+    "<article class=\"media\">" +
+    "<figure class=\"media-left\">" +
+    "<p class=\"image is-64x64\">" +
+    "<img src=\"../images/logos/howler-logo-small.png\">" +
+    "</p>" +
+    "</figure>" +
+    "<div class=\"media-content\">" +
+    "<div class=\"content\">" +
+    "<p>" +
+    "<strong>Howler.js</strong>" +
+    "<br>" +
+    "howler.js is an audio library for the modern web. It defaults to Web Audio API and falls back to HTML5 Audio. This makes working with audio in JavaScript easy and reliable across all platforms." +
+    "</p>" +
+    "</div>" +
+    "</div>" +
+    "</article>" +
+    "</a>" +
+    "</li>";
     "</ul>" +
     "</div>" +
     "</div>";
@@ -118,7 +213,46 @@ $('#contact-mail').on('click', function (event) {
     document.getElementById('contact-mail').setAttribute("class", "is-active");
 
     // load HTML for subsection
-    document.getElementById('contact-subsection').innerHTML = "";
+    document.getElementById('contact-subsection').innerHTML =
+        "<div class=\"field\">" +
+        "<label class=\"label\">Name</label>" +
+        "<p class=\"control\">" +
+        "<input class=\"input\" type=\"text\" placeholder=\"Text input\">" +
+        "</p>" +
+        "</div>" +
+        "<div class=\"field\">" +
+        "<label class=\"label\">Username</label>" +
+        "<p class=\"control has-icons-left has-icons-right\">" +
+        "<input class=\"input is-success\" type=\"text\" placeholder=\"Text input\" value=\"bulma\">" +
+        "<span class=\"icon is-small is-left\">" +
+        "<i class=\"fa fa-user\"></i>" +
+        "</span>" +
+        "<span class=\"icon is-small is-right\">" +
+        "<i class=\"fa fa-check\"></i>" +
+        "</span>" +
+        "</p>" +
+        "<p class=\"help is-success\">This username is available</p>" +
+        "</div>" +
+        "<div class=\"field\">" +
+        "<label class=\"label\">Email</label>" +
+        "<p class=\"control has-icons-left has-icons-right\">" +
+        "<input class=\"input is-danger\" type=\"text\" placeholder=\"Email input\" value=\"hello@\">" +
+        "<span class=\"icon is-small is-left\">" +
+        "<i class=\"fa fa-envelope\"></i>" +
+        "</span>" +
+        "<span class=\"icon is-small is-right\">" +
+        "<i class=\"fa fa-warning\"></i>" +
+        "</span>" +
+        "</p>" +
+        "<p class=\"help is-danger\">This email is invalid</p>" +
+        "</div>" +
+
+        "<div class=\"field\">" +
+        "<label class=\"label\">Message</label>" +
+        "<p class=\"control\">" +
+        "<textarea class=\"textarea\" placeholder=\"Textarea\"></textarea>" +
+        "</p>" +
+        "</div>";
 
 
 });
@@ -138,9 +272,9 @@ $('#contact-phone').on('click', function (event) {
 
     // show open or closed message according to time
     if(time.getHours() >= 10 && time.getHours() <=16) {
-        document.getElementById("open-close").innerHTML = "WE ARE OPEN!";
+        document.getElementById("open-close").innerHTML = "<h1 class=\"subtitle\" id=\"open\">WE ARE OPEN!</h1>";
     } else {
-        document.getElementById("open-close").innerHTML = "SORRY WE ARE CLOSED!";
+        document.getElementById("open-close").innerHTML = "<h1 class=\"subtitle\" id=\"closed\">SORRY WE ARE CLOSED!</h1>";
     }
 });
 
