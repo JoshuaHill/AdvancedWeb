@@ -55,12 +55,12 @@
     </div>
     <div class="tabs is-boxed about-tabs">
             <ul>
-                <li class="is-active">
+                <li class="is-active" id="contact-mail">
                     <a>
                         <span class="tabs-text">Mail</span>
                     </a>
                 </li>
-                <li>
+                <li id="contact-phone">
                     <a>
                         <span  class="tabs-text">Telefon</span>
                     </a>
@@ -72,58 +72,61 @@
             <div class="is-vcentered">
                 <div class="columns">
                     <div class="column is-half is-offset-one-quarter">
-                        <div class="field">
-                            <label class="label">Name</label>
-                            <p class="control">
-                                <input class="input" type="text" placeholder="Text input">
-                            </p>
-                        </div>
+                        <div id="contact-subsection">
+                            <!-- load content here -->
+                            <div class="field">
+                                <label class="label">Name</label>
+                                <p class="control">
+                                    <input class="input" type="text" placeholder="Text input">
+                                </p>
+                            </div>
 
-                        <div class="field">
-                            <label class="label">Username</label>
-                            <p class="control has-icons-left has-icons-right">
-                                <input class="input is-success" type="text" placeholder="Text input" value="bulma">
+                            <div class="field">
+                                <label class="label">Username</label>
+                                <p class="control has-icons-left has-icons-right">
+                                    <input class="input is-success" type="text" placeholder="Text input" value="bulma">
                                 <span class="icon is-small is-left">
                                     <i class="fa fa-user"></i>
                                 </span>
                                 <span class="icon is-small is-right">
                                     <i class="fa fa-check"></i>
                                 </span>
-                            </p>
-                            <p class="help is-success">This username is available</p>
-                        </div>
+                                </p>
+                                <p class="help is-success">This username is available</p>
+                            </div>
 
-                        <div class="field">
-                            <label class="label">Email</label>
-                            <p class="control has-icons-left has-icons-right">
-                                <input class="input is-danger" type="text" placeholder="Email input" value="hello@">
+                            <div class="field">
+                                <label class="label">Email</label>
+                                <p class="control has-icons-left has-icons-right">
+                                    <input class="input is-danger" type="text" placeholder="Email input" value="hello@">
                                 <span class="icon is-small is-left">
                                     <i class="fa fa-envelope"></i>
                                 </span>
                                 <span class="icon is-small is-right">
                                   <i class="fa fa-warning"></i>
                                 </span>
-                            </p>
-                            <p class="help is-danger">This email is invalid</p>
-                        </div>
+                                </p>
+                                <p class="help is-danger">This email is invalid</p>
+                            </div>
 
-                        <div class="field">
-                            <label class="label">Subject</label>
-                            <p class="control">
+                            <div class="field">
+                                <label class="label">Subject</label>
+                                <p class="control">
                                 <span class="select">
                                   <select>
                                     <option>Select dropdown</option>
                                     <option>With options</option>
                                   </select>
                                 </span>
-                            </p>
-                        </div>
+                                </p>
+                            </div>
 
-                        <div class="field">
-                            <label class="label">Message</label>
-                            <p class="control">
-                                <textarea class="textarea" placeholder="Textarea"></textarea>
-                            </p>
+                            <div class="field">
+                                <label class="label">Message</label>
+                                <p class="control">
+                                    <textarea class="textarea" placeholder="Textarea"></textarea>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
