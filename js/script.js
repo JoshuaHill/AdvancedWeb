@@ -48,38 +48,29 @@ $('#about-info').on('click', function(event) {
     this.setAttribute("class", "is-active");
     // Load HTML for subsection
     document.getElementById('about-subsection').innerHTML = "<div id=\"accordion\">" +
-    "<h3>Section 1</h3>" +
+    "<h3>Was ist Muse:Viz?</h3>" +
     "<div>" +
     "<p>" +
-    "Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer " +
+    "Muse:Viz ist eine Webapplikation, die es dem Nutzer ermöglicht Visualisierungen für seine Musik zu erstellen. " +
     "</p>" +
     "</div>" +
-    "<h3>Section 2</h3>" +
+    "<h3>Warum Muse:Viz?</h3>" +
     "<div>" +
     "<p>" +
-    "Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet" +
+    "Muse:Viz wurde im Rahmen der Veranstaltung Advanced Web Programming an der Hochschule der Medien erstellt und soll ein Beispiel für moderne" +
+        " Webprogrammierung mit einem Schwerpunkt auf Visualisierung darstellen." +
     "</p>" +
     "</div>" +
-    "<h3>Section 3</h3>" +
+    "<h3>Verwendete Libraries</h3>" +
     "<div>" +
-    "<p>" +
-    "Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis." +
-    "</p>" +
     "<ul>" +
-    "<li>List item one</li>" +
-    "<li>List item two</li>" +
-    "<li>List item three</li>" +
+        "<li>Bulma</li>" +
+    "<li>jQuery</li>" +
+    "<li>jQuery UI</li>" +
+    "<li>D3</li>" +
+            "<li>Howler</li>" +
     "</ul>" +
     "</div>" +
-    "<h3>Section 4</h3>" +
-    "<div>" +
-    "<p>" +
-    "Cras dictum. Pellentesque habitant morbi tristique senectus et netus" +
-    "</p>" +
-    "<p>" +
-    "Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus." +
-    "</p>" +
-   "</div>" +
     "</div>";
 
     // load accordion

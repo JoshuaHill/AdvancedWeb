@@ -3,6 +3,16 @@
     margin-right: 10px;
 }
 
+.lib-list {
+    padding-bottom: 15px;
+}
+.lib-list:hover {
+    background-color: #dcdcdc;
+}
+.lib-list a:hover {
+    background-color: #0fb8ad;
+}
+
 #section-sign{
     font-size: large;
     font-weight: bold;
@@ -26,6 +36,7 @@
     color: #FFFFFF;
 
 }
+
 
 .about-subtitle {
     padding-top: 30px;
