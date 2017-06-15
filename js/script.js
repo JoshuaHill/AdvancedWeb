@@ -47,7 +47,46 @@ $('#about-info').on('click', function(event) {
     document.getElementById('about-privacy').setAttribute("class", "");
     this.setAttribute("class", "is-active");
     // Load HTML for subsection
-    document.getElementById('about-subsection').innerHTML = "";
+    document.getElementById('about-subsection').innerHTML = "<div id=\"accordion\">" +
+    "<h3>Section 1</h3>" +
+    "<div>" +
+    "<p>" +
+    "Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer " +
+    "</p>" +
+    "</div>" +
+    "<h3>Section 2</h3>" +
+    "<div>" +
+    "<p>" +
+    "Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet" +
+    "</p>" +
+    "</div>" +
+    "<h3>Section 3</h3>" +
+    "<div>" +
+    "<p>" +
+    "Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis." +
+    "</p>" +
+    "<ul>" +
+    "<li>List item one</li>" +
+    "<li>List item two</li>" +
+    "<li>List item three</li>" +
+    "</ul>" +
+    "</div>" +
+    "<h3>Section 4</h3>" +
+    "<div>" +
+    "<p>" +
+    "Cras dictum. Pellentesque habitant morbi tristique senectus et netus" +
+    "</p>" +
+    "<p>" +
+    "Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus." +
+    "</p>" +
+   "</div>" +
+    "</div>";
+
+    // load accordion
+    $( "#accordion" ).accordion({
+        heightStyle: "content"
+    });
+
 
 });
 $('#about-imprint').on('click', function(event) {
@@ -69,7 +108,13 @@ $('#about-privacy').on('click', function(event) {
     document.getElementById('about-subsection').innerHTML =
     "<h1 class=\"title\">Datenschutzerkl&auml;rung</h1> <h2 class=\"subtitle about-subtitle\">Datenschutz</h2> <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer pers&ouml;nlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerkl&auml;rung.</p> <p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten m&ouml;glich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit m&ouml;glich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdr&uuml;ckliche Zustimmung nicht an Dritte weitergegeben.</p> <p>Wir weisen darauf hin, dass die Daten&uuml;bertragung im Internet" +
     "(z.B. bei der Kommunikation per E-Mail) Sicherheitsl&uuml;cken aufweisen kann. Ein l&uuml;ckenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht m&ouml;glich.</p><p>&nbsp;</p> <h2 class=\"subtitle about-subtitle\"> Cookies</h2> <p>Die Internetseiten verwenden teilweise so genannte Cookies. Cookies richten auf Ihrem Rechner keinen Schaden an und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen. Cookies sind kleine Textdateien, die auf Ihrem Rechner abgelegt werden und die Ihr Browser speichert.</p> <p>Die meisten der von uns verwendeten Cookies sind so genannte „Session-Cookies“. Sie werden nach Ende Ihres Besuchs automatisch gel&ouml;scht. Andere Cookies bleiben auf Ihrem Endger&auml;t gespeichert, bis Sie diese l&ouml;schen. Diese Cookies erm&ouml;glichen es uns, Ihren Browser beim n&auml;chsten Besuch wiederzuerkennen.</p> <p>Sie k&ouml;nnen Ihren Browser so einstellen, dass Sie &uuml;ber das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies f&uuml;r bestimmte F&auml;lle oder generell ausschlie&szlig;en sowie das automatische L&ouml;schen der Cookies beim Schlie&szlig;en des Browser aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalit&auml;t dieser Website eingeschr&auml;nkt sein.</p><p>&nbsp;</p> <h2 class=\"subtitle about-subtitle\">Server-Log- Files</h2> <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log Files, die Ihr Browser automatisch an uns &uuml;bermittelt. Dies sind:</p> <ul> <li> Browsertyp und Browserversion</li> <li>verwendetes Betriebssystem</li> <li>Referrer URL</li> <li> Hostname des zugreifenden Rechners</li> <li>Uhrzeit der Serveranfrage</li> </ul> <p><br />Diese Daten sind nicht bestimmten Personen zuordenbar. Eine Zusammenf&uuml;hrung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Wir behalten uns vor, diese Daten nachtr&auml;glich zu pr&uuml;fen, wenn uns konkrete Anhaltspunkte f&uuml;r eine rechtswidrige Nutzung bekannt werden.</p> <p>&nbsp;</p> <h2 class=\"subtitle about-subtitle\">Kontaktformular</h2> <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und f&uuml;r den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p><p>&nbsp;</p> <p>Quelle: <a href=\"https://www.e-recht24.de\">eRecht24</a></p>";
+
 });
+
+$( "#accordion" ).accordion({
+    heightStyle: "content"
+});
+
 /**
  * Music / Visualization Controls
  */
