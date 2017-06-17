@@ -278,6 +278,10 @@ $('#contact-phone').on('click', function (event) {
     }
 });
 
+function emailCheck(email) {
+    
+};
+
 
 /**
  * Music / Visualization Controls
