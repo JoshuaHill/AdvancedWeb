@@ -278,8 +278,23 @@ $('#contact-phone').on('click', function (event) {
     }
 });
 
-function emailCheck(email) {
+
+function validateForm() {
+    var email = document.forms["contactForm"]["formEmail"];
+    var name = document.forms["contactForm"]["formName"];
     
+}
+
+function emailCheck(email) {
+
+};
+
+function nameCheck(name) {
+
+};
+
+function topicCheck(topic) {
+
 };
 
 
