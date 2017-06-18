@@ -280,22 +280,109 @@ $('#contact-phone').on('click', function (event) {
 
 
 function validateForm() {
-    var email = document.forms["contactForm"]["formEmail"];
-    var name = document.forms["contactForm"]["formName"];
+
+    var email = document.forms["contactForm"]["formEmail"].value;
+    var name = document.forms["contactForm"]["formName"].value;
+    var subject = document.forms["contactForm"]["formSubject"].value;
+    var message = document.forms["contactForm"]["formMessage"].value;
+
+    var emailStatus = emailCheck(email);
+    var nameStatus = nameCheck(name);
+    var subjectStatus = subjectCheck(subject);
+    var messageStatus = messageCheck(message);
+
+    console.log("IN");
+
+    if(emailStatus != "ok") {
+        document.getElementById("error-email").innerHTML = emailStatus;
+        document.getElementById("warning-email").setAttribute("class", "");
+        document.getElementById("input-email").setAttribute("class", "input is-danger");
+    }
+
+    if(nameStatus != "ok") {
+        document.getElementById("error-name").innerHTML = nameStatus;
+        document.getElementById("warning-name").setAttribute("class", "");
+        document.getElementById("input-name").setAttribute("class", "input is-danger");
+    }
+
+    if(subjectStatus != "ok") {
+        document.getElementById("error-subject").innerHTML = subjectStatus;
+        document.getElementById("warning-subject").setAttribute("class", "");
+        document.getElementById("input-subject").setAttribute("class", "input is-danger");
+    }
+
+    if(messageStatus != "ok") {
+        document.getElementById("error-message").innerHTML = messageStatus;
+        document.getElementById("warning-message").setAttribute("class", "");
+        document.getElementById("input-message").setAttribute("class", "textarea is-danger");
+    }
+
+    if(emailStatus == "ok" && nameStatus == "ok" && subjectStatus == "ok" && messageStatus == "ok") {
+        // clear old error messages
+
+        // set all indicators to ok
+        // submit form / start nodescript
+    } else {
+        console.log("out");
+        return false;
+    }
     
 }
 
 function emailCheck(email) {
+    var statusMsg;
 
+    // regular expression from: http://emailregex.com/
+    if(email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        statusMsg = "ok";
+    } else {
+        statusMsg = "Invalid email!";
+    }
+
+    return statusMsg;
 };
 
 function nameCheck(name) {
+    var statusMsg;
 
+    if(name == "" || name == "name") {
+        statusMsg = "Please enter your name.";
+    } else if(name.length < 3) {
+        statusMsg = "Name must be at least three characters!";
+    } else {
+        statusMsg = "ok";
+    }
+
+    return statusMsg;
 };
 
-function topicCheck(topic) {
+function subjectCheck(subject) {
+    var statusMsg;
+    
+    if(subject == "") {
+        statusMsg = "Subject is empty!";
+    } else if(subject.length < 3) {
+        statusMsg = "Subject must be at least three characters!";
+    } else {
+        statusMsg = "ok";
+    }
 
+    return statusMsg;
 };
+
+function messageCheck(message) {
+    var statusMsg;
+
+    if(message == "") {
+        statusMsg = "Message is empty!";
+    } else if(message.length < 3) {
+        statusMsg = "Message must be at least three characters!";
+    } else {
+        statusMsg = "ok";
+    }
+
+    return statusMsg;
+}
 
 
 /**
