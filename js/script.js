@@ -214,45 +214,65 @@ $('#contact-mail').on('click', function (event) {
 
     // load HTML for subsection
     document.getElementById('contact-subsection').innerHTML =
+        "<form name=\"contactForm\" onsubmit=\"return validateForm()\" method=\"post\" action=\"localhost:3000/contact.html\">" +
         "<div class=\"field\">" +
         "<label class=\"label\">Name</label>" +
-        "<p class=\"control\">" +
-        "<input class=\"input\" type=\"text\" placeholder=\"Text input\">" +
-        "</p>" +
-        "</div>" +
-        "<div class=\"field\">" +
-        "<label class=\"label\">Username</label>" +
         "<p class=\"control has-icons-left has-icons-right\">" +
-        "<input class=\"input is-success\" type=\"text\" placeholder=\"Text input\" value=\"bulma\">" +
+        "<input name=\"formName\" id=\"input-name\" class=\"input\" type=\"text\" placeholder=\"Text input\" value=\"name\">" +
         "<span class=\"icon is-small is-left\">" +
         "<i class=\"fa fa-user\"></i>" +
         "</span>" +
+        "<span id=\"warning-name\" class=\"is-hidden\">" +
         "<span class=\"icon is-small is-right\">" +
-        "<i class=\"fa fa-check\"></i>" +
+        "<i class=\"fa fa-warning\"></i>" +
+        "</span>" +
         "</span>" +
         "</p>" +
-        "<p class=\"help is-success\">This username is available</p>" +
+        "<p class=\"help is-danger\" id=\"error-name\"></p>" +
         "</div>" +
         "<div class=\"field\">" +
         "<label class=\"label\">Email</label>" +
         "<p class=\"control has-icons-left has-icons-right\">" +
-        "<input class=\"input is-danger\" type=\"text\" placeholder=\"Email input\" value=\"hello@\">" +
+        "<input name=\"formEmail\" id=\"input-email\" class=\"input\" type=\"text\" placeholder=\"Email input\" value=\"mail@\">" +
         "<span class=\"icon is-small is-left\">" +
         "<i class=\"fa fa-envelope\"></i>" +
         "</span>" +
+        "<span id=\"warning-email\" class=\"is-hidden\">" +
         "<span class=\"icon is-small is-right\">" +
         "<i class=\"fa fa-warning\"></i>" +
         "</span>" +
+        "</span>" +
         "</p>" +
-        "<p class=\"help is-danger\">This email is invalid</p>" +
+        "<p class=\"help is-danger\" id=\"error-email\">" +"</p>" +
+        "<label class=\"label\">Subject</label>" +
+        "<p class=\"control has-icons-right\">" +
+        "<input name=\"formSubject\" id=\"input-subject\" class=\"input\" type=\"text\" placeholder=\"Text input\">" +
+        "<span id=\"warning-subject\" class=\"is-hidden\">" +
+        "<span class=\"icon is-small is-right\">" +
+        "<i class=\"fa fa-warning\"></i>" +
+        "</span>" +
+        "</span>" +
+        "</p>" +
+        "<p class=\"help is-danger\" id=\"error-subject\"></p>" +
         "</div>" +
-
         "<div class=\"field\">" +
         "<label class=\"label\">Message</label>" +
-        "<p class=\"control\">" +
-        "<textarea class=\"textarea\" placeholder=\"Textarea\"></textarea>" +
+        "<p class=\"control has-icons-right\">" +
+        "<textarea name=\"formMessage\" id=\"input-message\" class=\"textarea\" placeholder=\"Textarea\">" +"</textarea>" +
+        "<span id=\"warning-message\" class=\"is-hidden\">" +
+        "<span class=\"icon is-small is-right\">" +
+        "<i class=\"fa fa-warning\"></i>" +
+        "</span>" +
+        "</span>" +
         "</p>" +
-        "</div>";
+        "<p class=\"help is-danger\" id=\"error-message\"></p>" +
+        "</div>" +
+        "<div class=\"field\">" +
+        "<p class=\"control\">" +
+        "<button type=\"submit\" class=\"button is-primary\">Submit</button>" +
+        "</p>" +
+        "</div>" +
+        "</form>";
 
 
 });
@@ -296,34 +316,54 @@ function validateForm() {
     if(emailStatus != "ok") {
         document.getElementById("error-email").innerHTML = emailStatus;
         document.getElementById("warning-email").setAttribute("class", "");
+        document.querySelector("#warning-email > span > i").setAttribute("class", "fa fa-warning");
         document.getElementById("input-email").setAttribute("class", "input is-danger");
+    } else {
+        document.getElementById("error-email").innerHTML = "";
+        document.getElementById("warning-email").setAttribute("class", "");
+        document.querySelector("#warning-email > span > i").setAttribute("class", "fa fa-check");
+        document.getElementById("input-email").setAttribute("class", "input is-success");
     }
 
     if(nameStatus != "ok") {
         document.getElementById("error-name").innerHTML = nameStatus;
         document.getElementById("warning-name").setAttribute("class", "");
+        document.querySelector("#warning-name > span > i").setAttribute("class", "fa fa-warning");
         document.getElementById("input-name").setAttribute("class", "input is-danger");
+    } else {
+        document.getElementById("error-name").innerHTML = "";
+        document.getElementById("warning-name").setAttribute("class", "");
+        document.querySelector("#warning-name > span > i").setAttribute("class", "fa fa-check");
+        document.getElementById("input-name").setAttribute("class", "input is-success");
     }
 
     if(subjectStatus != "ok") {
         document.getElementById("error-subject").innerHTML = subjectStatus;
         document.getElementById("warning-subject").setAttribute("class", "");
+        document.querySelector("#warning-subject > span > i").setAttribute("class", "fa fa-warning");
         document.getElementById("input-subject").setAttribute("class", "input is-danger");
+    } else {
+        document.getElementById("error-subject").innerHTML = "";
+        document.getElementById("warning-subject").setAttribute("class", "");
+        document.querySelector("#warning-subject > span > i").setAttribute("class", "fa fa-check");
+        document.getElementById("input-subject").setAttribute("class", "input is-success");
     }
 
     if(messageStatus != "ok") {
         document.getElementById("error-message").innerHTML = messageStatus;
         document.getElementById("warning-message").setAttribute("class", "");
+        document.querySelector("#warning-message > span > i").setAttribute("class", "fa fa-warning");
         document.getElementById("input-message").setAttribute("class", "textarea is-danger");
+    } else {
+        document.getElementById("error-message").innerHTML = "";
+        document.getElementById("warning-message").setAttribute("class", "");
+        document.querySelector("#warning-message > span > i").setAttribute("class", "fa fa-check");
+        document.getElementById("input-message").setAttribute("class", "textarea is-success");
     }
 
     if(emailStatus == "ok" && nameStatus == "ok" && subjectStatus == "ok" && messageStatus == "ok") {
-        // clear old error messages
-
-        // set all indicators to ok
-        // submit form / start nodescript
+        // TODO submit form / start nodescript
     } else {
-        console.log("out");
         return false;
     }
     
@@ -358,7 +398,7 @@ function nameCheck(name) {
 
 function subjectCheck(subject) {
     var statusMsg;
-    
+
     if(subject == "") {
         statusMsg = "Subject is empty!";
     } else if(subject.length < 3) {
