@@ -46,12 +46,26 @@ $('#settings-display').on('click', function (event) {
     // set correct menu item to active
     document.getElementById('settings-language').setAttribute("class", "");
     this.setAttribute("class", "is-active");
+
+    var ck = document.cookie;
+    console.log(ck);
+
 });
 
 $('#settings-language').on('click', function(event) {
     // set correct menu item to active
     document.getElementById('settings-display').setAttribute("class", "");
     this.setAttribute("class", "is-active");
+
+    // Basic Cookie setup based on https://stackoverflow.com/questions/8733025/setting-persistent-cookies-with-javascript#8733385
+    // Build the expiration date string:
+    var expiration_date = new Date();
+    var cookie_string = '';
+    expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+    // Build the set-cookie string:
+    cookie_string = "test_cookies=true; path=/; expires=" + expiration_date.toUTCString();
+    // Create or update the cookie:
+    document.cookie = cookie_string;
 });
 
 
