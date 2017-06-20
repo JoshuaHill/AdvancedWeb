@@ -38,9 +38,31 @@ var dataArray = new Uint8Array(bufferLength);
 
 /*******************************************************************************
  *
+ * Settings-Page
+ *
+ *******************************************************************************/
+
+$('#settings-display').on('click', function (event) {
+    // set correct menu item to active
+    document.getElementById('settings-language').setAttribute("class", "");
+    this.setAttribute("class", "is-active");
+});
+
+$('#settings-language').on('click', function(event) {
+    // set correct menu item to active
+    document.getElementById('settings-display').setAttribute("class", "");
+    this.setAttribute("class", "is-active");
+});
+
+
+
+/*******************************************************************************
+ *
  * About-Page
  *
  *******************************************************************************/
+
+
 $('#about-info').on('click', function(event) {
     // Set correct menu item to active
     document.getElementById('about-imprint').setAttribute("class", "");
@@ -423,6 +445,8 @@ function messageCheck(message) {
 
     return statusMsg;
 }
+
+
 
 
 /**
