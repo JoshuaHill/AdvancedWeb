@@ -12,6 +12,33 @@ var galerie = [
     "../images/gallery/placeholder3.png"
 ];
 
+// Enums
+    // Font Sizes
+const FONT_SIZE = {
+    TINY: 'tiny',
+    SMALL: 'small',
+    MEDIUM: 'medium',
+    BIG: 'large',
+    HUGE: 'huge'
+};
+    // Font Styles
+const FONT_FAMILY = {
+    PALATINO: 'palatino',
+    TIMES: 'times',
+    HELVETICA: 'helvetica',
+    LUCIDA: 'lucida',
+    COURIER: 'courier',
+    CONSOLE: 'console'
+};
+    // Color Themes
+const COLOR_THEME = {
+    DARK: 'dark',
+    BRIGHT: 'bright',
+    INTENSE: 'intense',
+    SOFT: 'soft',
+    DEFAULT: 'default'
+};
+
 
 
 /**
@@ -206,7 +233,9 @@ $('#about-info').on('click', function(event) {
 
     // load accordion
     $( "#accordion" ).accordion({
+        // TODO was sieht besser aus content oder auto?
         heightStyle: "content"
+        // heightStyle: "auto"
     });
 
 

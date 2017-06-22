@@ -120,3 +120,8 @@
 .button:active span{
     -webkit-transform: translate(0, 5px);
 }
+
+.ui-accordion-header.ui-state-active {
+    background-color: #95A5A6;
+    border-color: #000000;
+}
