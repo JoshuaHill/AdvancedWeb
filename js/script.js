@@ -12,7 +12,7 @@ var galerie = [
     "../images/gallery/placeholder3.png"
 ];
 
-// Enums
+// Options for User Settings
     // Font Sizes
 const FONT_SIZE = {
     TINY: 'tiny',
@@ -23,12 +23,12 @@ const FONT_SIZE = {
 };
     // Font Styles
 const FONT_FAMILY = {
-    PALATINO: 'palatino',
-    TIMES: 'times',
-    HELVETICA: 'helvetica',
-    LUCIDA: 'lucida',
-    COURIER: 'courier',
-    CONSOLE: 'console'
+    PALATINO: "\"Palatino Linotype\", \"Book Antiqua\", Palatino, serif",
+    TIMES: "\"Times New Roman\", Times, serif",
+    HELVETICA: "\"Helvetica Neue\", \"Helvetica\", \"Arial\", sans-serif",
+    LUCIDA: "\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif",
+    COURIER: "\"Courier New\", Courier, monospace",
+    CONSOLE: "\"Lucida Console\", Monaco, monospace"
 };
     // Color Themes
 const COLOR_THEME = {
@@ -39,6 +39,21 @@ const COLOR_THEME = {
     DEFAULT: 'default'
 };
 
+// Browser info
+var browserAppCodeName = navigator.appCodeName;
+var browserAppName = navigator.userAgent;
+var browserAppVersion = navigator.appName;
+var browserCookieEnabled = navigator.cookieEnabled;
+var browserGeolocation = navigator.geolocation;
+var browserLanguage = navigator.language;
+var browserOnLine = navigator.onLine;
+var browserPlatform = navigator.platform;
+var browserProduct = navigator.product;
+var browserUserAgent = navigator.userAgent;
+
+// Geolocation
+var userLatitude;
+var userLongitude;
 
 
 /**
@@ -77,7 +92,13 @@ $('#settings-display').on('click', function (event) {
     var ck = document.cookie;
     console.log(ck);
 
+    $('#settings-content').load("settings/display.html", function() {
+
+    });
+
 });
+
+
 
 $('#settings-language').on('click', function(event) {
     // set correct menu item to active
@@ -93,7 +114,13 @@ $('#settings-language').on('click', function(event) {
     cookie_string = "test_cookies=true; path=/; expires=" + expiration_date.toUTCString();
     // Create or update the cookie:
     document.cookie = cookie_string;
+    
+    $('#settings-content').load("settings/language.html", function() {
+        document.getElementById('detected-lang').innerHTML = browserLanguage;
+    });
 });
+
+
 
 
 
@@ -611,6 +638,46 @@ function draw() {
 
 };
 
+
+/******************************************************
+ * CODE FOR GOOGLE MAPS
+ * based on:
+ * https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
+ ******************************************************/
+function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: {lat: userLatitude, lng: userLongitude}
+    });
+    var geocoder = new google.maps.Geocoder;
+    var infowindow = new google.maps.InfoWindow;
+
+    geocodeLatLng(geocoder, map, infowindow);
+
+}
+
+function geocodeLatLng(geocoder, map, infowindow) {
+    var latlng = {lat: userLatitude, lng: userLongitude};
+    geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === 'OK') {
+            if (results[1]) {
+                map.setZoom(11);
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map
+                });
+                infowindow.setContent(results[1].formatted_address);
+                infowindow.open(map, marker);
+                document.getElementById('detected-location').innerHTML = results[1].formatted_address;
+            } else {
+                window.alert('No results found');
+            }
+        } else {
+            window.alert('Geocoder failed due to: ' + status);
+        }
+    });
+}
+
 /**
  *
  * INIT
@@ -619,7 +686,26 @@ function draw() {
 
 // Load on Startup
 $(document).ready(function() {
-    // DO SOMETHING
+    // Check Cookies
+    // Load Settings
+    console.log("AppCodeName: " + browserAppCodeName);
+    console.log("AppName: " + browserAppName);
+    console.log("AppVersion: " + browserAppVersion);
+    console.log("CookieEnabled: " + browserCookieEnabled);
+    console.log("Geolocation: " + browserGeolocation);
+    console.log("Language: " + browserLanguage);
+    console.log("OnLine: " + browserOnLine);
+    console.log("Platform: " + browserPlatform);
+    console.log("Product: " + browserProduct);
+    console.log("UserAgent: " + browserUserAgent);
+
+    browserGeolocation.getCurrentPosition(function (position) {
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
+
+        userLatitude = position.coords.latitude;
+        userLongitude = position.coords.longitude;
+    });
 });
 
 
