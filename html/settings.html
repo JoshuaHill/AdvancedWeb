@@ -72,37 +72,50 @@
                 <!-- Add Content here -->
                     <div class="column is-4">
                         <aside class="menu">
-                            <p class="menu-label">
-                                General
-                            </p>
                             <ul class="menu-list">
-                                <li><a>Dashboard</a></li>
-                                <li><a>Customers</a></li>
-                            </ul>
-                            <p class="menu-label">
-                                Administration
-                            </p>
-                            <ul class="menu-list">
-                                <li><a>Team Settings</a></li>
-                                <li>
-                                    <a class="is-active">Manage Your Team</a>
-                                    <ul>
-                                        <li><a>Members</a></li>
-                                        <li><a>Plugins</a></li>
-                                        <li><a>Add a member</a></li>
+                                <li id="font-settings">
+                                    <a>Schrift</a>
+                                    <ul class="menu-sub-list is-hidden" id="font-styles-list">
+                                        <li id="font-size"><a>Schriftgröße</a>
+                                            <ul class="menu-sub-list is-hidden" id="font-size-list">
+                                                <li id="font-size-tiny"><a>Winzig</a></li>
+                                                <li id="font-size-small"><a>Klein</a></li>
+                                                <li id="font-size-medium"><a>Normal (standard)</a></li>
+                                                <li id="font-size-big"><a>Groß</a></li>
+                                                <li id="font-size-huge"><a>Riesig</a></li>
+                                            </ul>
+                                        </li>
+                                        <li id="font-type"><a>Schriftart</a>
+                                            <ul class="menu-sub-list is-hidden" id="font-type-list">
+                                                <li id="font-type-serif"><a>Serif</a>
+                                                    <ul class="menu-sub-list is-hidden" id="serif-list">
+                                                        <li id="serif-palatino"><a>Palatino Linotype</a></li>
+                                                        <li id="serif-times"><a>Times New Roman</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li id="font-type-sans"><a>Sans-Serif</a>
+                                                    <ul class="menu-sub-list is-hidden" id="sans-list">
+                                                        <li id="sans-helvetica"><a>Helvetica Neue (standard)</a></li>
+                                                        <li id="sans-lucida"><a>Lucida Sans Unicode</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li id="font-type-monospace"><a>Monospace</a>
+                                                    <ul class="menu-sub-list is-hidden" id="mono-list">
+                                                        <li id="mono-courier"><a>Courier New</a></li>
+                                                        <li id="mono-lucida"><a>Lucida Console</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li><a>Invitations</a></li>
-                                <li><a>Cloud Storage Environment Settings</a></li>
-                                <li><a>Authentication</a></li>
-                            </ul>
-                            <p class="menu-label">
-                                Transactions
-                            </p>
-                            <ul class="menu-list">
-                                <li><a>Payments</a></li>
-                                <li><a>Transfers</a></li>
-                                <li><a>Balance</a></li>
+                                <li><a>Farbschemas</a>
+                                    <ul class="is-hidden">
+                                        <li><a>Dunkel</a></li>
+                                        <li><a>Hell (standard)</a></li>
+                                        <li><a>Farbenfroh</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </aside>
                     </div>

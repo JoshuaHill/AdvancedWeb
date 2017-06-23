@@ -122,6 +122,12 @@ $('#settings-language').on('click', function(event) {
 
 
 
+$('#font-settings').on('click', function() {
+   this.setAttribute("class", "is-active");
+
+    document.getElementById("font-styles-list").setAttribute("class", "");
+});
+
 
 
 /*******************************************************************************

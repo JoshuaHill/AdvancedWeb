@@ -125,3 +125,31 @@
     background-color: #95A5A6;
     border-color: #000000;
 }
+
+.menu-list > li {
+    background-color: #95A5A6;
+    color: white;
+    margin-bottom: 1px;
+}
+
+.menu-list li > a:hover {
+    background-color: grey;
+}
+
+.menu-list > li > a {
+    color:white;
+}
+
+.menu-sub-list > li {
+    background-color: #95A5A6;
+    color: white;
+    margin-bottom: 1px;
+}
+
+.menu-sub-list li > a:hover {
+    background-color: grey;
+}
+
+.menu-sub-list > li > a {
+    color:white;
+}
