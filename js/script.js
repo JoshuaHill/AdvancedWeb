@@ -137,135 +137,14 @@ $('#about-info').on('click', function(event) {
     document.getElementById('about-privacy').setAttribute("class", "");
     this.setAttribute("class", "is-active");
     // Load HTML for subsection
-    document.getElementById('about-subsection').innerHTML = "<div id=\"accordion\">" +
-    "<h3>Was ist Muse:Viz?</h3>" +
-    "<div>" +
-    "<p>" +
-    "Muse:Viz ist eine Webapplikation, die es dem Nutzer ermöglicht Visualisierungen für seine Musik zu erstellen. " +
-    "</p>" +
-    "</div>" +
-    "<h3>Warum Muse:Viz?</h3>" +
-    "<div>" +
-    "<p>" +
-    "Muse:Viz wurde im Rahmen der Veranstaltung Advanced Web Programming an der Hochschule der Medien erstellt und soll ein Beispiel für moderne" +
-        " Webprogrammierung mit einem Schwerpunkt auf Visualisierung darstellen." +
-    "</p>" +
-    "</div>" +
-    "<h3>Verwendete Libraries</h3>" +
-    "<div>" +
-    "<ul>" +
-        "<li class=\"lib-list\">" +
-        "<a href=\"http://bulma.io\">" +
-        "<article class=\"media\">" +
-        "<figure class=\"media-left\">" +
-        "<p class=\"image is-64x64\">" +
-        "<img src=\"../images/logos/bulma-logo-small.png\">" +
-        "</p>" +
-        "</figure>" +
-        "<div class=\"media-content\">" +
-        "<div class=\"content\">" +
-        "<p>" +
-        "<strong>Bulma</strong>" +
-        "<br>" +
-        "Bulma is an open source CSS framework based on Flexbox and built with Sass. It's 100% responsive, fully modular, and available for free." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "</article>" +
-    "</a>" +
-    "</li>" +
-    "<li class=\"lib-list\">" +
-    "<a href=\"https://jquery.com/\">" +
-    "<article class=\"media\">" +
-    "<figure class=\"media-left\">" +
-    "<p class=\"image is-64x64\">" +
-    "<img src=\"../images/logos/jquery-logo-small.png\">" +
-    "</p>" +
-    "</figure>" +
-    "<div class=\"media-content\">" +
-    "<div class=\"content\">" +
-    "<p>" +
-    "<strong>jQuery</strong>" +
-    "<br>" +
-    "jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "</article>" +
-    "</a>" +
-    "</li>" +
-    "<li class=\"lib-list\">" +
-    "<a href=\"https://jqueryui.com/\">" +
-    "<article class=\"media\">" +
-    "<figure class=\"media-left\">" +
-    "<p class=\"image is-64x64\">" +
-    "<img src=\"../images/logos/jqueryui-logo-small.png\">" +
-    "</p>" +
-    "</figure>" +
-    "<div class=\"media-content\">" +
-    "<div class=\"content\">" +
-    "<p>" +
-    "<strong>jQuery UI</strong>" +
-    "<br>" +
-    "jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "</article>" +
-    "</a>" +
-    "</li>" +
-    "<li class=\"lib-list\">" +
-    "<a href=\"https://d3js.org/\">" +
-    "<article class=\"media\">" +
-    "<figure class=\"media-left\">" +
-    "<p class=\"image is-64x64\">" +
-    "<img src=\"../images/logos/d3-logo-small.png\">" +
-    "</p>" +
-    "</figure>" +
-    "<div class=\"media-content\">" +
-    "<div class=\"content\">" +
-    "<p>" +
-    "<strong>D3.js</strong>" +
-    "<br>" +
-    "D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "</article>" +
-    "</a>" +
-    "</li>" +
-    "<li class=\"lib-list\">" +
-    "<a href=\"https://howlerjs.com/\">" +
-    "<article class=\"media\">" +
-    "<figure class=\"media-left\">" +
-    "<p class=\"image is-64x64\">" +
-    "<img src=\"../images/logos/howler-logo-small.png\">" +
-    "</p>" +
-    "</figure>" +
-    "<div class=\"media-content\">" +
-    "<div class=\"content\">" +
-    "<p>" +
-    "<strong>Howler.js</strong>" +
-    "<br>" +
-    "howler.js is an audio library for the modern web. It defaults to Web Audio API and falls back to HTML5 Audio. This makes working with audio in JavaScript easy and reliable across all platforms." +
-    "</p>" +
-    "</div>" +
-    "</div>" +
-    "</article>" +
-    "</a>" +
-    "</li>";
-    "</ul>" +
-    "</div>" +
-    "</div>";
-
-    // load accordion
-    $( "#accordion" ).accordion({
-        // TODO was sieht besser aus content oder auto?
-        heightStyle: "content"
-        // heightStyle: "auto"
+    $('#about-subsection').load("about/accordion.html", function () {
+        // load accordion
+        $( "#accordion" ).accordion({
+            // TODO was sieht besser aus content oder auto?
+            heightStyle: "content"
+            // heightStyle: "auto"
+        });
     });
-
-
 });
 
 $('#about-imprint').on('click', function(event) {
@@ -305,66 +184,9 @@ $('#contact-mail').on('click', function (event) {
     document.getElementById('contact-mail').setAttribute("class", "is-active");
 
     // load HTML for subsection
-    document.getElementById('contact-subsection').innerHTML =
-        "<form name=\"contactForm\" onsubmit=\"return validateForm()\" method=\"post\" action=\"localhost:3000/contact.html\">" +
-        "<div class=\"field\">" +
-        "<label class=\"label\">Name</label>" +
-        "<p class=\"control has-icons-left has-icons-right\">" +
-        "<input name=\"formName\" id=\"input-name\" class=\"input\" type=\"text\" placeholder=\"Text input\" value=\"name\">" +
-        "<span class=\"icon is-small is-left\">" +
-        "<i class=\"fa fa-user\"></i>" +
-        "</span>" +
-        "<span id=\"warning-name\" class=\"is-hidden\">" +
-        "<span class=\"icon is-small is-right\">" +
-        "<i class=\"fa fa-warning\"></i>" +
-        "</span>" +
-        "</span>" +
-        "</p>" +
-        "<p class=\"help is-danger\" id=\"error-name\"></p>" +
-        "</div>" +
-        "<div class=\"field\">" +
-        "<label class=\"label\">Email</label>" +
-        "<p class=\"control has-icons-left has-icons-right\">" +
-        "<input name=\"formEmail\" id=\"input-email\" class=\"input\" type=\"text\" placeholder=\"Email input\" value=\"mail@\">" +
-        "<span class=\"icon is-small is-left\">" +
-        "<i class=\"fa fa-envelope\"></i>" +
-        "</span>" +
-        "<span id=\"warning-email\" class=\"is-hidden\">" +
-        "<span class=\"icon is-small is-right\">" +
-        "<i class=\"fa fa-warning\"></i>" +
-        "</span>" +
-        "</span>" +
-        "</p>" +
-        "<p class=\"help is-danger\" id=\"error-email\">" +"</p>" +
-        "<label class=\"label\">Subject</label>" +
-        "<p class=\"control has-icons-right\">" +
-        "<input name=\"formSubject\" id=\"input-subject\" class=\"input\" type=\"text\" placeholder=\"Text input\">" +
-        "<span id=\"warning-subject\" class=\"is-hidden\">" +
-        "<span class=\"icon is-small is-right\">" +
-        "<i class=\"fa fa-warning\"></i>" +
-        "</span>" +
-        "</span>" +
-        "</p>" +
-        "<p class=\"help is-danger\" id=\"error-subject\"></p>" +
-        "</div>" +
-        "<div class=\"field\">" +
-        "<label class=\"label\">Message</label>" +
-        "<p class=\"control has-icons-right\">" +
-        "<textarea name=\"formMessage\" id=\"input-message\" class=\"textarea\" placeholder=\"Textarea\">" +"</textarea>" +
-        "<span id=\"warning-message\" class=\"is-hidden\">" +
-        "<span class=\"icon is-small is-right\">" +
-        "<i class=\"fa fa-warning\"></i>" +
-        "</span>" +
-        "</span>" +
-        "</p>" +
-        "<p class=\"help is-danger\" id=\"error-message\"></p>" +
-        "</div>" +
-        "<div class=\"field\">" +
-        "<p class=\"control\">" +
-        "<button type=\"submit\" class=\"button is-primary\">Submit</button>" +
-        "</p>" +
-        "</div>" +
-        "</form>";
+    $('#contact-subsection').load("contact/mail.html", function() {
+
+    });
 
 
 });
