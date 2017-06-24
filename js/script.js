@@ -93,7 +93,7 @@ $('#settings-display').on('click', function (event) {
     console.log(ck);
 
     $('#settings-content').load("settings/display.html", function() {
-
+        loadSettingClickhandlers();
     });
 
 });
@@ -121,82 +121,84 @@ $('#settings-language').on('click', function(event) {
 });
 
 
-/**
- * Schrift
- */
-$('#font-settings').on('click', function() {
-    // remove active from sibling and it's children
-    var themeLinks = document.getElementById("color-themes").getElementsByTagName('a');
-    for(let i = 0; i < themeLinks.length; i++) {
-        themeLinks[i].setAttribute("class", "");
-    }
-    // hide siblings children
-    var themeLists = document.getElementById("color-themes").getElementsByTagName('ul');
-    for(let i = 0; i < themeLists.length; i++) {
-        themeLists[i].setAttribute("class", "menu-sub-list is-hidden");
-    }
-    // remove is-hidden modifier from child
-    document.getElementById("font-styles-list").setAttribute("class", "menu-sub-list");
-    // set clicked Element to active
-    this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-});
+function loadSettingClickhandlers() {
+    /**
+     * Schrift
+     */
+    $('#font-settings').on('click', function() {
+        // remove active from sibling and it's children
+        var themeLinks = document.getElementById("color-themes").getElementsByTagName('a');
+        for(let i = 0; i < themeLinks.length; i++) {
+            themeLinks[i].setAttribute("class", "");
+        }
+        // hide siblings children
+        var themeLists = document.getElementById("color-themes").getElementsByTagName('ul');
+        for(let i = 0; i < themeLists.length; i++) {
+            themeLists[i].setAttribute("class", "menu-sub-list is-hidden");
+        }
+        // remove is-hidden modifier from child
+        document.getElementById("font-styles-list").setAttribute("class", "menu-sub-list");
+        // set clicked Element to active
+        this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+    });
 
-/**
- * Schrift Child 1
- * Schriftgröße
- */
-$('#font-size').on('click', function () {
-    // remove active from sibling and it's children
-    var fontStyleLinks = document.getElementById("font-type").getElementsByTagName('a');
-    for(let i = 0; i < fontStyleLinks.length; i++) {
-        fontStyleLinks[i].setAttribute("class", "");
-    }
-    // hide siblings children
-    document.getElementById("font-type-list").setAttribute("class", "menu-sub-list is-hidden");
-    // remove is-hidden modifier from child
-    document.getElementById("font-size-list").setAttribute("class", "menu-sub-list");
-    // set clicked Element to active
-    this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-});
+    /**
+     * Schrift Child 1
+     * Schriftgröße
+     */
+    $('#font-size').on('click', function () {
+        // remove active from sibling and it's children
+        var fontStyleLinks = document.getElementById("font-type").getElementsByTagName('a');
+        for(let i = 0; i < fontStyleLinks.length; i++) {
+            fontStyleLinks[i].setAttribute("class", "");
+        }
+        // hide siblings children
+        document.getElementById("font-type-list").setAttribute("class", "menu-sub-list is-hidden");
+        // remove is-hidden modifier from child
+        document.getElementById("font-size-list").setAttribute("class", "menu-sub-list");
+        // set clicked Element to active
+        this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+    });
 
-/**
- * Schrift Child 2
- * Schriftart
- */
-$('#font-type').on('click', function () {
-    // remove active from sibling and it's children
-    var fontSizeLinks = document.getElementById("font-size").getElementsByTagName('a');
-    for(let i = 0; i < fontSizeLinks.length; i++) {
-        fontSizeLinks[i].setAttribute("class", "");
-    }
-    // hide siblings children
-    document.getElementById("font-size-list").setAttribute("class", "menu-sub-list is-hidden");
-    // remove is-hidden modifier from child
-    document.getElementById("font-type-list").setAttribute("class", "menu-sub-list");
-    // set clicked Element to active
-    this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-});
+    /**
+     * Schrift Child 2
+     * Schriftart
+     */
+    $('#font-type').on('click', function () {
+        // remove active from sibling and it's children
+        var fontSizeLinks = document.getElementById("font-size").getElementsByTagName('a');
+        for(let i = 0; i < fontSizeLinks.length; i++) {
+            fontSizeLinks[i].setAttribute("class", "");
+        }
+        // hide siblings children
+        document.getElementById("font-size-list").setAttribute("class", "menu-sub-list is-hidden");
+        // remove is-hidden modifier from child
+        document.getElementById("font-type-list").setAttribute("class", "menu-sub-list");
+        // set clicked Element to active
+        this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+    });
 
 
-/**
- * Farbschemas
- */
-$('#color-themes').on('click', function() {
-    // remove active from sibling and it's children
-    var fontLinks = document.getElementById("font-settings").getElementsByTagName('a');
-    for(let i = 0; i < fontLinks.length; i++) {
-        fontLinks[i].setAttribute("class", "");
-    }
-    // hide siblings children
-    var fontLists = document.getElementById("font-settings").getElementsByTagName('ul');
-    for(let i = 0; i < fontLists.length; i++) {
-        fontLists[i].setAttribute("class", "menu-sub-list is-hidden");
-    }
-    // remove is-hidden modifier from child
-    document.getElementById("color-themes-list").setAttribute("class", "menu-sub-list");
-    // set clicked Element to active
-    this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-});
+    /**
+     * Farbschemas
+     */
+    $('#color-themes').on('click', function() {
+        // remove active from sibling and it's children
+        var fontLinks = document.getElementById("font-settings").getElementsByTagName('a');
+        for(let i = 0; i < fontLinks.length; i++) {
+            fontLinks[i].setAttribute("class", "");
+        }
+        // hide siblings children
+        var fontLists = document.getElementById("font-settings").getElementsByTagName('ul');
+        for(let i = 0; i < fontLists.length; i++) {
+            fontLists[i].setAttribute("class", "menu-sub-list is-hidden");
+        }
+        // remove is-hidden modifier from child
+        document.getElementById("color-themes-list").setAttribute("class", "menu-sub-list");
+        // set clicked Element to active
+        this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+    });
+}
 
 
 /*******************************************************************************
@@ -606,6 +608,12 @@ $(document).ready(function() {
 
         userLatitude = position.coords.latitude;
         userLongitude = position.coords.longitude;
+
+        // TODO auf produktivsystem evtl anpassen
+        if(window.location.href == "http://localhost:3000/settings.html") {
+            loadSettingClickhandlers();
+        }
+
     });
 });
 

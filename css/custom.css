@@ -28,7 +28,7 @@
     margin-bottom: auto;
     padding-top: 50px;
     padding-left: 10%;
-    background-color: #95A5A6;
+    background-color: #00D1B2;
     color: #FFFFFF;
 }
 
@@ -48,7 +48,7 @@
     padding: auto;
     padding-top: 25px;
     width: 100%;
-    background-color: #95A5A6;
+    background-color: #00D1B2;
     text-align: center;
 }
 
@@ -121,11 +121,20 @@
     -webkit-transform: translate(0, 5px);
 }
 
-.ui-accordion-header.ui-state-active {
-    background-color: #95A5A6;
-    border-color: #000000;
+.ui-accordion-header {
+    border-color: #00D1B2;
+    color: black;
 }
 
+.ui-accordion-header.ui-state-active {
+    background-color: #00D1B2;
+    border-color: #00D1B2;
+    color: white;
+}
+
+.menu-list li > a.is-active {
+    background-color: #00D1B2;
+}
 /*
 .menu-list li {
     background-color: #95A5A6;
