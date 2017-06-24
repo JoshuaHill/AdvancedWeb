@@ -125,6 +125,16 @@ $('#settings-language').on('click', function(event) {
  * Schrift
  */
 $('#font-settings').on('click', function() {
+    // remove active from sibling and it's children
+    var themeLinks = document.getElementById("color-themes").getElementsByTagName('a');
+    for(let i = 0; i < themeLinks.length; i++) {
+        themeLinks[i].setAttribute("class", "");
+    }
+    // hide siblings children
+    var themeLists = document.getElementById("color-themes").getElementsByTagName('ul');
+    for(let i = 0; i < themeLists.length; i++) {
+        themeLists[i].setAttribute("class", "menu-sub-list is-hidden");
+    }
     // remove is-hidden modifier from child
     document.getElementById("font-styles-list").setAttribute("class", "menu-sub-list");
     // set clicked Element to active
@@ -136,6 +146,13 @@ $('#font-settings').on('click', function() {
  * Schriftgröße
  */
 $('#font-size').on('click', function () {
+    // remove active from sibling and it's children
+    var fontStyleLinks = document.getElementById("font-type").getElementsByTagName('a');
+    for(let i = 0; i < fontStyleLinks.length; i++) {
+        fontStyleLinks[i].setAttribute("class", "");
+    }
+    // hide siblings children
+    document.getElementById("font-type-list").setAttribute("class", "menu-sub-list is-hidden");
     // remove is-hidden modifier from child
     document.getElementById("font-size-list").setAttribute("class", "menu-sub-list");
     // set clicked Element to active
@@ -147,6 +164,13 @@ $('#font-size').on('click', function () {
  * Schriftart
  */
 $('#font-type').on('click', function () {
+    // remove active from sibling and it's children
+    var fontSizeLinks = document.getElementById("font-size").getElementsByTagName('a');
+    for(let i = 0; i < fontSizeLinks.length; i++) {
+        fontSizeLinks[i].setAttribute("class", "");
+    }
+    // hide siblings children
+    document.getElementById("font-size-list").setAttribute("class", "menu-sub-list is-hidden");
     // remove is-hidden modifier from child
     document.getElementById("font-type-list").setAttribute("class", "menu-sub-list");
     // set clicked Element to active
