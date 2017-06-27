@@ -178,6 +178,76 @@ function loadSettingClickhandlers() {
         this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
     });
 
+        /**
+         * Schriftart Child 1
+         * Serif
+         */
+        $('#font-type-serif').on('click', function () {
+           // remove active from siblings and their children
+            var sansSerifLinks = document.getElementById("font-type-sans").getElementsByTagName('a');
+            for(let i = 0; i < sansSerifLinks.length; i++) {
+                sansSerifLinks[i].setAttribute("class", "");
+            }
+            var monoLinks = document.getElementById("font-type-monospace").getElementsByTagName('a');
+            for(let i = 0; i < monoLinks.length; i++) {
+                monoLinks[i].setAttribute("class", "");
+            }
+            // hide siblings children
+            document.getElementById("sans-list").setAttribute("class", "menu-sub-list is-hidden");
+            document.getElementById("mono-list").setAttribute("class", "menu-sub-list is-hidden");
+            // remove is hidden modifier from own children
+            document.getElementById("serif-list").setAttribute("class", "menu-sub-list");
+            // set clicked Element to active
+            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+        });
+
+
+        /**
+         * Schriftart Child 2
+         * Sans-Serif
+         */
+        $('#font-type-sans').on('click', function () {
+            // remove active from siblings and their children
+            var serifLinks = document.getElementById("font-type-serif").getElementsByTagName('a');
+            for(let i = 0; i < serifLinks.length; i++) {
+                serifLinks[i].setAttribute("class", "");
+            }
+            var monoLinks = document.getElementById("font-type-monospace").getElementsByTagName('a');
+            for(let i = 0; i < monoLinks.length; i++) {
+                monoLinks[i].setAttribute("class", "");
+            }
+            // hide siblings children
+            document.getElementById("serif-list").setAttribute("class", "menu-sub-list is-hidden");
+            document.getElementById("mono-list").setAttribute("class", "menu-sub-list is-hidden");
+            // remove is hidden modifier from own children
+            document.getElementById("sans-list").setAttribute("class", "menu-sub-list");
+            // set clicked Element to active
+            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+        });
+
+        /**
+         * Schriftart Child 3
+         * Monospace
+         */
+        $('#font-type-monospace').on('click', function () {
+            // remove active from siblings and their children
+            var sansSerifLinks = document.getElementById("font-type-sans").getElementsByTagName('a');
+            for(let i = 0; i < sansSerifLinks.length; i++) {
+                sansSerifLinks[i].setAttribute("class", "");
+            }
+            var serifLinks = document.getElementById("font-type-serif").getElementsByTagName('a');
+            for(let i = 0; i < serifLinks.length; i++) {
+                serifLinks[i].setAttribute("class", "");
+            }
+            // hide siblings children
+            document.getElementById("sans-list").setAttribute("class", "menu-sub-list is-hidden");
+            document.getElementById("serif-list").setAttribute("class", "menu-sub-list is-hidden");
+            // remove is hidden modifier from own children
+            document.getElementById("mono-list").setAttribute("class", "menu-sub-list");
+            // set clicked Element to active
+            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+        });
+
 
     /**
      * Farbschemas
