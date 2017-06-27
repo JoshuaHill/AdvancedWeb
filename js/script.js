@@ -160,6 +160,46 @@ function loadSettingClickhandlers() {
         this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
     });
 
+        /**
+         * Schriftgröße Child 1
+         * klein
+         */
+        $('#font-size-small').on('click', function () {
+           // remove active from siblings
+            document.getElementById("font-size-medium").firstElementChild.setAttribute("class", "");
+            document.getElementById("font-size-big").firstElementChild.setAttribute("class", "");
+            // set clicked Element to active
+            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+            // Load content
+        });
+
+
+        /**
+         * Schriftgröße Child 2
+         * normal
+         */
+        $('#font-size-medium').on('click', function () {
+            // remove active from siblings
+            document.getElementById("font-size-small").firstElementChild.setAttribute("class", "");
+            document.getElementById("font-size-big").firstElementChild.setAttribute("class", "");
+            // set clicked Element to active
+            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+            // Load content
+        });
+
+        /**
+         * Schriftgröße Child 3
+         * groß
+         */
+        $('#font-size-big').on('click', function () {
+            // remove active from siblings
+            document.getElementById("font-size-medium").firstElementChild.setAttribute("class", "");
+            document.getElementById("font-size-small").firstElementChild.setAttribute("class", "");
+            // set clicked Element to active
+            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+            // Load content
+        });
+
     /**
      * Schrift Child 2
      * Schriftart
@@ -201,6 +241,17 @@ function loadSettingClickhandlers() {
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
         });
 
+            /**
+             * Serif Child 1
+             * Palatino Linotype
+             */
+
+
+            /**
+             * Serif Child 2
+             * Times New Roman
+             */
+
 
         /**
          * Schriftart Child 2
@@ -225,6 +276,18 @@ function loadSettingClickhandlers() {
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
         });
 
+            /**
+             * Sans Child 1
+             * Helvetica Neue
+             */
+
+
+            /**
+             * Sans Child 2
+             * Lucida Sans Unicode
+             */
+
+
         /**
          * Schriftart Child 3
          * Monospace
@@ -247,6 +310,17 @@ function loadSettingClickhandlers() {
             // set clicked Element to active
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
         });
+
+            /**
+             * Monospace Child 1
+             * Courier New
+             */
+
+
+            /**
+             * Monospace Child 2
+             * Lucida Consoloe
+             */
 
 
     /**
