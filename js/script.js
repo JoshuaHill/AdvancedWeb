@@ -173,7 +173,6 @@ function loadSettingClickhandlers() {
             // Load content
         });
 
-
         /**
          * Schriftgröße Child 2
          * normal
@@ -245,6 +244,7 @@ function loadSettingClickhandlers() {
              * Serif Child 1
              * Palatino Linotype
              */
+            $('')
 
 
             /**
