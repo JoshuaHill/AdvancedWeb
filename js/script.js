@@ -126,6 +126,9 @@ function loadSettingClickhandlers() {
      * Schrift
      */
     $('#font-settings').on('click', function() {
+        /*
+         * Menu Settings
+         */
         // remove active from sibling and it's children
         var themeLinks = document.getElementById("color-themes").getElementsByTagName('a');
         for(let i = 0; i < themeLinks.length; i++) {
@@ -140,6 +143,13 @@ function loadSettingClickhandlers() {
         document.getElementById("font-styles-list").setAttribute("class", "menu-sub-list");
         // set clicked Element to active
         this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+        /*
+         * Content
+         */
+        $('#display-content').load("settings/display/fonts.html", function () {
+
+        });
     });
 
     /**
@@ -757,6 +767,7 @@ $(document).ready(function() {
         if(window.location.href == "http://localhost:3000/settings.html") {
             loadSettingClickhandlers();
         }
+
 
     });
 });

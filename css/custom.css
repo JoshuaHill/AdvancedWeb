@@ -1,3 +1,9 @@
+/**
+body {
+    filter: invert(100%);
+}
+**/
+
 .nav-text{
     margin-left: 10px;
     margin-right: 10px;
