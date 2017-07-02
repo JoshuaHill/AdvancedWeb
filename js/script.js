@@ -107,13 +107,13 @@ $('#settings-language').on('click', function(event) {
 
     // Basic Cookie setup based on https://stackoverflow.com/questions/8733025/setting-persistent-cookies-with-javascript#8733385
     // Build the expiration date string:
-    var expiration_date = new Date();
-    var cookie_string = '';
-    expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+    // var expiration_date = new Date();
+    // var cookie_string = '';
+    // expiration_date.setFullYear(expiration_date.getFullYear() + 1);
     // Build the set-cookie string:
-    cookie_string = "test_cookies=true; path=/; expires=" + expiration_date.toUTCString();
+    // cookie_string = "test_cookies=true; path=/; expires=" + expiration_date.toUTCString();
     // Create or update the cookie:
-    document.cookie = cookie_string;
+    // document.cookie = cookie_string;
     
     $('#settings-content').load("settings/language.html", function() {
         document.getElementById('detected-lang').innerHTML = browserLanguage;
@@ -177,8 +177,6 @@ function loadSettingClickhandlers() {
         document.getElementById("font-size-list").setAttribute("class", "menu-sub-list");
         // set clicked Element to active
         this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-
-        console.log("Schriftgroeße geklickt");
 
         /*
          * Content
@@ -361,6 +359,25 @@ function loadSettingClickhandlers() {
              * Serif Child 2
              * Times New Roman
              */
+            $('#serif-times').on('click', function (event) {
+                // prevent parent event from firing
+                event.stopImmediatePropagation();
+
+                /*
+                 * Side Nav
+                 */
+                // remove active from sibling
+                document.getElementById("serif-palatino").getElementsByTagName('a')[0].setAttribute("class", "");
+                // set clicked Element to active
+                this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+                /*
+                 * Content
+                 */
+                $('#display-content').load("settings/display/fonts/fonttype/serif/serif-times.html", function () {
+
+                });
+            });
 
 
         /**
@@ -403,12 +420,50 @@ function loadSettingClickhandlers() {
              * Sans Child 1
              * Helvetica Neue
              */
+            $('#sans-helvetica').on('click', function (event) {
+                // prevent parent event from firing
+                event.stopImmediatePropagation();
+
+                /*
+                 * Side Nav
+                 */
+                // remove active from sibling
+                document.getElementById("sans-lucida").getElementsByTagName('a')[0].setAttribute("class", "");
+                // set clicked Element to active
+                this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+                /*
+                 * Content
+                 */
+                $('#display-content').load("settings/display/fonts/fonttype/sans/sans-helvetica.html", function () {
+
+                });
+            });
 
 
             /**
              * Sans Child 2
              * Lucida Sans Unicode
              */
+            $('#sans-lucida').on('click', function (event) {
+                // prevent parent event from firing
+                event.stopImmediatePropagation();
+
+                /*
+                 * Side Nav
+                 */
+                // remove active from sibling
+                document.getElementById("sans-helvetica").getElementsByTagName('a')[0].setAttribute("class", "");
+                // set clicked Element to active
+                this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+                /*
+                 * Content
+                 */
+                $('#display-content').load("settings/display/fonts/fonttype/sans/sans-lucida.html", function () {
+
+                });
+            });
 
 
         /**
@@ -451,12 +506,49 @@ function loadSettingClickhandlers() {
              * Monospace Child 1
              * Courier New
              */
+            $('#mono-courier').on('click', function (event) {
+                // prevent parent event from firing
+                event.stopImmediatePropagation();
 
+                /*
+                 * Side Nav
+                 */
+                // remove active from sibling
+                document.getElementById("mono-lucida").getElementsByTagName('a')[0].setAttribute("class", "");
+                // set clicked Element to active
+                this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
 
+                /*
+                 * Content
+                 */
+                $('#display-content').load("settings/display/fonts/fonttype/mono/mono-courier.html", function () {
+
+                });
+            });
+    
             /**
              * Monospace Child 2
              * Lucida Consoloe
              */
+            $('#mono-lucida').on('click', function (event) {
+                // prevent parent event from firing
+                event.stopImmediatePropagation();
+
+                /*
+                 * Side Nav
+                 */
+                // remove active from sibling
+                document.getElementById("mono-courier").getElementsByTagName('a')[0].setAttribute("class", "");
+                // set clicked Element to active
+                this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+                /*
+                 * Content
+                 */
+                $('#display-content').load("settings/display/fonts/fonttype/mono/mono-lucida.html", function () {
+
+                });
+            });
 
 
     /**
@@ -482,6 +574,55 @@ function loadSettingClickhandlers() {
 
         });
     });
+
+        /**
+         * Farbschema Child 1
+         * Dunkel
+         */
+        $('#dark-theme').on('click', function (event) {
+            // prevent parent event from firing
+            event.stopImmediatePropagation();
+
+            /*
+             * Side Nav
+             */
+            // remove active from sibling
+            document.getElementById("bright-theme").getElementsByTagName('a')[0].setAttribute("class", "");
+            // set clicked Element to active
+            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+            /*
+             * Content
+             */
+            $('#display-content').load("settings/display/themes/dark.html", function () {
+
+            });
+        });
+
+    /**
+     * Farbschema Child 1
+     * Hell
+     */
+    $('#bright-theme').on('click', function (event) {
+        // prevent parent event from firing
+        event.stopImmediatePropagation();
+
+        /*
+         * Side Nav
+         */
+        // remove active from sibling
+        document.getElementById("dark-theme").getElementsByTagName('a')[0].setAttribute("class", "");
+        // set clicked Element to active
+        this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+        /*
+         * Content
+         */
+        $('#display-content').load("settings/display/themes/bright.html", function () {
+
+        });
+    });
+
 }
 
 
@@ -875,6 +1016,7 @@ function geocodeLatLng(geocoder, map, infowindow) {
 $(document).ready(function() {
     // Check Cookies
     // Load Settings
+    /*
     console.log("AppCodeName: " + browserAppCodeName);
     console.log("AppName: " + browserAppName);
     console.log("AppVersion: " + browserAppVersion);
@@ -885,10 +1027,11 @@ $(document).ready(function() {
     console.log("Platform: " + browserPlatform);
     console.log("Product: " + browserProduct);
     console.log("UserAgent: " + browserUserAgent);
+    */
 
     browserGeolocation.getCurrentPosition(function (position) {
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
+        // console.log(position.coords.latitude);
+        // console.log(position.coords.longitude);
 
         userLatitude = position.coords.latitude;
         userLongitude = position.coords.longitude;
