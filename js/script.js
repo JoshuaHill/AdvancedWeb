@@ -127,7 +127,7 @@ function loadSettingClickhandlers() {
      */
     $('#font-settings').on('click', function() {
         /*
-         * Menu Settings
+         * Side Nav
          */
         // remove active from sibling and it's children
         var themeLinks = document.getElementById("color-themes").getElementsByTagName('a');
@@ -150,13 +150,22 @@ function loadSettingClickhandlers() {
         $('#display-content').load("settings/display/fonts.html", function () {
 
         });
+
     });
+
+
 
     /**
      * Schrift Child 1
      * Schriftgröße
      */
-    $('#font-size').on('click', function () {
+    $('#font-size').on('click', function (event) {
+        // prevent parent event from firing
+        event.stopImmediatePropagation();
+
+        /*
+         * Side Nav
+         */
         // remove active from sibling and it's children
         var fontStyleLinks = document.getElementById("font-type").getElementsByTagName('a');
         for(let i = 0; i < fontStyleLinks.length; i++) {
@@ -168,52 +177,106 @@ function loadSettingClickhandlers() {
         document.getElementById("font-size-list").setAttribute("class", "menu-sub-list");
         // set clicked Element to active
         this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+        console.log("Schriftgroeße geklickt");
+
+        /*
+         * Content
+         */
+        // remove old content
+        document.getElementById("display-content").innerHTML = "";
+        // load new content
+        $('#display-content').load("settings/display/fonts/fontsize.html", function () {
+
+        });
     });
 
         /**
          * Schriftgröße Child 1
-         * klein
+         * small
          */
-        $('#font-size-small').on('click', function () {
+        $('#font-size-small').on('click', function (event) {
+            // prevent parent event from firing
+            event.stopImmediatePropagation();
+
+            /*
+             * Side Nav
+             */
            // remove active from siblings
             document.getElementById("font-size-medium").firstElementChild.setAttribute("class", "");
             document.getElementById("font-size-big").firstElementChild.setAttribute("class", "");
             // set clicked Element to active
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-            // Load content
+
+            /*
+             * Content
+             */
+            $('#display-content').load("settings/display/fonts/fontsize/small-font.html", function () {
+
+            });
         });
 
         /**
          * Schriftgröße Child 2
-         * normal
+         * medium
          */
-        $('#font-size-medium').on('click', function () {
+        
+        $('#font-size-medium').on('click', function (event) {
+            // prevent parent event from firing
+            event.stopImmediatePropagation();
+
+            /*
+             * Side Nav
+             */
             // remove active from siblings
             document.getElementById("font-size-small").firstElementChild.setAttribute("class", "");
             document.getElementById("font-size-big").firstElementChild.setAttribute("class", "");
             // set clicked Element to active
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-            // Load content
+
+            /*
+             * Content
+             */
+            $('#display-content').load("settings/display/fonts/fontsize/medium-font.html", function () {
+
+            });
         });
 
         /**
          * Schriftgröße Child 3
-         * groß
+         * big
          */
-        $('#font-size-big').on('click', function () {
+        $('#font-size-big').on('click', function (event) {
+            // prevent parent event from firing
+            event.stopImmediatePropagation();
+            /*
+             * Side Nav
+             */
             // remove active from siblings
             document.getElementById("font-size-medium").firstElementChild.setAttribute("class", "");
             document.getElementById("font-size-small").firstElementChild.setAttribute("class", "");
             // set clicked Element to active
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-            // Load content
+
+            /*
+             * Content
+             */
+            $('#display-content').load("settings/display/fonts/fontsize/big-font.html", function () {
+
+            });
         });
 
     /**
      * Schrift Child 2
      * Schriftart
      */
-    $('#font-type').on('click', function () {
+    $('#font-type').on('click', function (event) {
+        // prevent parent event from firing
+        event.stopImmediatePropagation();
+
+        /*
+         * Side Nav
+         */
         // remove active from sibling and it's children
         var fontSizeLinks = document.getElementById("font-size").getElementsByTagName('a');
         for(let i = 0; i < fontSizeLinks.length; i++) {
@@ -225,13 +288,26 @@ function loadSettingClickhandlers() {
         document.getElementById("font-type-list").setAttribute("class", "menu-sub-list");
         // set clicked Element to active
         this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+        /*
+         * Content
+         */
+        $('#display-content').load("settings/display/fonts/fonttype.html", function () {
+
+        });
     });
 
         /**
          * Schriftart Child 1
          * Serif
          */
-        $('#font-type-serif').on('click', function () {
+        $('#font-type-serif').on('click', function (event) {
+            // prevent parent event from firing
+            event.stopImmediatePropagation();
+
+            /*
+             * Side Nav
+             */
            // remove active from siblings and their children
             var sansSerifLinks = document.getElementById("font-type-sans").getElementsByTagName('a');
             for(let i = 0; i < sansSerifLinks.length; i++) {
@@ -248,14 +324,38 @@ function loadSettingClickhandlers() {
             document.getElementById("serif-list").setAttribute("class", "menu-sub-list");
             // set clicked Element to active
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+            /*
+             * Content
+             */
+            $('#display-content').load("settings/display/fonts/fonttype/serif.html", function () {
+
+            });
         });
 
             /**
              * Serif Child 1
              * Palatino Linotype
              */
-            $('')
+            $('#serif-palatino').on('click', function (event) {
+                // prevent parent event from firing
+                event.stopImmediatePropagation();
 
+                /*
+                 * Side Nav
+                 */
+                // remove active from sibling
+                document.getElementById("serif-times").getElementsByTagName('a')[0].setAttribute("class", "");
+                // set clicked Element to active
+                this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+                /*
+                 * Content
+                 */
+                $('#display-content').load("settings/display/fonts/fonttype/serif/serif-palatino.html", function () {
+
+                });
+            });
 
             /**
              * Serif Child 2
@@ -267,7 +367,13 @@ function loadSettingClickhandlers() {
          * Schriftart Child 2
          * Sans-Serif
          */
-        $('#font-type-sans').on('click', function () {
+        $('#font-type-sans').on('click', function (event) {
+            // prevent parent event from firing
+            event.stopImmediatePropagation();
+
+            /*
+             * Side Nav
+             */
             // remove active from siblings and their children
             var serifLinks = document.getElementById("font-type-serif").getElementsByTagName('a');
             for(let i = 0; i < serifLinks.length; i++) {
@@ -284,6 +390,13 @@ function loadSettingClickhandlers() {
             document.getElementById("sans-list").setAttribute("class", "menu-sub-list");
             // set clicked Element to active
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+            /*
+             * Content
+             */
+            $('#display-content').load("settings/display/fonts/fonttype/sans.html", function () {
+
+            });
         });
 
             /**
@@ -302,7 +415,13 @@ function loadSettingClickhandlers() {
          * Schriftart Child 3
          * Monospace
          */
-        $('#font-type-monospace').on('click', function () {
+        $('#font-type-monospace').on('click', function (event) {
+            // prevent parent event from firing
+            event.stopImmediatePropagation();
+
+            /*
+             * Side Nav
+             */
             // remove active from siblings and their children
             var sansSerifLinks = document.getElementById("font-type-sans").getElementsByTagName('a');
             for(let i = 0; i < sansSerifLinks.length; i++) {
@@ -319,6 +438,13 @@ function loadSettingClickhandlers() {
             document.getElementById("mono-list").setAttribute("class", "menu-sub-list");
             // set clicked Element to active
             this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+            /*
+             * Content
+             */
+            $('#display-content').load("settings/display/fonts/fonttype/mono.html", function () {
+
+            });
         });
 
             /**
@@ -351,6 +477,10 @@ function loadSettingClickhandlers() {
         document.getElementById("color-themes-list").setAttribute("class", "menu-sub-list");
         // set clicked Element to active
         this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+        $('#display-content').load("settings/display/themes.html", function () {
+
+        });
     });
 }
 
