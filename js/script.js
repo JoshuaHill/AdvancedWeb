@@ -429,6 +429,7 @@ function loadSettingClickhandlers() {
                  */
                 // remove active from sibling
                 document.getElementById("sans-lucida").getElementsByTagName('a')[0].setAttribute("class", "");
+                document.getElementById("sans-standard").getElementsByTagName('a')[0].setAttribute("class", "");
                 // set clicked Element to active
                 this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
 
@@ -454,6 +455,7 @@ function loadSettingClickhandlers() {
                  */
                 // remove active from sibling
                 document.getElementById("sans-helvetica").getElementsByTagName('a')[0].setAttribute("class", "");
+                document.getElementById("sans-standard").getElementsByTagName('a')[0].setAttribute("class", "");
                 // set clicked Element to active
                 this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
 
@@ -461,6 +463,31 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/sans/sans-lucida.html", function () {
+
+                });
+            });
+
+            /**
+             * Sans Child 3
+             * Standard Sans
+             */
+            $('#sans-standard').on('click', function (event) {
+                // prevent parent event from firing
+                event.stopImmediatePropagation();
+
+                /*
+                 * Side Nav
+                 */
+                // remove active from siblings
+                document.getElementById("sans-helvetica").getElementsByTagName('a')[0].setAttribute("class", "");
+                document.getElementById("sans-lucida").getElementsByTagName('a')[0].setAttribute("class", "");
+                // set clicked Element to active
+                this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
+
+                /*
+                 * Content
+                 */
+                $('#display-content').load("settings/display/fonts/fonttype/sans/sans-standard.html", function () {
 
                 });
             });

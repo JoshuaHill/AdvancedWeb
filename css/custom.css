@@ -4,6 +4,34 @@ body {
 }
 **/
 
+/**
+* Fonts
+**/
+.palatino {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
+
+.times-new-roman {
+    font-family: "Times New Roman", Times, serif !important;
+}
+
+.helvetica-neue {
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+}
+
+.lucida-sans {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
+}
+
+.courier-new {
+    font-family: "Courier New", Courier, monospace !important;
+}
+
+.lucida-console {
+    font-family: "Lucida Console", Monaco, monospace !important;
+}
+
+
 .nav-text{
     margin-left: 10px;
     margin-right: 10px;
