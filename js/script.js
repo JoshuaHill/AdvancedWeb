@@ -31,13 +31,13 @@ const FONT_FAMILY = {
     CONSOLE: "\"Lucida Console\", Monaco, monospace"
 };
     // Color Themes
-const COLOR_THEME = {
-    DARK: 'dark',
-    BRIGHT: 'bright',
-    INTENSE: 'intense',
-    SOFT: 'soft',
-    DEFAULT: 'default'
-};
+    // Umsetzung basierend auf https://stackoverflow.com/a/26514362
+var darkCssTheme = $("<link>", {
+    "rel" : "stylesheet",
+    "type" : "text/css",
+    "href" : "../css/themes/dark-theme.css",
+    "id" : "dark-theme-tag"
+})[0];
 
 // Browser info
 var browserAppCodeName = navigator.appCodeName;
@@ -351,7 +351,9 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/serif/serif-palatino.html", function () {
-
+                    $('#settings-btn').on('click', function () {
+                        document.getElementsByTagName("body")[0].setAttribute("class", "palatino");
+                    });
                 });
             });
 
@@ -375,7 +377,9 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/serif/serif-times.html", function () {
-
+                    $('#settings-btn').on('click', function () {
+                        document.getElementsByTagName("body")[0].setAttribute("class", "times-new-roman");
+                    });
                 });
             });
 
@@ -437,7 +441,9 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/sans/sans-helvetica.html", function () {
-
+                    $('#settings-btn').on('click', function () {
+                        document.getElementsByTagName("body")[0].setAttribute("class", "helvetica-neue");
+                    });
                 });
             });
 
@@ -463,7 +469,9 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/sans/sans-lucida.html", function () {
-
+                    $('#settings-btn').on('click', function () {
+                        document.getElementsByTagName("body")[0].setAttribute("class", "lucida-sans");
+                    });
                 });
             });
 
@@ -488,7 +496,9 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/sans/sans-standard.html", function () {
-
+                    $('#settings-btn').on('click', function () {
+                        document.getElementsByTagName("body")[0].removeAttribute("class");
+                    });
                 });
             });
 
@@ -549,7 +559,9 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/mono/mono-courier.html", function () {
-
+                    $('#settings-btn').on('click', function () {
+                        document.getElementsByTagName("body")[0].setAttribute("class", "courier-new");
+                    });
                 });
             });
     
@@ -573,7 +585,9 @@ function loadSettingClickhandlers() {
                  * Content
                  */
                 $('#display-content').load("settings/display/fonts/fonttype/mono/mono-lucida.html", function () {
-
+                    $('#settings-btn').on('click', function () {
+                        document.getElementsByTagName("body")[0].setAttribute("class", "lucida-console");
+                    });
                 });
             });
 
@@ -622,7 +636,9 @@ function loadSettingClickhandlers() {
              * Content
              */
             $('#display-content').load("settings/display/themes/dark.html", function () {
-
+                $('#settings-btn').on('click', function () {
+                    document.getElementsByTagName("head")[0].appendChild(darkCssTheme);
+                });
             });
         });
 
@@ -646,7 +662,11 @@ function loadSettingClickhandlers() {
          * Content
          */
         $('#display-content').load("settings/display/themes/bright.html", function () {
-
+            $('#settings-btn').on('click', function () {
+                var tag = document.getElementById("dark-theme-tag");
+                if(tag != null);
+                tag.parentNode.removeChild(tag);
+            });
         });
     });
 
