@@ -80,6 +80,35 @@ var dataArray = new Uint8Array(bufferLength);
 
 /*******************************************************************************
  *
+ * Modals
+ *
+ *******************************************************************************/
+function loadModalClickhandlers() {
+    // close modal btn oben rechts im browser
+    $('.modal-close').on('click', function () {
+        console.log("Modal-Close clicked");
+        document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+    });
+
+    // close modal button oben rechts am popup
+    $('.delete').on('click', function () {
+        console.log("Modal-Close clicked");
+        document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+    });
+
+    // OK button
+    $('#modal-ok-btn').on('click', function () {
+        console.log("Modal-Close clicked");
+        document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+    });
+
+}
+
+
+
+
+/*******************************************************************************
+ *
  * Settings-Page
  *
  *******************************************************************************/
@@ -943,8 +972,28 @@ function geocodeLatLng(geocoder, map, infowindow) {
  **/
 
 // Load on Startup
+// TODO alle localhost locations auf produktivsystem evtl anpassen
 $(document).ready(function() {
-    // Check Cookies
+    // Check on home and start screen if Cookies are enabled
+    if(window.location.href == "http://localhost:3000/index.html" || window.location.href == "http://localhost:3000/home.html") {
+        // if cookies are disabled show a warning modal
+        if(navigator.cookieEnabled == false) {
+            var modalDiv = document.createElement("div");
+            $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-start.html", function() {
+                loadModalClickhandlers();
+            });
+        }
+    }
+    // Check on settings screen if Cookies are enabled
+    if(window.location.href == "http://localhost:3000/settings.html") {
+        // if cookies are disabled show a danger modal
+        if(navigator.cookieEnabled == false) {
+            var modalDiv = document.createElement("div");
+            $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-settings.html", function() {
+                loadModalClickhandlers();
+            });
+        }
+    }
     // Load Settings
     /*
     console.log("AppCodeName: " + browserAppCodeName);
@@ -966,7 +1015,7 @@ $(document).ready(function() {
         userLatitude = position.coords.latitude;
         userLongitude = position.coords.longitude;
 
-        // TODO auf produktivsystem evtl anpassen
+
         if(window.location.href == "http://localhost:3000/settings.html") {
             loadSettingClickhandlers();
         }
