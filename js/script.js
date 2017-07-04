@@ -154,118 +154,8 @@ function loadSettingClickhandlers() {
     });
 
 
-
     /**
      * Schrift Child 1
-     * Schriftgröße
-     */
-    $('#font-size').on('click', function (event) {
-        // prevent parent event from firing
-        event.stopImmediatePropagation();
-
-        /*
-         * Side Nav
-         */
-        // remove active from sibling and it's children
-        var fontStyleLinks = document.getElementById("font-type").getElementsByTagName('a');
-        for(let i = 0; i < fontStyleLinks.length; i++) {
-            fontStyleLinks[i].setAttribute("class", "");
-        }
-        // hide siblings children
-        document.getElementById("font-type-list").setAttribute("class", "menu-sub-list is-hidden");
-        // remove is-hidden modifier from child
-        document.getElementById("font-size-list").setAttribute("class", "menu-sub-list");
-        // set clicked Element to active
-        this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-
-        /*
-         * Content
-         */
-        // remove old content
-        document.getElementById("display-content").innerHTML = "";
-        // load new content
-        $('#display-content').load("settings/display/fonts/fontsize.html", function () {
-
-        });
-    });
-
-        /**
-         * Schriftgröße Child 1
-         * small
-         */
-        $('#font-size-small').on('click', function (event) {
-            // prevent parent event from firing
-            event.stopImmediatePropagation();
-
-            /*
-             * Side Nav
-             */
-           // remove active from siblings
-            document.getElementById("font-size-medium").firstElementChild.setAttribute("class", "");
-            document.getElementById("font-size-big").firstElementChild.setAttribute("class", "");
-            // set clicked Element to active
-            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-
-            /*
-             * Content
-             */
-            $('#display-content').load("settings/display/fonts/fontsize/small-font.html", function () {
-
-            });
-        });
-
-        /**
-         * Schriftgröße Child 2
-         * medium
-         */
-        
-        $('#font-size-medium').on('click', function (event) {
-            // prevent parent event from firing
-            event.stopImmediatePropagation();
-
-            /*
-             * Side Nav
-             */
-            // remove active from siblings
-            document.getElementById("font-size-small").firstElementChild.setAttribute("class", "");
-            document.getElementById("font-size-big").firstElementChild.setAttribute("class", "");
-            // set clicked Element to active
-            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-
-            /*
-             * Content
-             */
-            $('#display-content').load("settings/display/fonts/fontsize/medium-font.html", function () {
-
-            });
-        });
-
-        /**
-         * Schriftgröße Child 3
-         * big
-         */
-        $('#font-size-big').on('click', function (event) {
-            // prevent parent event from firing
-            event.stopImmediatePropagation();
-            /*
-             * Side Nav
-             */
-            // remove active from siblings
-            document.getElementById("font-size-medium").firstElementChild.setAttribute("class", "");
-            document.getElementById("font-size-small").firstElementChild.setAttribute("class", "");
-            // set clicked Element to active
-            this.getElementsByTagName('a')[0].setAttribute("class", "is-active");
-
-            /*
-             * Content
-             */
-            $('#display-content').load("settings/display/fonts/fontsize/big-font.html", function () {
-
-            });
-        });
-
-    /**
-     * Schrift Child 2
      * Schriftart
      */
     $('#font-type').on('click', function (event) {
@@ -275,13 +165,6 @@ function loadSettingClickhandlers() {
         /*
          * Side Nav
          */
-        // remove active from sibling and it's children
-        var fontSizeLinks = document.getElementById("font-size").getElementsByTagName('a');
-        for(let i = 0; i < fontSizeLinks.length; i++) {
-            fontSizeLinks[i].setAttribute("class", "");
-        }
-        // hide siblings children
-        document.getElementById("font-size-list").setAttribute("class", "menu-sub-list is-hidden");
         // remove is-hidden modifier from child
         document.getElementById("font-type-list").setAttribute("class", "menu-sub-list");
         // set clicked Element to active
