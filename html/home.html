@@ -10,7 +10,13 @@
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
 </head>
-<body>
+<style>
+    .wait {
+        visibility: hidden;
+    }
+</style>
+
+<body class="wait">
 <section class="hero is-fullheight is-default is-bold">
     <div class="hero-head">
         <div class="container">
@@ -60,7 +66,11 @@
                     -->
 
                     <canvas id="canvas" width="400" height="300">
-                        Alt Text
+                        <h1 class="title">JavaScript ist deaktiviert.</h1>
+                        <p>
+                            Um dieses Element korrekt darstellen zu können, muss JavaScript aktiviert sein.
+                            Ohne aktiviertes JavaScript ist die Website nur sehr eingeschränkt nutzbar.
+                        </p>
                     </canvas>
 
                 </div>
@@ -88,6 +98,7 @@
 
 </section>
 
+
 <!-- D3 JS -->
 <script src="../js/d3.min.js"></script>
 <!-- Howler -->
@@ -98,5 +109,10 @@
 <!-- custom script -->
 <script src="../js/script.js"></script>
 
+<noscript>
+    <style type="text/css">.wait { visibility: visible; }</style>
+</noscript>
+
 </body>
+
 </html>

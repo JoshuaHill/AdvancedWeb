@@ -21,15 +21,7 @@ const FONT_SIZE = {
     BIG: 'large',
     HUGE: 'huge'
 };
-    // Font Styles
-const FONT_FAMILY = {
-    PALATINO: "\"Palatino Linotype\", \"Book Antiqua\", Palatino, serif",
-    TIMES: "\"Times New Roman\", Times, serif",
-    HELVETICA: "\"Helvetica Neue\", \"Helvetica\", \"Arial\", sans-serif",
-    LUCIDA: "\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif",
-    COURIER: "\"Courier New\", Courier, monospace",
-    CONSOLE: "\"Lucida Console\", Monaco, monospace"
-};
+
     // Color Themes
     // Umsetzung basierend auf https://stackoverflow.com/a/26514362
 var darkCssTheme = $("<link>", {
@@ -83,6 +75,7 @@ var dataArray = new Uint8Array(bufferLength);
  * Modals
  *
  *******************************************************************************/
+
 function loadModalClickhandlers() {
     // close modal btn oben rechts im browser
     $('.modal-close').on('click', function () {
@@ -133,16 +126,6 @@ $('#settings-language').on('click', function(event) {
     // set correct menu item to active
     document.getElementById('settings-display').setAttribute("class", "");
     this.setAttribute("class", "is-active");
-
-    // Basic Cookie setup based on https://stackoverflow.com/questions/8733025/setting-persistent-cookies-with-javascript#8733385
-    // Build the expiration date string:
-    // var expiration_date = new Date();
-    // var cookie_string = '';
-    // expiration_date.setFullYear(expiration_date.getFullYear() + 1);
-    // Build the set-cookie string:
-    // cookie_string = "test_cookies=true; path=/; expires=" + expiration_date.toUTCString();
-    // Create or update the cookie:
-    // document.cookie = cookie_string;
     
     $('#settings-content').load("settings/language.html", function() {
         document.getElementById('detected-lang').innerHTML = browserLanguage;
@@ -265,6 +248,7 @@ function loadSettingClickhandlers() {
                 $('#display-content').load("settings/display/fonts/fonttype/serif/serif-palatino.html", function () {
                     $('#settings-btn').on('click', function () {
                         document.getElementsByTagName("body")[0].setAttribute("class", "palatino");
+                        setCookie("fontstyle", "palatino", 365);
                     });
                 });
             });
@@ -291,6 +275,7 @@ function loadSettingClickhandlers() {
                 $('#display-content').load("settings/display/fonts/fonttype/serif/serif-times.html", function () {
                     $('#settings-btn').on('click', function () {
                         document.getElementsByTagName("body")[0].setAttribute("class", "times-new-roman");
+                        setCookie("fontstyle", "times-new-roman", 365);
                     });
                 });
             });
@@ -355,6 +340,7 @@ function loadSettingClickhandlers() {
                 $('#display-content').load("settings/display/fonts/fonttype/sans/sans-helvetica.html", function () {
                     $('#settings-btn').on('click', function () {
                         document.getElementsByTagName("body")[0].setAttribute("class", "helvetica-neue");
+                        setCookie("fontstyle", "helvetica-neue", 365);
                     });
                 });
             });
@@ -383,6 +369,7 @@ function loadSettingClickhandlers() {
                 $('#display-content').load("settings/display/fonts/fonttype/sans/sans-lucida.html", function () {
                     $('#settings-btn').on('click', function () {
                         document.getElementsByTagName("body")[0].setAttribute("class", "lucida-sans");
+                        setCookie("fontstyle", "lucida-sans", 365);
                     });
                 });
             });
@@ -410,6 +397,7 @@ function loadSettingClickhandlers() {
                 $('#display-content').load("settings/display/fonts/fonttype/sans/sans-standard.html", function () {
                     $('#settings-btn').on('click', function () {
                         document.getElementsByTagName("body")[0].removeAttribute("class");
+                        setCookie("fontstyle", "", 365);
                     });
                 });
             });
@@ -473,6 +461,7 @@ function loadSettingClickhandlers() {
                 $('#display-content').load("settings/display/fonts/fonttype/mono/mono-courier.html", function () {
                     $('#settings-btn').on('click', function () {
                         document.getElementsByTagName("body")[0].setAttribute("class", "courier-new");
+                        setCookie("fontstyle", "courier-new", 365);
                     });
                 });
             });
@@ -499,6 +488,7 @@ function loadSettingClickhandlers() {
                 $('#display-content').load("settings/display/fonts/fonttype/mono/mono-lucida.html", function () {
                     $('#settings-btn').on('click', function () {
                         document.getElementsByTagName("body")[0].setAttribute("class", "lucida-console");
+                        setCookie("fontstyle", "lucida-console", 365);
                     });
                 });
             });
@@ -550,6 +540,7 @@ function loadSettingClickhandlers() {
             $('#display-content').load("settings/display/themes/dark.html", function () {
                 $('#settings-btn').on('click', function () {
                     document.getElementsByTagName("head")[0].appendChild(darkCssTheme);
+                    setCookie("theme", "dark", 365);
                 });
             });
         });
@@ -578,6 +569,7 @@ function loadSettingClickhandlers() {
                 var tag = document.getElementById("dark-theme-tag");
                 if(tag != null);
                 tag.parentNode.removeChild(tag);
+                setCookie("theme", "", 365);
             });
         });
     });
@@ -643,6 +635,7 @@ $('#about-privacy').on('click', function(event) {
  * Contact-Page
  *
  *******************************************************************************/
+
 $('#contact-mail').on('click', function (event) {
     // set menu item to active
     document.getElementById('contact-phone').setAttribute("class", "");
@@ -926,11 +919,13 @@ function draw() {
 };
 
 
+
 /******************************************************
  * CODE FOR GOOGLE MAPS
  * based on:
  * https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
  ******************************************************/
+
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
@@ -965,35 +960,102 @@ function geocodeLatLng(geocoder, map, infowindow) {
     });
 }
 
-/**
+
+
+/*******************************************************************************
+ *
+ * Basic Cookie Functions
+ * taken from / based on https://www.w3schools.com/js/js_cookies.asp
+ *
+ *******************************************************************************/
+
+// function to create new cookies or update existing ones
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+// function to get the value of a specific cookie
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+// function to check if a cookie is set
+function checkCookie(cname) {
+    var cVal = getCookie(cname);
+    if (cVal != "") {
+        console.log("Cookie '" + cname + "' is set with value '" + cVal + "'.");
+    } else {
+        console.log("Cookie '" + cname + "' not set.");
+    }
+    return cVal;
+}
+
+
+
+/*******************************************************************************
  *
  * INIT
  *
- **/
+ *******************************************************************************/
 
 // Load on Startup
 // TODO alle localhost locations auf produktivsystem evtl anpassen
 $(document).ready(function() {
-    // Check on home and start screen if Cookies are enabled
-    if(window.location.href == "http://localhost:3000/index.html" || window.location.href == "http://localhost:3000/home.html") {
-        // if cookies are disabled show a warning modal
-        if(navigator.cookieEnabled == false) {
+    // Check if Cookies are disabled
+    if(navigator.cookieEnabled == false) {
+        // if location is index or home show warning modal
+        if(window.location.href == "http://localhost:3000/index.html" || window.location.href == "http://localhost:3000/home.html") {
             var modalDiv = document.createElement("div");
             $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-start.html", function() {
                 loadModalClickhandlers();
             });
-        }
-    }
-    // Check on settings screen if Cookies are enabled
-    if(window.location.href == "http://localhost:3000/settings.html") {
-        // if cookies are disabled show a danger modal
-        if(navigator.cookieEnabled == false) {
+        // if location is settings show danger modal
+        } else if(window.location.href == "http://localhost:3000/settings.html") {
             var modalDiv = document.createElement("div");
             $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-settings.html", function() {
                 loadModalClickhandlers();
             });
         }
+    // if cookies are enabled check if cookies are set
+    } else {
+        var fontStyle = checkCookie("fontstyle");
+        var theme = checkCookie("theme");
+
+        if(fontStyle != "" && fontStyle != null) {
+            document.getElementsByTagName("body")[0].setAttribute("class", fontStyle);
+        }
+        if(theme != "" && theme != null) {
+            // weil es nur ein nicht-std theme gibt bedeutet gesetzter cookie immer dark theme
+            document.getElementsByTagName("head")[0].appendChild(darkCssTheme);
+        }
     }
+
+    $(".wait").show();
+
+    /**
+     * Settings Page startup
+     */
+    if(window.location.href == "http://localhost:3000/settings.html") {
+        loadSettingClickhandlers();
+    }
+
+
+
     // Load Settings
     /*
     console.log("AppCodeName: " + browserAppCodeName);
@@ -1014,12 +1076,6 @@ $(document).ready(function() {
 
         userLatitude = position.coords.latitude;
         userLongitude = position.coords.longitude;
-
-
-        if(window.location.href == "http://localhost:3000/settings.html") {
-            loadSettingClickhandlers();
-        }
-
 
     });
 });
