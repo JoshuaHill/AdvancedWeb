@@ -10,7 +10,14 @@
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
 </head>
-<body>
+
+<style>
+    .wait {
+        visibility: hidden;
+    }
+</style>
+
+<body class="wait">
 <section class="hero is-fullheight is-default is-bold">
     <div class="hero-head">
         <div class="container">
@@ -142,6 +149,11 @@
 <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
 <!-- custom script -->
 <script src="../js/script.js"></script>
+
+<noscript>
+    <style type="text/css">.wait { visibility: visible; }</style>
+    <style type="text/css">.is-hidden { display: block !important;}</style>
+</noscript>
 
 </body>
 </html>

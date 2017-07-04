@@ -10,7 +10,14 @@
         <link rel="stylesheet" type="text/css" href="../css/hero.css">
         <link rel="stylesheet" type="text/css" href="../css/custom.css">
     </head>
-    <body>
+
+    <style>
+        .wait {
+            visibility: hidden;
+        }
+    </style>
+
+    <body class="wait">
         <section class="hero is-primary is-small header-image" deluminate_imagetype="png">
             <div class="hero-head">
             </div>
@@ -107,5 +114,9 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
         <!-- custom script -->
         <script src="../js/script.js"></script>
+
+        <noscript>
+            <style type="text/css">.wait { visibility: visible; }</style>
+        </noscript>
     </body>
 </html>

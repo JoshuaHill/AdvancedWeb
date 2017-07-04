@@ -1045,7 +1045,11 @@ $(document).ready(function() {
         }
     }
 
-    $(".wait").show();
+    // make website visible
+    var waitEle = document.getElementsByClassName("wait");
+    for(let i = 0; i < waitEle.length; i++) {
+        waitEle[i].style.visibility = "visible";
+    }
 
     /**
      * Settings Page startup
