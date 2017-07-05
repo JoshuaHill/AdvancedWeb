@@ -660,7 +660,7 @@ $('#contact-phone').on('click', function (event) {
     // load HTML for subsection
     document.getElementById('contact-subsection').innerHTML = "" +
         "Telefon: 0711/123-456-789 <br>" +
-        "Von Montag bis Freitag 10:00 - 16:00 <br><br><span id=\"open-close\"></span>";
+        "täglich 10:00 - 16:00 <br><br><span id=\"open-close\"></span>";
 
     // show open or closed message according to time
     if(time.getHours() >= 10 && time.getHours() <=16) {
