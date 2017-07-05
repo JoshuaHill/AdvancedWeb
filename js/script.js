@@ -673,17 +673,31 @@ $('#contact-phone').on('click', function (event) {
 
 function validateForm() {
 
+    var phone = document.forms["contactForm"]["formPhone"].value;
     var email = document.forms["contactForm"]["formEmail"].value;
     var name = document.forms["contactForm"]["formName"].value;
     var subject = document.forms["contactForm"]["formSubject"].value;
     var message = document.forms["contactForm"]["formMessage"].value;
 
+    var phoneStatus = phoneCheck(phone);
     var emailStatus = emailCheck(email);
     var nameStatus = nameCheck(name);
     var subjectStatus = subjectCheck(subject);
     var messageStatus = messageCheck(message);
 
     console.log("IN");
+
+    if(phoneStatus != "ok") {
+        document.getElementById("error-phone").innerHTML = phoneStatus;
+        document.getElementById("warning-phone").setAttribute("class", "");
+        document.querySelector("#warning-phone > span > i").setAttribute("class", "fa fa-warning");
+        document.getElementById("input-phone").setAttribute("class", "input is-danger");
+    } else {
+        document.getElementById("error-phone").innerHTML = "";
+        document.getElementById("warning-phone").setAttribute("class", "");
+        document.querySelector("#warning-phone > span > i").setAttribute("class", "fa fa-check");
+        document.getElementById("input-phone").setAttribute("class", "input is-success");
+    }
 
     if(emailStatus != "ok") {
         document.getElementById("error-email").innerHTML = emailStatus;
@@ -733,12 +747,28 @@ function validateForm() {
         document.getElementById("input-message").setAttribute("class", "textarea is-success");
     }
 
-    if(emailStatus == "ok" && nameStatus == "ok" && subjectStatus == "ok" && messageStatus == "ok") {
+    if((phoneStatus == "ok" || emailStatus == "ok") && nameStatus == "ok" && subjectStatus == "ok" && messageStatus == "ok") {
         // TODO submit form / start nodescript
     } else {
         return false;
     }
     
+}
+
+function phoneCheck(phone) {
+    var statusMsg;
+
+    // Erlaubte Eingaben:
+        // Nur Nummern z.B. 0711555666
+        // mit + am Anfang z.B. +49711555666
+        // mit Bindestrichen z.B. 0711-555-666
+        // mit Querstrich z.B. 0711/555666
+        // mit Leerzeichen z.B. 0711 555 666
+    if(phone.match(/(([0-9])|\+)([0-9]+)([0-9]|\-|\/| )+/g)) {
+        statusMsg = "ok";
+    } else {
+        statusMsg = "Ungültige Telefon Nummer";
+    }
 }
 
 function emailCheck(email) {
