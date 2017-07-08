@@ -1,56 +1,89 @@
 <form name="contactForm" onsubmit="return validateForm()" method="post" action="localhost:3000/contact.html">
     <div class="field">
-        <label class="label">Name</label>
+        <label class="label" style="text-align: left">Antwort per:</label>
+        <p class="control">
+                                        <span class="select">
+                                          <select>
+                                            <option selected="selected">Mail</option>
+                                            <option>Telefon</option>
+                                          </select>
+                                        </span>
+        </p>
+    </div>
+    <div class="field">
+        <label class="label" style="text-align: left">Name</label>
         <p class="control has-icons-left has-icons-right">
             <input name="formName" id="input-name" class="input" type="text" placeholder="Text input" value="name">
-        <span class="icon is-small is-left">
-        <i class="fa fa-user"></i>
-        </span>
-        <span id="warning-name" class="is-hidden">
-        <span class="icon is-small is-right">
-        <i class="fa fa-warning"></i>
-        </span>
-        </span>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                        <span id="warning-name" class="is-hidden">
+                                            <span class="icon is-small is-right">
+                                                <i class="fa fa-warning"></i>
+                                            </span>
+                                        </span>
         </p>
         <p class="help is-danger" id="error-name"></p>
     </div>
-    <div class="field">
-        <label class="label">Email</label>
+
+    <div class="field is-hidden" id="phone-field">
+        <label class="label" style="text-align: left">Telefon Nummer</label>
+        <p class="control has-icons-left has-icons-right">
+            <input name="formPhone" id="input-phone" class="input" type="text" placeholder="Text input" value="+49">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                        <span id="warning-phone" class="is-hidden">
+                                            <span class="icon is-small is-right">
+                                                <i class="fa fa-warning"></i>
+                                            </span>
+                                        </span>
+        </p>
+        <p class="help is-danger" id="error-phone"></p>
+    </div>
+
+    <div class="field" id="email-field">
+        <label class="label" style="text-align: left">Email</label>
         <p class="control has-icons-left has-icons-right">
             <input name="formEmail" id="input-email" class="input" type="text" placeholder="Email input" value="mail@">
-        <span class="icon is-small is-left">
-        <i class="fa fa-envelope"></i>
-        </span>
-        <span id="warning-email" class="is-hidden">
-        <span class="icon is-small is-right">
-        <i class="fa fa-warning"></i>
-        </span>
-        </span>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                        <span id="warning-email" class="is-hidden">
+                                            <span class="icon is-small is-right">
+                                                <i class="fa fa-warning"></i>
+                                            </span>
+                                        </span>
         </p>
         <p class="help is-danger" id="error-email"></p>
-        <label class="label">Subject</label>
+    </div>
+
+    <div class="field">
+        <label class="label" style="text-align: left">Betreff</label>
         <p class="control has-icons-right">
-            <input name="formSubject" id="input-subject" class="input" type="text" placeholder="Text input">
-        <span id="warning-subject" class="is-hidden">
-        <span class="icon is-small is-right">
-        <i class="fa fa-warning"></i>
-        </span>
-        </span>
+            <input name="formSubject" id="input-subject" class="input" type="text" placeholder="Betreff">
+                                        <span id="warning-subject" class="is-hidden">
+                                            <span class="icon is-small is-right">
+                                                <i class="fa fa-warning"></i>
+                                            </span>
+                                        </span>
         </p>
         <p class="help is-danger" id="error-subject"></p>
     </div>
+
     <div class="field">
-        <label class="label">Message</label>
+        <label class="label" style="text-align: left">Nachricht</label>
         <p class="control has-icons-right">
-            <textarea name="formMessage" id="input-message" class="textarea" placeholder="Textarea"></textarea>
-        <span id="warning-message" class="is-hidden">
-        <span class="icon is-small is-right">
-        <i class="fa fa-warning"></i>
-        </span>
-        </span>
+            <textarea name="formMessage" id="input-message" class="textarea" placeholder="Nachricht"></textarea>
+                                        <span id="warning-message" class="is-hidden">
+                                            <span class="icon is-small is-right">
+                                                <i class="fa fa-warning"></i>
+                                            </span>
+                                        </span>
         </p>
         <p class="help is-danger" id="error-message"></p>
     </div>
+
     <div class="field">
         <p class="control">
             <button type="submit" class="button is-primary">Submit</button>

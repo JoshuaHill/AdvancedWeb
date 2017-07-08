@@ -47,6 +47,9 @@ var browserUserAgent = navigator.userAgent;
 var userLatitude;
 var userLongitude;
 
+// Variable für kontext-sensitives Formular
+var formContext = "mail";
+
 
 /**
  *
@@ -670,46 +673,69 @@ $('#contact-phone').on('click', function (event) {
     }
 });
 
+$("select").change(function () {
+    var value = "";
+    $("select option:selected").each(function() {
+       value = $(this).text();
+       if(value.localeCompare("Mail") == 0) {
+           document.getElementById("phone-field").setAttribute("class", "field is-hidden");
+           document.getElementById("email-field").setAttribute("class", "field");
+           formContext = "mail";
+       } else {
+           document.getElementById("phone-field").setAttribute("class", "field");
+           document.getElementById("email-field").setAttribute("class", "field is-hidden");
+           formContext = "phone";
+       }
+    });
+});
 
+/**
+ * validateForm() überprüft ob die gemachten Angaben wie E-Mail, Telefon etc.
+ * sinnvoll ausgefüllt wurden.
+ *
+ * @returns {boolean}
+ */
 function validateForm() {
 
-    var phone = document.forms["contactForm"]["formPhone"].value;
-    var email = document.forms["contactForm"]["formEmail"].value;
+    if(formContext.localeCompare("mail") == 0) {
+        var email = document.forms["contactForm"]["formEmail"].value;
+        var emailStatus = emailCheck(email);
+
+        if(emailStatus != "ok") {
+            document.getElementById("error-email").innerHTML = emailStatus;
+            document.getElementById("warning-email").setAttribute("class", "");
+            document.querySelector("#warning-email > span > i").setAttribute("class", "fa fa-warning");
+            document.getElementById("input-email").setAttribute("class", "input is-danger");
+        } else {
+            document.getElementById("error-email").innerHTML = "";
+            document.getElementById("warning-email").setAttribute("class", "");
+            document.querySelector("#warning-email > span > i").setAttribute("class", "fa fa-check");
+            document.getElementById("input-email").setAttribute("class", "input is-success");
+        }
+    } else {
+        var phone = document.forms["contactForm"]["formPhone"].value;
+        var phoneStatus = phoneCheck(phone);
+
+        if(phoneStatus != "ok") {
+            document.getElementById("error-phone").innerHTML = phoneStatus;
+            document.getElementById("warning-phone").setAttribute("class", "");
+            document.querySelector("#warning-phone > span > i").setAttribute("class", "fa fa-warning");
+            document.getElementById("input-phone").setAttribute("class", "input is-danger");
+        } else {
+            document.getElementById("error-phone").innerHTML = "";
+            document.getElementById("warning-phone").setAttribute("class", "");
+            document.querySelector("#warning-phone > span > i").setAttribute("class", "fa fa-check");
+            document.getElementById("input-phone").setAttribute("class", "input is-success");
+        }
+    }
+
     var name = document.forms["contactForm"]["formName"].value;
     var subject = document.forms["contactForm"]["formSubject"].value;
     var message = document.forms["contactForm"]["formMessage"].value;
 
-    var phoneStatus = phoneCheck(phone);
-    var emailStatus = emailCheck(email);
     var nameStatus = nameCheck(name);
     var subjectStatus = subjectCheck(subject);
     var messageStatus = messageCheck(message);
-
-    console.log("IN");
-
-    if(phoneStatus != "ok") {
-        document.getElementById("error-phone").innerHTML = phoneStatus;
-        document.getElementById("warning-phone").setAttribute("class", "");
-        document.querySelector("#warning-phone > span > i").setAttribute("class", "fa fa-warning");
-        document.getElementById("input-phone").setAttribute("class", "input is-danger");
-    } else {
-        document.getElementById("error-phone").innerHTML = "";
-        document.getElementById("warning-phone").setAttribute("class", "");
-        document.querySelector("#warning-phone > span > i").setAttribute("class", "fa fa-check");
-        document.getElementById("input-phone").setAttribute("class", "input is-success");
-    }
-
-    if(emailStatus != "ok") {
-        document.getElementById("error-email").innerHTML = emailStatus;
-        document.getElementById("warning-email").setAttribute("class", "");
-        document.querySelector("#warning-email > span > i").setAttribute("class", "fa fa-warning");
-        document.getElementById("input-email").setAttribute("class", "input is-danger");
-    } else {
-        document.getElementById("error-email").innerHTML = "";
-        document.getElementById("warning-email").setAttribute("class", "");
-        document.querySelector("#warning-email > span > i").setAttribute("class", "fa fa-check");
-        document.getElementById("input-email").setAttribute("class", "input is-success");
-    }
 
     if(nameStatus != "ok") {
         document.getElementById("error-name").innerHTML = nameStatus;
@@ -764,11 +790,13 @@ function phoneCheck(phone) {
         // mit Bindestrichen z.B. 0711-555-666
         // mit Querstrich z.B. 0711/555666
         // mit Leerzeichen z.B. 0711 555 666
-    if(phone.match(/(([0-9])|\+)([0-9]+)([0-9]|\-|\/| )+/g)) {
+    if(phone.match(/(([0-9])|\+)([0-9]+)([0-9]|\-|\/| )+/g) && phone.length > 3) {
         statusMsg = "ok";
     } else {
         statusMsg = "Ungültige Telefon Nummer";
     }
+
+    return statusMsg;
 }
 
 function emailCheck(email) {
