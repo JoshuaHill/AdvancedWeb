@@ -4,5 +4,9 @@
   },
   "subtitle": {
     "index-sub": "Musik Visualisierung mit D3js"
+  },
+  "nav-menu": {
+    "settings": "Einstellungen",
+    "contact": "Kontakt"
   }
 }

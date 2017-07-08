@@ -1,5 +1,12 @@
 {
   "title": {
     "index-sub": "Visualize your music!"
+  },
+  "subtitle": {
+    "index-sub": "Musik Visualization with D3js"
+  },
+  "nav-menu": {
+    "settings": "Settings",
+    "contact": "Contact"
   }
 }

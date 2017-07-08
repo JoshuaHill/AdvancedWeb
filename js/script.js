@@ -1106,6 +1106,7 @@ function checkCookie(cname) {
  * Localization with i18next jQuery
  *
  *******************************************************************************/
+
 /**
  * i18nIndex() loads locale for Index page
  */
@@ -1124,6 +1125,27 @@ function i18nIndex() {
             jqueryI18next.init(i18next, $);
             $('.title').localize();
             $('.subtitle').localize();
+
+        });
+}
+
+/**
+ * i18nMenu() loads locale for the menu
+ */
+function i18nMenu() {
+    // todo checken ob cookie gesetzt ansonsten browser language als default nehmen evtl in separate function auslagern
+    language = browserLanguage;
+
+    i18next
+        .use(i18nextXHRBackend)
+        .init({
+            lng: language,
+            backend: {
+                loadPath: '../locales/{{lng}}/{{ns}}.json'
+            }
+        }, function(err, t) {
+            jqueryI18next.init(i18next, $);
+            $('.nav-menu').localize();
 
         });
 }
@@ -1166,6 +1188,8 @@ $(document).ready(function() {
             document.getElementsByTagName("head")[0].appendChild(darkCssTheme);
         }
     }
+
+    i18nMenu();
 
     // make website visible
     var waitEle = document.getElementsByClassName("wait");
