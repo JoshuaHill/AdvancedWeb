@@ -21,5 +21,9 @@
   "title-bar": {
     "contact": "Kontakt",
     "settings": "Einstellungen"
+  },
+  "column": {
+    "current-lang": "Eingestellte Sprache: Deutsch",
+    "lang-text": "Die eingestellte Sprache ist Deutsch. Mit diesen Spracheinstellungen wird die gesamte Website uneingeschränkt ausgegeben."
   }
 }

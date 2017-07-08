@@ -40,8 +40,8 @@ var userLongitude;
 // Variable für kontext-sensitives Formular
 var formContext = "mail";
 
-// Language defaults to english
-var language = "en";
+// Language
+var language;
 
 
 /**
@@ -107,8 +107,8 @@ $('#settings-display').on('click', function (event) {
     document.getElementById('settings-language').setAttribute("class", "");
     this.setAttribute("class", "is-active");
 
-    var ck = document.cookie;
-    console.log(ck);
+   // var ck = document.cookie;
+   // console.log(ck);
 
     $('#settings-content').load("settings/display.html", function() {
         loadSettingClickhandlers();
@@ -122,11 +122,41 @@ $('#settings-language').on('click', function(event) {
     // set correct menu item to active
     document.getElementById('settings-display').setAttribute("class", "");
     this.setAttribute("class", "is-active");
-    
-    $('#settings-content').load("settings/language.html", function() {
-        document.getElementById('detected-lang').innerHTML = browserLanguage;
-    });
+    loadSettingsLangContent();
+
+
+
 });
+
+function loadSettingsLangContent() {
+    $('#settings-content').load("settings/language.html", function() {
+        // document.getElementById('detected-lang').innerHTML = browserLanguage;
+        loadLocale();
+        /*
+         * Select Language
+         */
+        if(language.localeCompare("en") == 0) {
+            document.getElementById("lang-sel").selectedIndex = 1;
+        } else {
+            document.getElementById("lang-sel").selectedIndex = 0;
+        }
+        $("select").change(function () {
+            var value = "";
+            $("select option:selected").each(function() {
+                value = $(this).text();
+                if(value.localeCompare("German") == 0) {
+                    language = "de";
+                    setCookie("lang", "de", 365);
+                    loadLocale();
+                } else {
+                    language = "en";
+                    setCookie("lang", "en", 365);
+                    loadLocale();
+                }
+            });
+        });
+    });
+}
 
 
 function loadSettingClickhandlers() {
@@ -1061,44 +1091,27 @@ function checkCookie(cname) {
 
 /*******************************************************************************
  *
- * Localization with i18next jQuery
+ * Localization
  *
  *******************************************************************************/
 
-/**
- * i18nIndex() loads locale for Index page
- */
-function i18nIndex() {
-    // todo checken ob cookie gesetzt ansonsten browser language als default nehmen evtl in separate function auslagern
-    language = browserLanguage;
 
-    i18next
-        .use(i18nextXHRBackend)
-        .init({
-            lng: language,
-            backend: {
-                loadPath: '../locales/{{lng}}/{{ns}}.json'
-            }
-        }, function(err, t) {
-            jqueryI18next.init(i18next, $);
-            $('.title').localize();
-            $('.subtitle').localize();
-
-        });
-}
 
 /**
- * i18nMenu() loads locale for the menu and submenu tabs
+ * loadLocale() utilizes i18next Framework to load locale for currently set language.
+ * The currently set language is defined in global variable 'language'.
+ * If not explicitly changed by user it's German when using German
+ * browser settings or English for all other browser language settings.
  */
 function loadLocale() {
-    // todo checken ob cookie gesetzt ansonsten browser language als default nehmen evtl in separate function auslagern
-    language = browserLanguage;
 
     i18next
+        // i18nextXHRBackend is needed to load localizations from file system
         .use(i18nextXHRBackend)
         .init({
             lng: language,
             backend: {
+                // load locale for current language from external json file
                 loadPath: '../locales/{{lng}}/{{ns}}.json'
             }
         }, function(err, t) {
@@ -1107,6 +1120,7 @@ function loadLocale() {
             $('.subtitle').localize();
             $('.nav-menu').localize();
             $('.tabs').localize();
+            $('.column').localize();
         });
 }
 
@@ -1141,6 +1155,7 @@ $(document).ready(function() {
     } else {
         var fontStyle = checkCookie("fontstyle");
         var theme = checkCookie("theme");
+        var languageCookie = checkCookie("lang");
 
         if(fontStyle != "" && fontStyle != null) {
             document.getElementsByTagName("body")[0].setAttribute("class", fontStyle);
@@ -1148,6 +1163,20 @@ $(document).ready(function() {
         if(theme != "" && theme != null) {
             // weil es nur ein nicht-std theme gibt bedeutet gesetzter cookie immer dark theme
             document.getElementsByTagName("head")[0].appendChild(darkCssTheme);
+        }
+        // if language cookie is set use set language
+        if(languageCookie != "" && languageCookie != null) {
+            language = languageCookie;
+        // else use browser language
+        } else {
+            // for german browsers (including de, de-ch, de-at etc.) use german
+            if(browserLanguage.startsWith("de")) {
+                language = "de";
+            // else default to english for non german browsers
+            } else {
+                language = "en";
+            }
+
         }
     }
 
