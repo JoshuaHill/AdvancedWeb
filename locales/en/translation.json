@@ -8,5 +8,17 @@
   "nav-menu": {
     "settings": "Settings",
     "contact": "Contact"
+  },
+  "tabs": {
+    "display": "Display",
+    "language": "Language",
+    "phone": "Phone",
+    "info": "Information about Website",
+    "imprint": "Imprint",
+    "privacy": "Privacy"
+  },
+  "title-bar": {
+    "contact": "Contact",
+    "settings": "Settings"
   }
 }

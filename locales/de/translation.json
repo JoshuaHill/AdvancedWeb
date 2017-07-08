@@ -1,6 +1,7 @@
 {
   "title": {
-    "index-title": "Visualisiere deine Musik!"
+    "index-title": "Visualisiere deine Musik!",
+    "contact": "Kontakt"
   },
   "subtitle": {
     "index-sub": "Musik Visualisierung mit D3js"
@@ -8,5 +9,17 @@
   "nav-menu": {
     "settings": "Einstellungen",
     "contact": "Kontakt"
+  },
+  "tabs": {
+    "display": "Darstellung",
+    "language": "Sprache",
+    "phone": "Telefon",
+    "info": "Informationen zur Website",
+    "imprint": "Impressum",
+    "privacy": "Datenschutzerklärung"
+  },
+  "title-bar": {
+    "contact": "Kontakt",
+    "settings": "Einstellungen"
   }
 }

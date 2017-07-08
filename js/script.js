@@ -1130,9 +1130,9 @@ function i18nIndex() {
 }
 
 /**
- * i18nMenu() loads locale for the menu
+ * i18nMenu() loads locale for the menu and submenu tabs
  */
-function i18nMenu() {
+function loadLocale() {
     // todo checken ob cookie gesetzt ansonsten browser language als default nehmen evtl in separate function auslagern
     language = browserLanguage;
 
@@ -1145,10 +1145,14 @@ function i18nMenu() {
             }
         }, function(err, t) {
             jqueryI18next.init(i18next, $);
+            $('.title').localize();
+            $('.subtitle').localize();
             $('.nav-menu').localize();
-
+            $('.tabs').localize();
         });
 }
+
+
 
 
 /*******************************************************************************
@@ -1189,7 +1193,8 @@ $(document).ready(function() {
         }
     }
 
-    i18nMenu();
+    // load localization
+    loadLocale();
 
     // make website visible
     var waitEle = document.getElementsByClassName("wait");
@@ -1197,13 +1202,7 @@ $(document).ready(function() {
         waitEle[i].style.visibility = "visible";
     }
 
-    /**
-     * Index Page startup
-     */
-    if(window.location.href == "http://localhost:3000/index.html") {
 
-        i18nIndex();
-    }
 
     /**
      * Settings Page startup
