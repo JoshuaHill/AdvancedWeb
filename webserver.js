@@ -10,6 +10,7 @@ app.use('/css', express.static('css'));
 app.use('/js', express.static('js'));
 app.use('/audio', express.static('audio'));
 app.use('/images', express.static('images'));
+app.use('/locales', express.static('locales'));
 
 app.listen(port, (err) => {
     if (err) {

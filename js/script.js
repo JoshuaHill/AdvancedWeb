@@ -40,6 +40,9 @@ var userLongitude;
 // Variable für kontext-sensitives Formular
 var formContext = "mail";
 
+// Language defaults to english
+var language = "en";
+
 
 /**
  *
@@ -1100,6 +1103,34 @@ function checkCookie(cname) {
 
 /*******************************************************************************
  *
+ * Localization with i18next jQuery
+ *
+ *******************************************************************************/
+/**
+ * i18nIndex() loads locale for Index page
+ */
+function i18nIndex() {
+    // todo checken ob cookie gesetzt ansonsten browser language als default nehmen evtl in separate function auslagern
+    language = browserLanguage;
+
+    i18next
+        .use(i18nextXHRBackend)
+        .init({
+            lng: language,
+            backend: {
+                loadPath: '../locales/{{lng}}/{{ns}}.json'
+            }
+        }, function(err, t) {
+            jqueryI18next.init(i18next, $);
+            $('.title').localize();
+            $('.subtitle').localize();
+
+        });
+}
+
+
+/*******************************************************************************
+ *
  * INIT
  *
  *******************************************************************************/
@@ -1143,11 +1174,21 @@ $(document).ready(function() {
     }
 
     /**
+     * Index Page startup
+     */
+    if(window.location.href == "http://localhost:3000/index.html") {
+
+        i18nIndex();
+    }
+
+    /**
      * Settings Page startup
      */
     if(window.location.href == "http://localhost:3000/settings.html") {
         loadSettingClickhandlers();
     }
+
+
 
 
 
