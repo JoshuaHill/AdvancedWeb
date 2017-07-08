@@ -12,18 +12,8 @@ var galerie = [
     "../images/gallery/placeholder3.png"
 ];
 
-// Options for User Settings
-    // Font Sizes
-const FONT_SIZE = {
-    TINY: 'tiny',
-    SMALL: 'small',
-    MEDIUM: 'medium',
-    BIG: 'large',
-    HUGE: 'huge'
-};
-
-    // Color Themes
-    // Umsetzung basierend auf https://stackoverflow.com/a/26514362
+// Color Themes
+// Umsetzung basierend auf https://stackoverflow.com/a/26514362
 var darkCssTheme = $("<link>", {
     "rel" : "stylesheet",
     "type" : "text/css",
@@ -690,8 +680,8 @@ $("select").change(function () {
 });
 
 /**
- * validateForm() überprüft ob die gemachten Angaben wie E-Mail, Telefon etc.
- * sinnvoll ausgefüllt wurden.
+ * validateForm() checks wether entered E-Mail, phone etc.
+ * make sense.
  *
  * @returns {boolean}
  */
@@ -781,15 +771,21 @@ function validateForm() {
     
 }
 
+/**
+ * phoneCheck(phone) checks phone input for validity
+ *
+ * @param phone
+ * @returns {*}
+ */
 function phoneCheck(phone) {
     var statusMsg;
 
     // Erlaubte Eingaben:
-        // Nur Nummern z.B. 0711555666
-        // mit + am Anfang z.B. +49711555666
-        // mit Bindestrichen z.B. 0711-555-666
-        // mit Querstrich z.B. 0711/555666
-        // mit Leerzeichen z.B. 0711 555 666
+        // numbers only: 0711555666
+        // starting with plus: +49711555666
+        // dashes: 0711-555-666
+        // slash after prefix: 0711/555666
+        // spaces: 0711 555 666
     if(phone.match(/(([0-9])|\+)([0-9]+)([0-9]|\-|\/| )+/g) && phone.length > 3) {
         statusMsg = "ok";
     } else {
@@ -799,6 +795,12 @@ function phoneCheck(phone) {
     return statusMsg;
 }
 
+/**
+ * emailCheck(email) checks email input for validity
+ *
+ * @param email
+ * @returns {*}
+ */
 function emailCheck(email) {
     var statusMsg;
 
@@ -812,11 +814,19 @@ function emailCheck(email) {
     return statusMsg;
 };
 
+/**
+ * nameCheck(name) checks name input for validity
+ *
+ * @param name
+ * @returns {*}
+ */
 function nameCheck(name) {
     var statusMsg;
 
+    // name must not be empty or "name"
     if(name == "" || name == "name") {
         statusMsg = "Please enter your name.";
+    // name must be at least 3 characters
     } else if(name.length < 3) {
         statusMsg = "Name must be at least three characters!";
     } else {
@@ -826,11 +836,19 @@ function nameCheck(name) {
     return statusMsg;
 };
 
+/**
+ * subjectCheck(subject) checks subject input for validity
+ *
+ * @param subject
+ * @returns {*}
+ */
 function subjectCheck(subject) {
     var statusMsg;
 
+    // subject must not be empty
     if(subject == "") {
         statusMsg = "Subject is empty!";
+    // subject must be longer than 3 characters
     } else if(subject.length < 3) {
         statusMsg = "Subject must be at least three characters!";
     } else {
@@ -840,11 +858,19 @@ function subjectCheck(subject) {
     return statusMsg;
 };
 
+/**
+ * messageCheck(message) checks message input for validity
+ *
+ * @param message
+ * @returns {*}
+ */
 function messageCheck(message) {
     var statusMsg;
 
+    // message must not be empty
     if(message == "") {
         statusMsg = "Message is empty!";
+    // message must be at least 3 characters
     } else if(message.length < 3) {
         statusMsg = "Message must be at least three characters!";
     } else {
@@ -873,6 +899,13 @@ $('#playBtn').click(function () {
 $('#stopBtn').click(function () {
     sound.stop();
 });
+
+
+/*******************************************************************************
+ *
+ * Index-Page
+ *
+ *******************************************************************************/
 
 /**
  * Gallery Controls
@@ -1023,7 +1056,7 @@ function geocodeLatLng(geocoder, map, infowindow) {
 /*******************************************************************************
  *
  * Basic Cookie Functions
- * taken from / based on https://www.w3schools.com/js/js_cookies.asp
+ * based on https://www.w3schools.com/js/js_cookies.asp
  *
  *******************************************************************************/
 
@@ -1133,12 +1166,8 @@ $(document).ready(function() {
     */
 
     browserGeolocation.getCurrentPosition(function (position) {
-        // console.log(position.coords.latitude);
-        // console.log(position.coords.longitude);
-
         userLatitude = position.coords.latitude;
         userLongitude = position.coords.longitude;
-
     });
 });
 
