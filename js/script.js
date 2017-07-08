@@ -1014,48 +1014,6 @@ function draw() {
 
 
 
-/******************************************************
- * CODE FOR GOOGLE MAPS
- * based on:
- * https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
- ******************************************************/
-
-function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
-        center: {lat: userLatitude, lng: userLongitude}
-    });
-    var geocoder = new google.maps.Geocoder;
-    var infowindow = new google.maps.InfoWindow;
-
-    geocodeLatLng(geocoder, map, infowindow);
-
-}
-
-function geocodeLatLng(geocoder, map, infowindow) {
-    var latlng = {lat: userLatitude, lng: userLongitude};
-    geocoder.geocode({'location': latlng}, function(results, status) {
-        if (status === 'OK') {
-            if (results[1]) {
-                map.setZoom(11);
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map
-                });
-                infowindow.setContent(results[1].formatted_address);
-                infowindow.open(map, marker);
-                document.getElementById('detected-location').innerHTML = results[1].formatted_address;
-            } else {
-                window.alert('No results found');
-            }
-        } else {
-            window.alert('Geocoder failed due to: ' + status);
-        }
-    });
-}
-
-
-
 /*******************************************************************************
  *
  * Basic Cookie Functions
