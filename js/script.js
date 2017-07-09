@@ -1152,6 +1152,7 @@ function loadLocale() {
             $('.nav-menu').localize();
             $('.tabs').localize();
             $('.column').localize();
+            $('.footer').localize();
         });
 }
 

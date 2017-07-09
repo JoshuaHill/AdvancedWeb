@@ -24,5 +24,8 @@
   "column": {
     "current-lang": "Current Language: English",
     "lang-text": "User language is currently set to English. The default language of this website is German. Some parts might not be available in English yet. If you can speak German consider changing the language to German."
+  },
+  "footer": {
+    "github": "Check out the source code at Github"
   }
 }
