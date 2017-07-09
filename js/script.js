@@ -633,16 +633,7 @@ $('#about-info').on('click', function(event) {
 
 // clickhandler for Imprint subsection
 $('#about-imprint').on('click', function(event) {
-    // Set correct menu item to active
-    document.getElementById('about-info').setAttribute("class", "");
-    document.getElementById('about-privacy').setAttribute("class", "");
-    this.setAttribute("class", "is-active");
-
-    // Load HTML for subsection
-    $('#about-subsection').load("about/imprint.html", function () {
-
-    });
-
+    loadImprint();
 });
 
 // clickhandler for privacy subsection
@@ -658,6 +649,18 @@ $('#about-privacy').on('click', function(event) {
 
     });
 });
+
+function loadImprint() {
+    // Set correct menu item to active
+    document.getElementById('about-info').setAttribute("class", "");
+    document.getElementById('about-privacy').setAttribute("class", "");
+    document.getElementById('about-imprint').setAttribute("class", "is-active");
+
+    // Load HTML for subsection
+    $('#about-subsection').load("about/imprint.html", function () {
+
+    });
+}
 
 
 
@@ -1212,16 +1215,6 @@ $(document).ready(function() {
         }
     }
 
-    // load localization
-    loadLocale();
-
-    // make website visible
-    var waitEle = document.getElementsByClassName("wait");
-    for(let i = 0; i < waitEle.length; i++) {
-        waitEle[i].style.visibility = "visible";
-    }
-
-
 
     /**
      * Settings Page startup
@@ -1230,6 +1223,22 @@ $(document).ready(function() {
         loadSettingClickhandlers();
     }
 
+    /**
+     * About Page startup
+     */
+    if(window.location.href == "http://localhost:3000/about.html") {
+        loadImprint();
+    }
+
+
+    // load localization
+    loadLocale();
+
+    // make website visible
+    var waitEle = document.getElementsByClassName("wait");
+    for(let i = 0; i < waitEle.length; i++) {
+        waitEle[i].style.visibility = "visible";
+    }
 
 
 
