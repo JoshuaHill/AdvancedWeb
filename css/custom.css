@@ -29,6 +29,9 @@
     font-family:BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+/**
+* Navigation
+**/
 
 .nav-text{
     margin-left: 10px;
@@ -106,7 +109,9 @@
     color: red;
 }
 
-
+/**
+* Gallery Controls
+**/
 .btn{
     margin: 0 auto;
     display: inline-block;
@@ -126,6 +131,12 @@
 }
 
 .btn:active{
+    background-image: -webkit-linear-gradient(top, #efedec, #f7f4f4);
+    background-image: linear-gradient(top, #efedec, #f7f4f4);
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5);
+}
+
+.selected {
     background-image: -webkit-linear-gradient(top, #efedec, #f7f4f4);
     background-image: linear-gradient(top, #efedec, #f7f4f4);
     box-shadow: 0 3px 5px 0 rgba(0,0,0,.4), inset 0px -3px 1px 1px rgba(204,198,197,.5);
@@ -153,6 +164,15 @@
     -webkit-transform: translate(0, 5px);
 }
 
+.selected span {
+    color: #00D1B2;
+    text-shadow: 0px 1px 1px #00FFFF;
+    -webkit-transform: translate(0, 5px);
+}
+/**
+* jQueryUI customization
+**/
+
 .ui-accordion-header {
     border-color: #00D1B2;
     color: black;
@@ -167,22 +187,3 @@
 .menu-list li > a.is-active {
     background-color: #00D1B2;
 }
-/*
-.menu-list li {
-    background-color: #95A5A6;
-    color: white;
-    margin-bottom: 1px;
-}
-
-.menu-list > li > ul > li {
-    margin-bottom: 1px;
-}
-
-.menu-list  li > a:hover {
-    background-color: grey;
-}
-
-.menu-list > li > a {
-    color:white;
-}
-*/

@@ -950,7 +950,9 @@ $('#btn-gal-first').click(function () {
 });
 
 // startet die automatische Wiedergabe der Slideshow
-$('#btn-gal-play').click(function () {
+$('#btn-gal-play').on('click', function () {
+
+    $(this).addClass('selected');
     var ctr;
     var currentImage = document.getElementById('gal-image').getAttribute('src');
     for(let i = 0; i < galerie.length - 1; i++) {
@@ -958,11 +960,14 @@ $('#btn-gal-play').click(function () {
             ctr = i;
         }
     }
-    console.log(ctr);
+
+
+
     setTimeout(function () {
-        console.log("Hallo");
+
     }, 3000);
-   galleryPlayback(ctr);
+    galleryPlayback(ctr);
+
 });
 
 // zeigt das nächste Bild der Galerie an
@@ -995,8 +1000,9 @@ function galleryPlayback(ctr) {
     if(ctr+1 < galerie.length) {
         setTimeout(function(){setGalleryImage(ctr+2, ctr+1);}, 3000);
         setTimeout(function(){galleryPlayback(ctr+1);}, 3500);
+    } else {
+        $('#btn-gal-play').removeClass('selected');
     }
-
 }
 //
 function setGalleryImage(counter, image) {
