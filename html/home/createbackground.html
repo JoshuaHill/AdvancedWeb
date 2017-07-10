@@ -1,0 +1,70 @@
+<h1 class="title">Hintergrund</h1>
+<hr>
+<div class="columns fullheight">
+    <div class="column is-6">
+        <div class="columns fullheight">
+            <div class="column is-1 create-nav">
+                <p><i class="fa fa-chevron-left" aria-hidden="true"></i></p>
+            </div>
+            <div class="column is-11">
+                <div class="field">
+                    <p class="control">
+                                                <span class="select">
+                                                  <select>
+                                                    <option>Einfarbig</option>
+                                                    <option>Farbverlauf</option>
+                                                  </select>
+                                                </span>
+                    </p>
+                </div>
+
+                <input type="color" class="colorpicker" id="color1" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+                <br>
+                <br>
+                <div class="field">
+                    <p class="control">
+                                                <span class="select">
+                                                  <select>
+                                                    <option>Von Links</option>
+                                                    <option>Von Rechts</option>
+                                                    <option>Von Oben</option>
+                                                    <option>Von Unten</option>
+                                                  </select>
+                                                </span>
+                    </p>
+                </div>
+                <input type="color" class="colorpicker" id="color2" onchange="clickColor(0, -1, -1, 5)" value="#ff0000">
+
+            </div>
+        </div>
+    </div>
+    <div class="column is-6">
+        <div class="columns fullheight">
+            <div class="column is-11">
+                <p>Hintergrundtyp wählen</p>
+                <br>
+                <p>Farbe wählen</p>
+                <br>
+                <p>Farbverlaufsrichtung wählen</p>
+                <br>
+                <p>Zweite Farbe wählen</p>
+            </div>
+            <div class="column is-1 create-nav">
+                <p><i class="fa fa-chevron-right" aria-hidden="true"></i></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="create-progress">
+    <progress class="progress is-primary" value="40" max="120">33%</progress>
+    <nav class="breadcrumb is-centered">
+        <ul>
+            <li><a>Musik</a></li>
+            <li><a>Visualisierung</a></li>
+            <li class="is-active"><a>Hintergrund</a></li>
+            <li><a>Frequenzbereich</a></li>
+            <li><a>Farben</a></li>
+        </ul>
+    </nav>
+</div>
