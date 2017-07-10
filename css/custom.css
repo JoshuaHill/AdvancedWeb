@@ -210,9 +210,10 @@
 }
 
 .create-progress {
+    width: 95%;
     position: absolute;
     bottom: 0px;
-    left: 9%;
+    left: 2%;
 }
 
 .create-nav {
