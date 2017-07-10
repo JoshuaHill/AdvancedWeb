@@ -60,11 +60,12 @@
     </div>
 
     <div class="hero-body">
-        <!-- load hero-body content here -->
+
         <div class="container has-text-centered">
             <div class="columns">
-                <div class="column is-5">
 
+                <div class="column is-5" id="create-visual">
+                    <!-- load visualization here -->
                     <figure class="image is-4by3">
                         <img src="http://placehold.it/800x600" alt="Description">
                     </figure>
@@ -81,36 +82,34 @@
                     </canvas>
 -->
                 </div>
-                <div class="column is-6 is-offset-1 is-fullheight">
-                    <div class="box is-fullheight">
-                        <h1 class="title">Musik</h1>
 
+                <div class="column is-6 is-offset-1 is-fullheight">
+                    <div class="box is-fullheight" id="create-controls">
+                        <!-- load controls here -->
+                        <h1 class="title">Visualisierung</h1>
+                        <hr>
                         <div class="columns fullheight">
                             <div class="column is-6">
                                 <div class="columns fullheight">
-                                    <div class="column is-1 create-nav is-hidden">
+                                    <div class="column is-1 create-nav">
                                         <p><i class="fa fa-chevron-left" aria-hidden="true"></i></p>
                                     </div>
                                     <div class="column is-11">
                                         <table class="table is-bordered is-narrow">
                                             <thead>
                                                 <tr>
-                                                    <th><abbr title="Datei">Dateiname</abbr></th>
-                                                    <th><abbr title="Datei">Länge</abbr></th>
+                                                    <th><abbr title="Datei">Visualisierung</abbr></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>chill.mp3</td>
-                                                    <td>1:00</td>
+                                                    <td>Stroboskop</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>classy.mp3</td>
-                                                    <td>1:00</td>
+                                                    <td>Balken</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>upbeat.mp3</td>
-                                                    <td>1:00</td>
+                                                    <td>Bubbles</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -121,7 +120,7 @@
                             <div class="column is-6">
                                 <div class="columns fullheight">
                                     <div class="column is-11">
-                                        <p>Lied aus der Liste wählen oder ein eigenes Lied per Drag&Drop hinzufügen.</p>
+                                        <p>Visualisierung aus der Liste wählen.</p>
                                     </div>
                                     <div class="column is-1 create-nav">
                                         <p><i class="fa fa-chevron-right" aria-hidden="true"></i></p>
@@ -131,11 +130,11 @@
                         </div>
 
                         <div class="create-progress">
-                            <progress class="progress is-primary" value="0" max="100">0%</progress>
+                            <progress class="progress is-primary" value="20" max="100">20%</progress>
                             <nav class="breadcrumb is-centered">
                                 <ul>
-                                    <li class="is-active"><a>Musik</a></li>
-                                    <li><a>Visualisierung</a></li>
+                                    <li><a>Musik</a></li>
+                                    <li class="is-active"><a>Visualisierung</a></li>
                                     <li><a>Hintergrund</a></li>
                                     <li><a>Frequenzbereich</a></li>
                                     <li><a>Farben</a></li>
