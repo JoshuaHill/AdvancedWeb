@@ -192,3 +192,33 @@
     padding-top: 40px;
     padding-bottom: 40px;
 }
+
+/*
+* Home Screen
+*/
+.box {
+    height: 100% !important;
+    position: relative;
+}
+
+.fullheight {
+    height: 100%;
+}
+
+.progress {
+    margin-bottom: 5px !important;
+}
+
+.create-progress {
+    position: absolute;
+    bottom: 0px;
+    left: 9%;
+}
+
+.create-nav {
+    color: black;
+    alignment: center;
+    padding-top: 40%;
+    padding-right: 0px;
+    padding-left: 0px;
+}
