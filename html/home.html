@@ -64,11 +64,14 @@
         <div class="container has-text-centered">
             <div class="columns">
 
-                <div class="column is-5" id="create-visual">
+                <div class="column is-6" id="create-visual">
                     <!-- load visualization here -->
-                    <figure class="image is-4by3">
-                        <img src="http://placehold.it/800x600" alt="Description">
-                    </figure>
+                    <div class="card">
+                        <figure class="image is-4by3">
+                            <img src="../images/0001-0200.svg" alt="Description">
+                        </figure>
+                    </div>
+
 
 <!--
                     <canvas id="canvas" width="400" height="600">
@@ -83,10 +86,10 @@
 -->
                 </div>
 
-                <div class="column is-6 is-offset-1 is-fullheight">
+                <div class="column is-6 is-fullheight">
                     <div class="box is-fullheight" id="create-controls">
                         <!-- load controls here -->
-                        <h1 class="title">Text</h1>
+                        <h1 class="title">Farben</h1>
                         <hr>
                         <div class="columns fullheight">
                             <div class="column is-6">
@@ -181,7 +184,18 @@
                     -->
                 </div>
             </div>
+
+            <p class="has-text-centered">
+                <a class="button is-large" id="playBtn">
+                    Play
+                </a>
+                <a class="button is-large" id="stopBtn">
+                    Stop
+                </a>
+            </p>
+
         </div>
+
     </div>
 
     <footer class="footer">

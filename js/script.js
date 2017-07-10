@@ -933,22 +933,19 @@ function messageCheck(message) {
 /**
  * Music / Visualization Controls
  */
-/**
+
 $('#playBtn').click(function () {
-    sound.play();
+    
+        sound.play();
 
-
-
-    console.log("PRE DRAW");
-
-    draw();
+    // draw();
 });
 
 $('#stopBtn').click(function () {
     sound.stop();
 });
 
-
+/**
  function draw() {
     console.log("DRAW");
     var canvas = document.getElementById("canvas");
