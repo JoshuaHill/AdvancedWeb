@@ -928,14 +928,12 @@ function messageCheck(message) {
  *
  *******************************************************************************/
 
-
-
 /**
  * Music / Visualization Controls
  */
 
 $('#playBtn').click(function () {
-    
+
         sound.play();
 
     // draw();
@@ -944,6 +942,8 @@ $('#playBtn').click(function () {
 $('#stopBtn').click(function () {
     sound.stop();
 });
+
+
 
 /**
  function draw() {
