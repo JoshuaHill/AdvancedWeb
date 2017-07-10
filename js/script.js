@@ -922,11 +922,18 @@ function messageCheck(message) {
 }
 
 
+/*******************************************************************************
+ *
+ * Home-Page
+ *
+ *******************************************************************************/
+
 
 
 /**
  * Music / Visualization Controls
  */
+/**
 $('#playBtn').click(function () {
     sound.play();
 
@@ -941,6 +948,44 @@ $('#stopBtn').click(function () {
     sound.stop();
 });
 
+
+ function draw() {
+    console.log("DRAW");
+    var canvas = document.getElementById("canvas");
+    if(canvas.getContext) {
+        console.log("YES");
+        var canvasContext = canvas.getContext("2d");
+
+        drawVisual = requestAnimationFrame(draw);
+        analyser.getByteTimeDomainData(dataArray);
+        canvasContext.fillStyle = 'rgb(255, 255, 255)';
+        canvasContext.fillRect(0, 0, 400, 300);
+        canvasContext.lineWidth = 4;
+        canvasContext.strokeStyle = 'rgb(3, 209, 178)';
+        canvasContext.beginPath();
+        var sliceWidth = 400 * 1.0 / bufferLength;
+        var x = 0;
+
+        for (var i = 0; i < bufferLength; i++) {
+            var v = dataArray[i] / 128.0;
+            var y = v * 300 / 2;
+
+            if(i===0) {
+                canvasContext.moveTo(x, y);
+            } else {
+                canvasContext.lineTo(x, y);
+            }
+
+            x += sliceWidth;
+        }
+
+        canvasContext.lineTo(canvasContext.width, canvasContext.height/2);
+        canvasContext.stroke();
+
+    }
+
+};
+**/
 
 /*******************************************************************************
  *
@@ -1039,42 +1084,7 @@ function stopGalleryPlayback() {
     $('#btn-gal-play').removeClass('selected');
 }
 
-function draw() {
-    console.log("DRAW");
-    var canvas = document.getElementById("canvas");
-    if(canvas.getContext) {
-        console.log("YES");
-        var canvasContext = canvas.getContext("2d");
 
-        drawVisual = requestAnimationFrame(draw);
-        analyser.getByteTimeDomainData(dataArray);
-        canvasContext.fillStyle = 'rgb(255, 255, 255)';
-        canvasContext.fillRect(0, 0, 400, 300);
-        canvasContext.lineWidth = 4;
-        canvasContext.strokeStyle = 'rgb(3, 209, 178)';
-        canvasContext.beginPath();
-        var sliceWidth = 400 * 1.0 / bufferLength;
-        var x = 0;
-
-        for (var i = 0; i < bufferLength; i++) {
-            var v = dataArray[i] / 128.0;
-            var y = v * 300 / 2;
-
-            if(i===0) {
-                canvasContext.moveTo(x, y);
-            } else {
-                canvasContext.lineTo(x, y);
-            }
-
-            x += sliceWidth;
-        }
-
-        canvasContext.lineTo(canvasContext.width, canvasContext.height/2);
-        canvasContext.stroke();
-
-    }
-
-};
 
 
 
