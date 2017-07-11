@@ -229,3 +229,11 @@
     width: 20%;
     left: 7%;
 }
+
+.chevron-btn {
+    cursor: pointer;
+}
+
+.chevron-btn:hover {
+    color: #00D1B2;
+}
