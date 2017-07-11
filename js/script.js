@@ -2,10 +2,12 @@
  * Created by joshuahill on 29.04.2017.
  */
 
-/***
- * Globale Variablen
- */
-// Bilder für Galerie
+/*******************************************************************************
+ *
+ * Global Variables
+ *
+ *******************************************************************************/
+// gallery pictures
 var galerie = [
     "../images/gallery/placeholder1.png",
     "../images/gallery/placeholder2.png",
@@ -13,7 +15,7 @@ var galerie = [
 ];
 
 // Color Themes
-// Umsetzung basierend auf https://stackoverflow.com/a/26514362
+// variable format and usage based on https://stackoverflow.com/a/26514362
 var darkCssTheme = $("<link>", {
     "rel" : "stylesheet",
     "type" : "text/css",
@@ -47,6 +49,18 @@ var language;
 var galPlayback = false;
 var galleryImageTimeout;
 var playBackTimeout;
+
+// Visualization creation controls
+var visPages = [
+    "home/createmusic.html",
+    "home/createvisual.html",
+    "home/createbackground.html",
+    "home/createtext.html",
+    "home/createcolor.html",
+    "home/createfinished.html"
+];
+
+var visPointer = 0;
 
 
 /**
@@ -943,6 +957,18 @@ $('#stopBtn').click(function () {
     sound.stop();
 });
 
+function loadHome() {
+    $('#create-controls').load(visPages[visPointer], function () {
+        $('#create-forward').on('click', function () {
+            visPointer++;
+            loadHome();
+        });
+        $('#create-back').on('click', function () {
+            visPointer--;
+            loadHome();
+        });
+    });
+}
 
 
 /**
@@ -1222,6 +1248,12 @@ $(document).ready(function() {
         }
     }
 
+    /**
+     * Home Page startup
+     */
+    if(window.location.href == "http://localhost:3000/home.html") {
+        loadHome();
+    }
 
     /**
      * Settings Page startup
