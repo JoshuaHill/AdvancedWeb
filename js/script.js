@@ -14,6 +14,27 @@ var galerie = [
     "../images/gallery/placeholder3.png"
 ];
 
+// audio files
+
+
+var audioFiles = [
+    {
+        "name":"chill",
+        "path":"../audio/chill.mp3",
+        "duration": 107
+    },
+    {
+        "name":"classy",
+        "path":"../audio/classy.mp3",
+        "duration": 127
+    },
+    {
+        "name":"upbeat",
+        "path":"../audio/upbeat.mp3",
+        "duration": 192
+    }
+];
+
 // Color Themes
 // variable format and usage based on https://stackoverflow.com/a/26514362
 var darkCssTheme = $("<link>", {
@@ -63,18 +84,57 @@ var visPages = [
 var visPointer = 0;
 
 
+/*******************************************************************************
+ *
+ * Audio
+ *
+ *******************************************************************************/
+
 /**
+ * Get duration of an audio file
  *
- * Howl TEST
+ * Maybe better not use because of traffic
  *
+ * @param audioSource
+ * @returns duration
  */
+function getAudioDuration(audioSource) {
 
-var sound = new Howl({
-    volume: 0.5,
-    src: ['../audio/chill.mp3']
-});
+    var duration = 0;
+
+    var sound = new Howl({
+        src: [audioSource],
+        volume: 1,
+        onload: function () {
+            duration = sound.duration();
+        }
+    });
+
+    sound.load();
+
+    sound.unload();
+
+    return duration;
+}
 
 
+/**
+ * Get sound from audio file
+ *
+ * @param volume (e.g. 0.5), audioSource
+ * @returns sound
+ */
+function getSound(volume, audioSource) {
+    var sound = new Howl({
+        volume: volume,
+        src: [audioSource]
+    });
+
+    return sound;
+}
+
+
+/**
 var analyser = Howler.ctx.createAnalyser();
 Howler.masterGain.connect(analyser);
 analyser.connect(Howler.ctx.destination);
@@ -83,7 +143,7 @@ analyser.fftSize = 2048;
 var bufferLength = analyser.frequencyBinCount;
 var dataArray = new Uint8Array(bufferLength);
 
-
+*/
 
 /*******************************************************************************
  *
@@ -957,12 +1017,24 @@ $('#stopBtn').click(function () {
     sound.stop();
 });
 
+/**
+ * Function to load up the content for the home screen
+ */
 function loadHome() {
     $('#create-controls').load(visPages[visPointer], function () {
+
+        // create table for createmusic.html subpage
+        if(visPointer == 0) {
+            createMusicTable();
+        }
+
+        // Clickhandler for forward button
         $('#create-forward').on('click', function () {
             visPointer++;
             loadHome();
         });
+
+        // Clickhandler for back button
         $('#create-back').on('click', function () {
             visPointer--;
             loadHome();
@@ -970,6 +1042,46 @@ function loadHome() {
     });
 }
 
+/**
+ * Function to create a table with all mp3 files
+ */
+function createMusicTable() {
+    for(let i = 0; i < audioFiles.length; i++) {
+        // create new tr element
+        var tr = document.createElement('tr');
+        // create new td element
+        var td = document.createElement('td');
+
+        // get file name
+        var name = audioFiles[i].name;
+        // create text node from file name
+        var text = document.createTextNode(name);
+        // add text node to td
+        td.appendChild(text);
+        // add td to tr
+        tr.appendChild(td);
+
+        // get file duration
+        var durationFull = audioFiles[i].duration;
+        var durationMinutes = parseInt(durationFull/60);
+        var durationSeconds = (durationFull%60);
+        if(durationSeconds.toString().length < 2) {
+            durationSeconds = "0" + durationSeconds.toString();
+        }
+        var duration = durationMinutes + ":" + durationSeconds;
+        // clear td
+        td = document.createElement('td');
+        // update text
+        text = document.createTextNode(duration);
+        // add text node to td
+        td.appendChild(text);
+        // add td to tr
+        tr.appendChild(td);
+
+        // add tr to tablebody
+        document.getElementById("music-table-body").appendChild(tr);
+    }
+}
 
 /**
  function draw() {
