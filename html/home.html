@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../css/bulma043.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
 </head>
 
 <style>
@@ -90,27 +91,28 @@
                     <div class="box is-fullheight" id="create-controls">
                         <!-- load controls here -->
                     </div>
-
-                    <!--
-                    <h1 class="title is-2">
-                        Play a Song
-                    </h1>
-                    <h2 class="subtitle is-4">
-                        Seriously just click the button.
-                    </h2>
-                    <br>
-                    <p class="has-text-centered">
-                        <a class="button is-large" id="playBtn">
-                            Play
-                        </a>
-                        <a class="button is-large" id="stopBtn">
-                            Stop
-                        </a>
-                    </p>
-                    -->
                 </div>
             </div>
 
+            <div class="columns">
+                <div class="column is-12">
+                    <div class="card">
+                        <div class="columns">
+                            <div class="column is-11">
+
+                            </div>
+                            <div class="column is-1">
+                                <div id="slider-vertical" style="height:50px"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--
             <p class="has-text-centered">
                 <a class="button is-large" id="playBtn">
                     Play
@@ -119,6 +121,7 @@
                     Stop
                 </a>
             </p>
+            -->
 
         </div>
 
@@ -154,6 +157,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/8.1.0/i18next.min.js" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-i18next/1.2.0/jquery-i18next.min.js" ></script>
 <script src="../js/i18nextXHRBackend.min.js"></script>
+<!-- jQueryUI -->
+<script src="../js/jquery-ui.min.js"></script>
 <!-- custom script -->
 <script src="../js/script.js"></script>
 

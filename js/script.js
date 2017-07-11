@@ -15,8 +15,6 @@ var galerie = [
 ];
 
 // audio files
-
-
 var audioFiles = [
     {
         "name":"chill",
@@ -34,6 +32,10 @@ var audioFiles = [
         "duration": 192
     }
 ];
+
+var sounds = [];
+var soundIds = [];
+var soundPlaying;
 
 // Color Themes
 // variable format and usage based on https://stackoverflow.com/a/26514362
@@ -98,6 +100,7 @@ var visPointer = 0;
  * @param audioSource
  * @returns duration
  */
+/*
 function getAudioDuration(audioSource) {
 
     var duration = 0;
@@ -116,7 +119,7 @@ function getAudioDuration(audioSource) {
 
     return duration;
 }
-
+*/
 
 /**
  * Get sound from audio file
@@ -143,6 +146,43 @@ analyser.fftSize = 2048;
 var bufferLength = analyser.frequencyBinCount;
 var dataArray = new Uint8Array(bufferLength);
 
+*/
+
+
+
+// WEBAUDIO API TEST
+// works fine too, but lack of caching and fallback to html5
+/*
+
+var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+var source;
+var songLength;
+var channelData = [];
+var request;
+
+function getData() {
+    source = audioCtx.createBufferSource();
+    request = new XMLHttpRequest();
+    request.open('GET', '../audio/classy.mp3', true);
+    request.responseType = 'arraybuffer';
+    request.onload = function() {
+        var audioData = request.response;
+        audioCtx.decodeAudioData(audioData, function(buffer) {
+                myBuffer = buffer;
+                channelData = buffer.getChannelData(1);
+                console.log(channelData);
+                songLength = buffer.duration;
+                source.buffer = myBuffer;
+                source.playbackRate.value = 1;
+                source.connect(audioCtx.destination);
+                //source.loop = true;
+                // loopstartControl.setAttribute('max', Math.floor(songLength));
+                //loopendControl.setAttribute('max', Math.floor(songLength));
+            },
+            function(e){"Error with decoding audio data" + e.err});
+    }
+    request.send();
+}
 */
 
 /*******************************************************************************
@@ -1007,14 +1047,18 @@ function messageCheck(message) {
  */
 
 $('#playBtn').click(function () {
-
-        sound.play();
+    // sound.stop();
+    // sound.play();
 
     // draw();
+    // getData();
+    // source.start(0);
+
 });
 
 $('#stopBtn').click(function () {
-    sound.stop();
+    // sound.stop();
+    // source.stop();
 });
 
 /**
@@ -1039,6 +1083,18 @@ function loadHome() {
             visPointer--;
             loadHome();
         });
+    });
+
+    $("#slider-vertical").slider({
+        orientation: "vertical",
+        range: "min",
+        min: 0,
+        max: 100,
+        value: 50,
+        slide: function( event, ui ) {
+            console.log(ui.value);
+            Howler.volume(ui.value/100);
+        }
     });
 }
 
@@ -1078,8 +1134,43 @@ function createMusicTable() {
         // add td to tr
         tr.appendChild(td);
 
+        // add id to tr
+        tr.setAttribute("id", audioFiles[i].name);
+
         // add tr to tablebody
         document.getElementById("music-table-body").appendChild(tr);
+    }
+
+    loadMusicTblClickhandlders();
+}
+
+/**
+ * function to load clickhandlers for music table
+ */
+function loadMusicTblClickhandlders() {
+
+    for(let i = 0; i < audioFiles.length; i++) {
+        $('#' + audioFiles[i].name).on('click', function () {
+
+                // stop all sounds
+                for(let j = 0; j <sounds.length; j++) {
+                    sounds[j].stop();
+                }
+
+                // if sound
+                if(sounds[i] != null && soundPlaying == false) {
+                    sounds[i].play();
+                    soundPlaying = true;
+                } else if(sounds[i] != null && soundPlaying == true) {
+                    sounds[i].stop();
+                    soundPlaying = false;
+                } else {
+                    sounds[i] = getSound(0.5, audioFiles[i].path);
+                    soundIds[i] = sounds[i].play();
+                    soundPlaying = true;
+                }
+
+        });
     }
 }
 
