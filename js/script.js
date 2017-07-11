@@ -33,9 +33,10 @@ var audioFiles = [
     }
 ];
 
-var sounds = [];
-var soundIds = [];
-var soundPlaying;
+// sound
+var sound = null;
+
+
 
 // Color Themes
 // variable format and usage based on https://stackoverflow.com/a/26514362
@@ -93,47 +94,20 @@ var visPointer = 0;
  *******************************************************************************/
 
 /**
- * Get duration of an audio file
- *
- * Maybe better not use because of traffic
- *
- * @param audioSource
- * @returns duration
- */
-/*
-function getAudioDuration(audioSource) {
-
-    var duration = 0;
-
-    var sound = new Howl({
-        src: [audioSource],
-        volume: 1,
-        onload: function () {
-            duration = sound.duration();
-        }
-    });
-
-    sound.load();
-
-    sound.unload();
-
-    return duration;
-}
-*/
-
-/**
  * Get sound from audio file
  *
  * @param volume (e.g. 0.5), audioSource
  * @returns sound
  */
 function getSound(volume, audioSource) {
-    var sound = new Howl({
+     sound = new Howl({
         volume: volume,
-        src: [audioSource]
+        src: [audioSource],
+        onplay: function () {
+            requestAnimationFrame(updateProgress);
+        }
     });
 
-    return sound;
 }
 
 
@@ -1065,6 +1039,8 @@ $('#stopBtn').click(function () {
  * Function to load up the content for the home screen
  */
 function loadHome() {
+
+
     $('#create-controls').load(visPages[visPointer], function () {
 
         // create table for createmusic.html subpage
@@ -1085,6 +1061,7 @@ function loadHome() {
         });
     });
 
+    // Slider for volume
     $("#slider-vertical").slider({
         orientation: "vertical",
         range: "min",
@@ -1094,6 +1071,7 @@ function loadHome() {
         slide: function( event, ui ) {
             console.log(ui.value);
             Howler.volume(ui.value/100);
+            document.getElementById('volume').innerHTML = ui.value + "%";
         }
     });
 }
@@ -1149,28 +1127,48 @@ function createMusicTable() {
  */
 function loadMusicTblClickhandlders() {
 
+    var lastClick;
+
     for(let i = 0; i < audioFiles.length; i++) {
         $('#' + audioFiles[i].name).on('click', function () {
 
-                // stop all sounds
-                for(let j = 0; j <sounds.length; j++) {
-                    sounds[j].stop();
+                if(sound != null) {
+                    sound.stop();
+                    if(lastClick != audioFiles[i].name) {
+                        getSound(0.5, audioFiles[i].path);
+                        sound.play();
+                    }
+                } else {
+                    getSound(0.5, audioFiles[i].path);
+                    sound.play();
                 }
 
-                // if sound
-                if(sounds[i] != null && soundPlaying == false) {
-                    sounds[i].play();
-                    soundPlaying = true;
-                } else if(sounds[i] != null && soundPlaying == true) {
-                    sounds[i].stop();
-                    soundPlaying = false;
+                if(lastClick == audioFiles[i].name) {
+                    lastClick = '';
                 } else {
-                    sounds[i] = getSound(0.5, audioFiles[i].path);
-                    soundIds[i] = sounds[i].play();
-                    soundPlaying = true;
+                    lastClick = audioFiles[i].name;
                 }
 
         });
+    }
+}
+
+
+/**
+ * function which gets the current track position and updates
+ * the progress bar accordingly
+ */
+function updateProgress() {
+    var trackPos;
+    var progressPos;
+
+    trackPos = sound.seek() || 0;
+    progressPos = (((trackPos / sound.duration()) * 100) || 0);
+
+    document.getElementById('progressbar-two').style.width = progressPos + '%';
+
+    if(sound.playing() == true) {
+        requestAnimationFrame(updateProgress);
     }
 }
 

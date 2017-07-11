@@ -69,7 +69,9 @@
                     <!-- load visualization here -->
                     <div class="card">
                         <figure class="image is-4by3">
+
                             <img src="../images/0001-0200.svg" alt="Description">
+
                         </figure>
                     </div>
 
@@ -99,10 +101,19 @@
                     <div class="card">
                         <div class="columns">
                             <div class="column is-11">
+                                <div id="progressbar-one">
+                                    <div id="progressbar-two">
 
+                                    </div>
+                                </div>
+                                <p class="player-controls">
+                                    <span id="player-play">Play</span>
+                                    <span id="play-pause">Pause</span>
+                                    <span id="player-stop">Stop</span>
+                                </p>
                             </div>
                             <div class="column is-1">
-                                <div id="slider-vertical" style="height:50px"></div>
+                                <div id="slider-vertical" style="height:50px"><p id="volume">50%</p></div>
                             </div>
                         </div>
 
@@ -149,7 +160,7 @@
 <!-- D3 JS -->
 <script src="../js/d3.min.js"></script>
 <!-- Howler -->
-<script src="../js/howler/howler.min.js"></script>
+<script src="../js/howler/howler.core.min.js"></script>
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
