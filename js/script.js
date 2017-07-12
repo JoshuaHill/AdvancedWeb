@@ -1080,6 +1080,32 @@ function loadHome() {
             visPointer--;
             loadHome();
         });
+
+        // Clickhandler for breadcrumbs
+        $('#bc-music').on('click', function () {
+            visPointer = 0;
+            loadHome();
+        });
+        $('#bc-visual').on('click', function () {
+            visPointer = 1;
+            loadHome();
+        });
+        $('#bc-background').on('click', function () {
+            visPointer = 2;
+            loadHome();
+        });
+        $('#bc-text').on('click', function () {
+            visPointer = 3;
+            loadHome();
+        });
+        $('#bc-color').on('click', function () {
+            visPointer = 4;
+            loadHome();
+        });
+        $('#bc-done').on('click', function () {
+            visPointer = 5;
+            loadHome();
+        });
     });
 
     // Slider for volume
