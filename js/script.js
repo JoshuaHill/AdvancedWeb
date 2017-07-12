@@ -1059,8 +1059,9 @@ $('#stopBtn').click(function () {
  */
 function loadHome() {
 
+    if(document.getElementById('svg-container').innerHTML == "") {
      loadSvg("../images/0001-0200.svg", "svg-container");
-
+    }
 
     $('#create-controls').load(visPages[visPointer], function () {
 
