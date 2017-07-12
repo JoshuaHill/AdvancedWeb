@@ -260,3 +260,15 @@
 .player-controls {
     margin-top: 7px;
 }
+
+#time-left {
+    margin-top: 7px;
+    margin-left: 25px;
+    text-align: left;
+}
+
+#time-right {
+    margin-top: 7px;
+    margin-right: 7px;
+    text-align: right;
+}

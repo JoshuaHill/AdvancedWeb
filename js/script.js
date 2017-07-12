@@ -104,6 +104,7 @@ function getSound(volume, audioSource) {
         volume: volume,
         src: [audioSource],
         onplay: function () {
+            document.getElementById('time-right').innerHTML = convertTime(sound.duration());
             requestAnimationFrame(updateProgress);
         }
     });
@@ -1095,14 +1096,8 @@ function createMusicTable() {
         // add td to tr
         tr.appendChild(td);
 
-        // get file duration
-        var durationFull = audioFiles[i].duration;
-        var durationMinutes = parseInt(durationFull/60);
-        var durationSeconds = (durationFull%60);
-        if(durationSeconds.toString().length < 2) {
-            durationSeconds = "0" + durationSeconds.toString();
-        }
-        var duration = durationMinutes + ":" + durationSeconds;
+        // get file duration string
+        var duration = convertTime(audioFiles[i].duration);
         // clear td
         td = document.createElement('td');
         // update text
@@ -1166,10 +1161,29 @@ function updateProgress() {
     progressPos = (((trackPos / sound.duration()) * 100) || 0);
 
     document.getElementById('progressbar-two').style.width = progressPos + '%';
+    document.getElementById('time-left').innerHTML = convertTime(trackPos);
 
     if(sound.playing() == true) {
         requestAnimationFrame(updateProgress);
     }
+}
+
+/**
+ * Helper function to convert time in seconds
+ * into min:second format string
+ *
+ * @param time
+ * @returns timeString
+ */
+function convertTime(time) {
+    var minutes = parseInt(time/60);
+    var seconds = Math.floor((time%60));
+    if(seconds.toString().length < 2) {
+        seconds = "0" + seconds.toString();
+    }
+    var timeString = minutes + ":" + seconds;
+
+    return timeString;
 }
 
 /**
