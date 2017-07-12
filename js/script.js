@@ -86,6 +86,8 @@ var visPages = [
 
 var visPointer = 0;
 
+var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\"-10%\" dur=\"15s\" repeatCount=\"indefinite\" />";
+
 
 /*******************************************************************************
  *
@@ -104,8 +106,24 @@ function getSound(volume, audioSource) {
         volume: volume,
         src: [audioSource],
         onplay: function () {
+            // update player controls
             document.getElementById('time-right').innerHTML = convertTime(sound.duration());
+            document.getElementById('play-pause').setAttribute("class", "fa fa-pause");
+            // update svg
+            document.getElementById('loading').setAttribute("class", "is-hidden");
+            document.getElementById('paused').setAttribute("class", "is-hidden");
+            // update progress bar
             requestAnimationFrame(updateProgress);
+        },
+        onpause: function () {
+            // update player controls
+            document.getElementById('play-pause').setAttribute("class", "fa fa-play");
+            // update svg
+            document.getElementById('paused').setAttribute("class", "");
+        },
+        onstop: function () {
+            // update player controls
+            document.getElementById('play-pause').setAttribute("class", "fa fa-play");
         }
     });
 
@@ -1041,6 +1059,8 @@ $('#stopBtn').click(function () {
  */
 function loadHome() {
 
+     loadSvg("../images/0001-0200.svg", "svg-container");
+
 
     $('#create-controls').load(visPages[visPointer], function () {
 
@@ -1127,17 +1147,32 @@ function loadMusicTblClickhandlders() {
     for(let i = 0; i < audioFiles.length; i++) {
         $('#' + audioFiles[i].name).on('click', function () {
 
+                // if sound is loaded
                 if(sound != null) {
+                    // stop sound
                     sound.stop();
+                    // if last clicked soundfile doesn't equal currently clicked soundfile
                     if(lastClick != audioFiles[i].name) {
+                        // display current track name and duration of track
+                        document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
+                        // show loading message
+                        document.getElementById('loading').setAttribute("class", "");
+                        // play new sound
                         getSound(0.5, audioFiles[i].path);
                         sound.play();
                     }
+                // if no sound is loaded
                 } else {
+                    // display current track name and duration of track
+                    document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
+                    // show loading message
+                    document.getElementById('loading').setAttribute("class", "");
+                    // play new sound
                     getSound(0.5, audioFiles[i].path);
                     sound.play();
                 }
 
+                // if the same track was clicked twice clear lastClick
                 if(lastClick == audioFiles[i].name) {
                     lastClick = '';
                 } else {
@@ -1147,6 +1182,19 @@ function loadMusicTblClickhandlders() {
         });
     }
 }
+
+/**
+ * Clickhandler for play/pause button
+ */
+$('#play-pause').on('click', function () {
+    if(sound != null) {
+        if(sound.playing()) {
+            sound.pause();
+        }  else {
+            sound.play();
+        }
+    }
+});
 
 
 /**
@@ -1169,6 +1217,23 @@ function updateProgress() {
 }
 
 /**
+ * function to load external svg to dom
+ *
+ * @param svg
+ * @param div
+ */
+function loadSvg(svg, div) {
+    xhr = new XMLHttpRequest();
+    xhr.open("GET",svg,false);
+
+    xhr.overrideMimeType("image/svg+xml");
+    xhr.send("");
+    document.getElementById(div)
+        .appendChild(xhr.responseXML.documentElement);
+    
+}
+
+/**
  * Helper function to convert time in seconds
  * into min:second format string
  *
@@ -1176,8 +1241,8 @@ function updateProgress() {
  * @returns timeString
  */
 function convertTime(time) {
-    var minutes = parseInt(time/60);
-    var seconds = Math.floor((time%60));
+    var minutes = parseInt(time/60) || 0;
+    var seconds = Math.floor((time%60)) || 0;
     if(seconds.toString().length < 2) {
         seconds = "0" + seconds.toString();
     }
