@@ -238,6 +238,10 @@
     color: #00D1B2;
 }
 
+/**
+* Music Player
+**/
+
 #volume {
     padding-left: 25px;
     padding-top: 12px;
@@ -279,12 +283,10 @@
     margin-right: 7px;
     text-align: right;
 }
-/*
-#svg-container {
-    width: 100%;
-    height: 100%;
-}
-*/
+
+/**
+* SVG
+**/
 
 #svg-container {
     position: relative;
@@ -300,4 +302,11 @@
     width: 100%;
     left: 0;
     top: 0;
+}
+
+/**
+* Home - Music - Table
+**/
+#music-table-body tr {
+    cursor: pointer;
 }

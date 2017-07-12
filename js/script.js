@@ -37,7 +37,6 @@ var audioFiles = [
 var sound = null;
 
 
-
 // Color Themes
 // variable format and usage based on https://stackoverflow.com/a/26514362
 var darkCssTheme = $("<link>", {
@@ -83,9 +82,9 @@ var visPages = [
     "home/createcolor.html",
     "home/createfinished.html"
 ];
-
 var visPointer = 0;
 
+// svg animation
 var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\"-10%\" dur=\"15s\" repeatCount=\"indefinite\" />";
 
 
@@ -102,9 +101,10 @@ var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\
  * @returns sound
  */
 function getSound(volume, audioSource) {
+    console.log("VOL " + volume);
      sound = new Howl({
-        volume: volume,
         src: [audioSource],
+        volume: volume,
         onplay: function () {
             // update player controls
             document.getElementById('time-right').innerHTML = convertTime(sound.duration());
@@ -1088,10 +1088,10 @@ function loadHome() {
         range: "min",
         min: 0,
         max: 100,
-        value: 50,
+        value: 100,
         slide: function( event, ui ) {
-            console.log(ui.value);
-            Howler.volume(ui.value/100);
+            var volume = (ui.value/100);
+            Howler.volume(volume);
             document.getElementById('volume').innerHTML = ui.value + "%";
         }
     });
@@ -1157,6 +1157,12 @@ function loadMusicTblClickhandlders() {
                         document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
                         // show loading message
                         document.getElementById('loading').setAttribute("class", "");
+                        // remove active from old row
+                        if(lastClick != "") {
+                            document.getElementById(lastClick).setAttribute("class", "");
+                        }
+                        // set new row to active
+                        document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
                         // play new sound
                         getSound(0.5, audioFiles[i].path);
                         sound.play();
@@ -1167,6 +1173,8 @@ function loadMusicTblClickhandlders() {
                     document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
                     // show loading message
                     document.getElementById('loading').setAttribute("class", "");
+                    // set new row to active
+                    document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
                     // play new sound
                     getSound(0.5, audioFiles[i].path);
                     sound.play();
