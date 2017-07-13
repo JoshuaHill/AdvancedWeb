@@ -164,6 +164,10 @@ function getSound(volume, audioSource) {
          onstop: function () {
             // update player controls
             document.getElementById('play-pause').setAttribute("class", "fa fa-play");
+         },
+         onended: function () {
+             // update player controls
+             document.getElementById('play-pause').setAttribute("class", "fa fa-play");
          }
      });
 }
@@ -1120,6 +1124,11 @@ function loadHome() {
             createTable();
         }
 
+        // loadclickhandler for background
+        if(visPointer == 2) {
+            loadBackgroundSetup();
+        }
+
         // Clickhandler for forward button
         $('#create-forward').on('click', function () {
             visPointer++;
@@ -1171,6 +1180,17 @@ function loadHome() {
             Howler.volume(volume);
             document.getElementById('volume').innerHTML = ui.value + "%";
         }
+    });
+}
+
+
+function loadBackgroundSetup() {
+
+    $('#color1').on('click', function () {
+        $('svg').css("background-color", $(this).val());
+    });
+    $('#color1').on('change', function () {
+        $('svg').css("background-color", $(this).val());
     });
 }
 
