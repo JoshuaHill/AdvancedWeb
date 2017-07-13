@@ -47,20 +47,7 @@ var darkCssTheme = $("<link>", {
 })[0];
 
 // Browser info
-var browserAppCodeName = navigator.appCodeName;
-var browserAppName = navigator.userAgent;
-var browserAppVersion = navigator.appName;
-var browserCookieEnabled = navigator.cookieEnabled;
-var browserGeolocation = navigator.geolocation;
 var browserLanguage = navigator.language;
-var browserOnLine = navigator.onLine;
-var browserPlatform = navigator.platform;
-var browserProduct = navigator.product;
-var browserUserAgent = navigator.userAgent;
-
-// Geolocation
-var userLatitude;
-var userLongitude;
 
 // Variable für kontext-sensitives Formular
 var formContext = "mail";
@@ -124,7 +111,9 @@ var visualizations = [
 ];
 
 
-var frequencyData = null;
+var soundData = null;
+var analyser = null;
+var svg = null;
 
 // svg animation
 var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\"-10%\" dur=\"15s\" repeatCount=\"indefinite\" />";
@@ -156,14 +145,15 @@ function getSound(volume, audioSource) {
                 document.getElementById('loading').setAttribute("class", "is-hidden");
                 document.getElementById('paused').setAttribute("class", "is-hidden");
             } else {
-
+                // updateBarVisualization();
             }
 
             // update progress bar
             requestAnimationFrame(updateProgress);
          },
          onload: function () {
-             frequencyData = getAudioData();
+             // getAudioData();
+
          },
          onpause: function () {
             // update player controls
@@ -186,7 +176,7 @@ function getSound(volume, audioSource) {
  */
 function getAudioData() {
     // create Analyser node
-    var analyser = Howler.ctx.createAnalyser();
+    analyser = Howler.ctx.createAnalyser();
     // connect Analyser to Master Gain
     Howler.masterGain.connect(analyser);
     analyser.connect(Howler.ctx.destination);
@@ -194,11 +184,11 @@ function getAudioData() {
     // set Fast Fourier Transform Size of Analyser
     analyser.fftSize = 2048;
     // set bufferLength to frequency bin count
-    var bufferLength = analyser.frequencyBinCount;
+    // var bufferLength = analyser.frequencyBinCount;
+    var bufferLength = 100;
     // create DataArray
-    var dataArray = new Uint8Array(bufferLength);
+    frequencyData = new Uint8Array(bufferLength);
 
-    return dataArray;
 }
 
 
@@ -1259,6 +1249,9 @@ function loadVisTblClickhandlers() {
                 // set new row to active
                 document.getElementById(visualizations[i].name).setAttribute("class", "is-selected");
                 // load visualization
+                console.log("loadVis: " + visualizations[i].name);
+
+                document.getElementById("svg-container").innerHTML = "";
                 loadD3Visualization(visualizations[i].name);
             }
 
@@ -1624,33 +1617,117 @@ function loadLocale() {
 
 function loadD3Visualization(visualization) {
 
-    switch(visualizations[visualization]) {
+    console.log(visualization + " asdasd");
+    switch(visualization) {
         case "none":
             break;
         case "bars":
-            loadBarVisualization;
+
+            loadBarVisualization(50, 2048);
             break;
         case "waves":
-            loadWaveVisualization;
+            loadWaveVisualization();
             break;
         case "bubbles":
-            loadBubblesVisualization;
+            loadBubblesVisualization();
             break;
     }
 
 }
 
-function loadBarVisualization() {
 
+
+/**
+ * function to initialize Bar Visualization
+ * load with 0 or null parameter for default values
+ *
+ * @param bufferLength (default = frequencyBinCount) [frequencyBinCount is usually too large though]
+ * @param fftSize (default = 2048)
+ */
+function loadBarVisualization(bufferLength, fftSize) {
+
+    var bufferLength = bufferLength;
+    var fftSize = fftSize;
+
+    // create Analyser node
+    analyser = Howler.ctx.createAnalyser();
+    // connect Analyser to Master Gain
+    Howler.masterGain.connect(analyser);
+    analyser.connect(Howler.ctx.destination);
+
+    if(fftSize == 0 || fftSize == null) {
+        fftSize = 2048;
+    }
+
+    if(bufferLength == 0 || bufferLength == null) {
+        bufferLength = analyser.frequencyBinCount;
+    }
+
+    // set Fast Fourier Transform Size of Analyser
+    analyser.fftSize = fftSize;
+    // update DataArray
+    soundData = new Uint8Array(bufferLength);
+
+    // update svg
+    svg = d3.select('#svg-container').append('svg').attr('height', 495).attr('width', 660);
+
+    //
+    svg.selectAll('rect')
+        .data(soundData)
+        .enter()
+        .append('rect')
+        .attr('x', function (d, i) {
+            return i * (660 / soundData.length);
+        })
+        .attr('width', 660 / soundData.length - 1);
+
+    runBarVisualization();
+}
+
+
+function runBarVisualization() {
+
+    // requestAnimationFrame will make sure loop doesn't run too fast
+    requestAnimationFrame(runBarVisualization);
+
+    analyser.getByteFrequencyData(soundData);
+
+    svg.selectAll('rect')
+        .data(soundData)
+        .attr('y', function(d) {
+            return 495 - d;
+        })
+        .attr('height', function(d) {
+            return d;
+        })
+        .attr('fill', "#00D1B2");
 }
 
 function loadWaveVisualization() {
 
 }
 
-function loadBubblesVisualization() {
-
+function runWaveVisualization() {
+    
 }
+
+function loadBubblesVisualization() {
+    
+    var svg = d3.select("#svg-container")
+        .append("svg")
+        .attr("width", 200)
+        .attr("height", 200);
+
+    var circle = svg.append("circle")
+        .attr("cx", 30)
+        .attr("cy", 30)
+        .attr("r", 20);
+}
+
+function runBubblesVisualization() {
+    
+}
+
 
 
 
