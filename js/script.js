@@ -84,6 +84,48 @@ var visPages = [
 ];
 var visPointer = 0;
 
+// visual json
+var visual = {
+    "music":"",
+    "visualization":"",
+    "background": {
+        "type": "",
+        "color_one": "",
+        "color_two": "",
+        "direction": ""
+    },
+    "text": {
+        "text":"",
+        "color":"",
+        "position":""
+    },
+    "color": {
+        "color_one":"",
+        "color_two":""
+    }
+
+};
+
+
+
+var visualizations = [
+    {
+        name: "none"
+    },
+    {
+        name: "bars"
+    },
+    {
+        name: "waves"
+    },
+    {
+        name: "bubbles"
+    }
+];
+
+
+var frequencyData = null;
+
 // svg animation
 var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\"-10%\" dur=\"15s\" repeatCount=\"indefinite\" />";
 
@@ -101,45 +143,66 @@ var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\
  * @returns sound
  */
 function getSound(volume, audioSource) {
-    console.log("VOL " + volume);
+
      sound = new Howl({
-        src: [audioSource],
-        volume: volume,
-        onplay: function () {
+         src: [audioSource],
+         volume: volume,
+         onplay: function () {
             // update player controls
             document.getElementById('time-right').innerHTML = convertTime(sound.duration());
             document.getElementById('play-pause').setAttribute("class", "fa fa-pause");
-            // update svg
-            document.getElementById('loading').setAttribute("class", "is-hidden");
-            document.getElementById('paused').setAttribute("class", "is-hidden");
+            // update initial svg
+            if(visPointer == 0 || (visPointer > 1 && (visual.visualization == "" || visual.visualization == "none"))) {
+                document.getElementById('loading').setAttribute("class", "is-hidden");
+                document.getElementById('paused').setAttribute("class", "is-hidden");
+            } else {
+
+            }
+
             // update progress bar
             requestAnimationFrame(updateProgress);
-        },
-        onpause: function () {
+         },
+         onload: function () {
+             frequencyData = getAudioData();
+         },
+         onpause: function () {
             // update player controls
             document.getElementById('play-pause').setAttribute("class", "fa fa-play");
             // update svg
             document.getElementById('paused').setAttribute("class", "");
-        },
-        onstop: function () {
+         },
+         onstop: function () {
             // update player controls
             document.getElementById('play-pause').setAttribute("class", "fa fa-play");
-        }
-    });
+         }
+     });
+}
 
+/**
+ * getAudioData() returns a dataArray containing
+ * frequency data of a sound
+ *
+ * @returns {Uint8Array}
+ */
+function getAudioData() {
+    // create Analyser node
+    var analyser = Howler.ctx.createAnalyser();
+    // connect Analyser to Master Gain
+    Howler.masterGain.connect(analyser);
+    analyser.connect(Howler.ctx.destination);
+
+    // set Fast Fourier Transform Size of Analyser
+    analyser.fftSize = 2048;
+    // set bufferLength to frequency bin count
+    var bufferLength = analyser.frequencyBinCount;
+    // create DataArray
+    var dataArray = new Uint8Array(bufferLength);
+
+    return dataArray;
 }
 
 
-/**
-var analyser = Howler.ctx.createAnalyser();
-Howler.masterGain.connect(analyser);
-analyser.connect(Howler.ctx.destination);
 
-analyser.fftSize = 2048;
-var bufferLength = analyser.frequencyBinCount;
-var dataArray = new Uint8Array(bufferLength);
-
-*/
 
 
 
@@ -187,19 +250,16 @@ function getData() {
 function loadModalClickhandlers() {
     // close modal btn oben rechts im browser
     $('.modal-close').on('click', function () {
-        console.log("Modal-Close clicked");
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
     });
 
     // close modal button oben rechts am popup
     $('.delete').on('click', function () {
-        console.log("Modal-Close clicked");
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
     });
 
     // OK button
     $('#modal-ok-btn').on('click', function () {
-        console.log("Modal-Close clicked");
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
     });
 
@@ -1065,9 +1125,9 @@ function loadHome() {
 
     $('#create-controls').load(visPages[visPointer], function () {
 
-        // create table for createmusic.html subpage
-        if(visPointer == 0) {
-            createMusicTable();
+        // create table for music or visualization
+        if(visPointer == 0 || visPointer == 1) {
+            createTable();
         }
 
         // Clickhandler for forward button
@@ -1124,18 +1184,27 @@ function loadHome() {
     });
 }
 
+
 /**
- * Function to create a table with all mp3 files
+ * Function to create a table with all mp3 files or visualizations
  */
-function createMusicTable() {
-    for(let i = 0; i < audioFiles.length; i++) {
+function createTable() {
+
+    var tableData;
+
+    if(visPointer == 0) {
+        tableData = audioFiles;
+    } else {
+        tableData =visualizations;
+    }
+    for(let i = 0; i < tableData.length; i++) {
         // create new tr element
         var tr = document.createElement('tr');
         // create new td element
         var td = document.createElement('td');
 
         // get file name
-        var name = audioFiles[i].name;
+        var name = tableData[i].name;
         // create text node from file name
         var text = document.createTextNode(name);
         // add text node to td
@@ -1143,76 +1212,115 @@ function createMusicTable() {
         // add td to tr
         tr.appendChild(td);
 
-        // get file duration string
-        var duration = convertTime(audioFiles[i].duration);
-        // clear td
-        td = document.createElement('td');
-        // update text
-        text = document.createTextNode(duration);
-        // add text node to td
-        td.appendChild(text);
-        // add td to tr
-        tr.appendChild(td);
+        if(visPointer == 0) {
+            // get file duration string
+            var duration = convertTime(tableData[i].duration);
+            // clear td
+            td = document.createElement('td');
+            // update text
+            text = document.createTextNode(duration);
+            // add text node to td
+            td.appendChild(text);
+            // add td to tr
+            tr.appendChild(td);
+        }
+
 
         // add id to tr
-        tr.setAttribute("id", audioFiles[i].name);
+        tr.setAttribute("id", tableData[i].name);
 
         // add tr to tablebody
-        document.getElementById("music-table-body").appendChild(tr);
+        document.getElementById("table-body").appendChild(tr);
     }
 
-    loadMusicTblClickhandlders();
+    if(visPointer == 0) {
+        loadMusicTblClickhandlders();
+    } else {
+        loadVisTblClickhandlers();
+    }
+
 }
+
+
+function loadVisTblClickhandlers() {
+
+    // if there was a visual selected before, show in table
+    if(visual.visualization != "") {
+        document.getElementById(visual.visualization).setAttribute("class", "is-selected");
+    }
+
+    for(let i = 0; i < visualizations.length; i++) {
+        $('#' + visualizations[i].name).on('click', function () {
+            if(visual.visualization != visualizations[i].name) {
+                // remove active from old row
+                if(visual.visualization != "") {
+                    document.getElementById(visual.visualization).setAttribute("class", "");
+                }
+                // set new row to active
+                document.getElementById(visualizations[i].name).setAttribute("class", "is-selected");
+                // load visualization
+                loadD3Visualization(visualizations[i].name);
+            }
+
+
+            visual.visualization = visualizations[i].name;
+
+        });
+    }
+}
+
 
 /**
  * function to load clickhandlers for music table
  */
 function loadMusicTblClickhandlders() {
 
-    var lastClick;
+    // if there was a track selected before, show in table
+    if(visual.music != "") {
+        document.getElementById(visual.music).setAttribute("class", "is-selected");
+    }
 
     for(let i = 0; i < audioFiles.length; i++) {
         $('#' + audioFiles[i].name).on('click', function () {
-
-                // if sound is loaded
-                if(sound != null) {
-                    // stop sound
-                    sound.stop();
-                    // if last clicked soundfile doesn't equal currently clicked soundfile
-                    if(lastClick != audioFiles[i].name) {
-                        // display current track name and duration of track
-                        document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
-                        // show loading message
-                        document.getElementById('loading').setAttribute("class", "");
-                        // remove active from old row
-                        if(lastClick != "") {
-                            document.getElementById(lastClick).setAttribute("class", "");
-                        }
-                        // set new row to active
-                        document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
-                        // play new sound
-                        getSound(0.5, audioFiles[i].path);
-                        sound.play();
-                    }
-                // if no sound is loaded
-                } else {
+            // if sound is loaded
+            if(sound != null) {
+                // stop sound
+                sound.stop();
+                // if last clicked soundfile doesn't equal currently clicked soundfile
+                if(visual.music != audioFiles[i].name) {
                     // display current track name and duration of track
                     document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
                     // show loading message
                     document.getElementById('loading').setAttribute("class", "");
+                    // remove active from old row
+                    if(visual.music != "") {
+                        document.getElementById(visual.music).setAttribute("class", "");
+                    }
                     // set new row to active
                     document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
                     // play new sound
                     getSound(0.5, audioFiles[i].path);
                     sound.play();
                 }
+            // if no sound is loaded
+            } else {
+                // display current track name and duration of track
+                document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
+                // show loading message
+                document.getElementById('loading').setAttribute("class", "");
+                // set new row to active
+                document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
+                // play new sound
+                getSound(0.5, audioFiles[i].path);
+                sound.play();
+            }
 
-                // if the same track was clicked twice clear lastClick
-                if(lastClick == audioFiles[i].name) {
-                    lastClick = '';
-                } else {
-                    lastClick = audioFiles[i].name;
-                }
+            // if the same track was clicked twice clear lastClick
+            if(visual.music == audioFiles[i].name) {
+                visual.music = '';
+            } else {
+                visual.music = audioFiles[i].name;
+            }
 
         });
     }
@@ -1273,7 +1381,7 @@ function loadSvg(svg, div) {
  * into min:second format string
  *
  * @param time
- * @returns timeString
+ * @returns {string}
  */
 function convertTime(time) {
     var minutes = parseInt(time/60) || 0;
@@ -1514,6 +1622,36 @@ function loadLocale() {
  *
  *******************************************************************************/
 
+function loadD3Visualization(visualization) {
+
+    switch(visualizations[visualization]) {
+        case "none":
+            break;
+        case "bars":
+            loadBarVisualization;
+            break;
+        case "waves":
+            loadWaveVisualization;
+            break;
+        case "bubbles":
+            loadBubblesVisualization;
+            break;
+    }
+
+}
+
+function loadBarVisualization() {
+
+}
+
+function loadWaveVisualization() {
+
+}
+
+function loadBubblesVisualization() {
+
+}
+
 
 
 /*******************************************************************************
@@ -1600,27 +1738,6 @@ $(document).ready(function() {
         waitEle[i].style.visibility = "visible";
     }
 
-
-
-
-    // Load Settings
-    /*
-    console.log("AppCodeName: " + browserAppCodeName);
-    console.log("AppName: " + browserAppName);
-    console.log("AppVersion: " + browserAppVersion);
-    console.log("CookieEnabled: " + browserCookieEnabled);
-    console.log("Geolocation: " + browserGeolocation);
-    console.log("Language: " + browserLanguage);
-    console.log("OnLine: " + browserOnLine);
-    console.log("Platform: " + browserPlatform);
-    console.log("Product: " + browserProduct);
-    console.log("UserAgent: " + browserUserAgent);
-    */
-
-    browserGeolocation.getCurrentPosition(function (position) {
-        userLatitude = position.coords.latitude;
-        userLongitude = position.coords.longitude;
-    });
 });
 
 

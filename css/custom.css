@@ -312,6 +312,6 @@
 /**
 * Home - Music - Table
 **/
-#music-table-body tr {
+#table-body tr {
     cursor: pointer;
 }
