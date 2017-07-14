@@ -147,7 +147,7 @@ function getSound(volume, audioSource) {
             document.getElementById('time-right').innerHTML = convertTime(sound.duration());
             document.getElementById('play-pause').setAttribute("class", "fa fa-pause");
             // update initial svg
-            if(visPointer == 0 || (visPointer > 1 && (visual.visualization == "" || visual.visualization == "none"))) {
+            if((visPointer == 0 && visual.visualization == "") || (visPointer > 1 && (visual.visualization == "" || visual.visualization == "none"))) {
                 document.getElementById('loading').setAttribute("class", "is-hidden");
                 document.getElementById('paused').setAttribute("class", "is-hidden");
             } else {
@@ -171,7 +171,7 @@ function getSound(volume, audioSource) {
             // update player controls
             document.getElementById('play-pause').setAttribute("class", "fa fa-play");
          },
-         onended: function () {
+         onend: function () {
              // update player controls
              document.getElementById('play-pause').setAttribute("class", "fa fa-play");
          }
@@ -1270,7 +1270,7 @@ function loadBackgroundSetup() {
         var color_one = $(this).val();
         visual.background.color_one = color_one;
 
-        if(visual.background.type != "gradient") {
+        if(visual.background.type.name != "gradient") {
             // set background-color
             $('svg').css("background-color", color_one);
         } else {
@@ -1281,7 +1281,7 @@ function loadBackgroundSetup() {
         var color_one = $(this).val();
         visual.background.color_one = color_one;
 
-        if(visual.background.type != "gradient") {
+        if(visual.background.type.name != "gradient") {
             // set background-color
             $('svg').css("background-color", color_one);
         } else {
@@ -1452,15 +1452,19 @@ function loadMusicTblClickhandlders() {
         $('#' + audioFiles[i].name).on('click', function () {
             // if sound is loaded
             if(sound != null) {
+                console.log("SOUND LOADED");
                 // stop sound
                 sound.stop();
                 // if last clicked soundfile doesn't equal currently clicked soundfile
                 if(visual.music != audioFiles[i].name) {
-                    // display current track name and duration of track
-                    document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
-                    // show loading message
-                    document.getElementById('loading').setAttribute("class", "");
-                    // remove active from old row
+                    // if visualization hasn't been chosen yet
+                    if(visual.visualization == "") {
+                        // display current track name and duration of track
+                        document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
+                        // show loading message
+                        document.getElementById('loading').setAttribute("class", "");
+                        // remove active from old row
+                    }
                     if(visual.music != "") {
                         document.getElementById(visual.music).setAttribute("class", "");
                     }
@@ -1472,10 +1476,14 @@ function loadMusicTblClickhandlders() {
                 }
             // if no sound is loaded
             } else {
-                // display current track name and duration of track
-                document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
-                // show loading message
-                document.getElementById('loading').setAttribute("class", "");
+                console.log("SOUND -N O T- LOADED");
+                // if visualization hasn't been chosen yet
+                if(visual.visualization == "") {
+                    // display current track name and duration of track
+                    document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
+                    // show loading message
+                    document.getElementById('loading').setAttribute("class", "");
+                }
                 // set new row to active
                 document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
                 // play new sound
