@@ -1800,13 +1800,12 @@ function loadLocale() {
 
 function loadD3Visualization(visualization) {
 
-    console.log(visualization + " asdasd");
     switch(visualization) {
         case "none":
             break;
         case "bars":
-
-            loadBarVisualization(50, 2048);
+            initVisualization(50, 0);
+            loadBarVisualization();
             break;
         case "waves":
             loadWaveVisualization();
@@ -1818,19 +1817,14 @@ function loadD3Visualization(visualization) {
 
 }
 
-
-
 /**
- * function to initialize Bar Visualization
- * load with 0 or null parameter for default values
+ * This function needs to be loaded for all visualizations.
+ * It creates an analyser node and connects it to the master gain.
  *
- * @param bufferLength (default = frequencyBinCount) [frequencyBinCount is usually too large though]
- * @param fftSize (default = 2048)
+ * @param bufferLength
+ * @param fftSize
  */
-function loadBarVisualization(bufferLength, fftSize) {
-
-    var bufferLength = bufferLength;
-    var fftSize = fftSize;
+function initVisualization(bufferLength, fftSize) {
 
     // create Analyser node
     analyser = Howler.ctx.createAnalyser();
@@ -1850,6 +1844,12 @@ function loadBarVisualization(bufferLength, fftSize) {
     analyser.fftSize = fftSize;
     // update DataArray
     soundData = new Uint8Array(bufferLength);
+}
+
+/**
+ * function to load Bar Visualization
+ */
+function loadBarVisualization() {
 
     // update svg
     svg = d3.select('#svg-container').append('svg').attr('height', 495).attr('width', 660);
@@ -1867,7 +1867,9 @@ function loadBarVisualization(bufferLength, fftSize) {
     runBarVisualization();
 }
 
-
+/**
+ *
+ */
 function runBarVisualization() {
 
     // requestAnimationFrame will make sure loop doesn't run too fast
