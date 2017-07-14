@@ -76,10 +76,16 @@ var visual = {
     "music":"",
     "visualization":"",
     "background": {
-        "type": "",
+        "type": {
+            "name": "",
+            "text": ""
+        },
         "color_one": "",
         "color_two": "",
-        "direction": ""
+        "direction": {
+            "name":"",
+            "text":""
+        }
     },
     "text": {
         "text":"",
@@ -1184,14 +1190,163 @@ function loadHome() {
 }
 
 
+/**
+ * loadBackgroundSetup() handles setting up
+ * background 
+ */
 function loadBackgroundSetup() {
 
+    // if background type was previously set load appropriate elements
+    if(visual.background.type.name == "gradient") {
+        document.getElementById('color2').setAttribute("class", "colorpicker");
+        document.getElementById('gradient-direction').setAttribute("class", "field");
+        document.getElementById('gradient-direction-info').setAttribute("class", "");
+        document.getElementById('gradient-color-info').setAttribute("class", "");
+
+        var selectType = document.getElementById('type').getElementsByTagName("option");
+        for(let i = 0; i < selectType.length; i++) {
+            if(selectType[i].text == visual.background.type.text) {
+                selectType[i].setAttribute("selected", "selected");
+            } else {
+                if(selectType[i].hasAttribute("selected")) {
+                    selectType[i].removeAttribute("selected");
+                }
+
+            }
+        }
+    }
+
+    // if background direction was previously set load appropriate elements
+    if(visual.background.direction.name != "") {
+        var selectDirection = document.getElementById('direction').getElementsByTagName("option");
+        for(let i = 0; i < selectDirection.length; i++) {
+            if(selectDirection[i].text == visual.background.direction.text) {
+                selectDirection[i].setAttribute("selected", "selected");
+            } else {
+                if(selectDirection[i].hasAttribute("selected")) {
+                    selectDirection[i].removeAttribute("selected");
+                }
+            }
+        }
+    }
+    
+    if(visual.background.color_one != "") {
+        document.getElementById("color1").setAttribute("value", visual.background.color_one);
+    }
+    
+    if(visual.background.color_two != "") {
+        document.getElementById("color2").setAttribute("value", visual.background.color_two);
+    }
+
+    // Select Type
+    $("#type").on("change", function () {
+            var val = $(this).val();
+            if(val.localeCompare("Einfarbig") == 0) {
+                // set background type to unicolored
+                visual.background.type.name = "unicolored";
+                visual.background.type.text = "Einfarbig";
+                // remove gradient
+                $('svg').css("background", "none");
+                // hide gradient elements
+                document.getElementById('color2').setAttribute("class", "colorpicker is-hidden");
+                document.getElementById('gradient-direction').setAttribute("class", "field is-hidden");
+                document.getElementById('gradient-direction-info').setAttribute("class", "is-hidden");
+                document.getElementById('gradient-color-info').setAttribute("class", "is-hidden");
+            } else {
+                // set background type to gradient
+                visual.background.type.name = "gradient";
+                visual.background.type.text = "Farbverlauf";
+                // show gradient elements
+                document.getElementById('color2').setAttribute("class", "colorpicker");
+                document.getElementById('gradient-direction').setAttribute("class", "field");
+                document.getElementById('gradient-direction-info').setAttribute("class", "");
+                document.getElementById('gradient-color-info').setAttribute("class", "");
+
+            }
+    });
+
+    // Select color1
     $('#color1').on('click', function () {
-        $('svg').css("background-color", $(this).val());
+        var color_one = $(this).val();
+        visual.background.color_one = color_one;
+
+        if(visual.background.type != "gradient") {
+            // set background-color
+            $('svg').css("background-color", color_one);
+        } else {
+            createGradient();
+        }
     });
     $('#color1').on('change', function () {
-        $('svg').css("background-color", $(this).val());
+        var color_one = $(this).val();
+        visual.background.color_one = color_one;
+
+        if(visual.background.type != "gradient") {
+            // set background-color
+            $('svg').css("background-color", color_one);
+        } else {
+            createGradient();
+        }
     });
+
+    // Select direction of gradient
+    $("#direction").on("change", function () {
+        var val = $(this).val();
+
+        if(val.localeCompare("Von Links") == 0) {
+            visual.background.direction.name = "right";
+        } else if (val.localeCompare("Von Rechts") == 0) {
+            visual.background.direction.name = "left";
+        } else if (val.localeCompare("Von Oben") == 0) {
+            visual.background.direction.name = "bottom";
+        } else if (val.localeCompare("Von Unten") == 0) {
+            visual.background.direction.name = "top";
+        }
+
+        visual.background.direction.text = val;
+
+        createGradient();
+    });
+
+    // select color2
+    $('#color2').on('click', function () {
+        var color_two = $(this).val();
+        visual.background.color_two = color_two;
+        createGradient();
+    });
+    $('#color2').on('change', function () {
+        var color_two = $(this).val();
+        visual.background.color_two = color_two;
+        createGradient();
+    });
+
+    // function to create gradient and add set it as background
+    function createGradient() {
+        if(visual.background.type.name == "gradient" && visual.background.color_one != ""
+            && visual.background.color_two != "" && visual.background.direction.name != "") {
+
+            console.log("CREATING GRADIENT");
+            /*
+            var cssSafari = "-webkit-linear-gradient(left, " + visual.background.color_one + ", " + visual.background.color_two
+                + ");";;
+
+
+            var cssOpera = "-o-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
+                + ");";;
+
+            var cssFirefox = "-moz-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
+                + ");";; ;
+            */
+
+            var cssStd = "linear-gradient(to " + visual.background.direction.name + ", "  + visual.background.color_one + ", " + visual.background.color_two
+             + ")";
+
+            $('svg').css("background", cssStd);
+
+        } else {
+            return;
+        }
+    }
 }
 
 
@@ -1205,7 +1360,7 @@ function createTable() {
     if(visPointer == 0) {
         tableData = audioFiles;
     } else {
-        tableData =visualizations;
+        tableData = visualizations;
     }
     for(let i = 0; i < tableData.length; i++) {
         // create new tr element

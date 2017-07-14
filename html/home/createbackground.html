@@ -10,7 +10,7 @@
                 <div class="field">
                     <p class="control">
                         <span class="select">
-                          <select>
+                          <select id="type">
                             <option>Einfarbig</option>
                             <option>Farbverlauf</option>
                           </select>
@@ -18,13 +18,13 @@
                     </p>
                 </div>
 
-                <input type="color" class="colorpicker" id="color1" value="#ffff3e">
+                <input type="color" class="colorpicker" id="color1" value="#ffffff">
                 <br>
                 <br>
-                <div class="field">
+                <div class="field is-hidden" id="gradient-direction">
                     <p class="control">
                         <span class="select">
-                          <select>
+                          <select id="direction">
                             <option>Von Links</option>
                             <option>Von Rechts</option>
                             <option>Von Oben</option>
@@ -33,7 +33,7 @@
                         </span>
                     </p>
                 </div>
-                <input type="color" class="colorpicker" id="color2" value="#ff0000">
+                <input type="color" class="colorpicker is-hidden" id="color2" value="#ffffff">
 
             </div>
         </div>
@@ -45,9 +45,9 @@
                 <br>
                 <p>Farbe wählen</p>
                 <br>
-                <p>Farbverlaufsrichtung wählen</p>
+                <p class="is-hidden" id="gradient-direction-info">Farbverlaufsrichtung wählen</p>
                 <br>
-                <p>Zweite Farbe wählen</p>
+                <p class="is-hidden" id="gradient-color-info">Zweite Farbe wählen</p>
             </div>
             <div class="column is-1 create-nav">
                 <p class="chevron-btn" id="create-forward"><i class="fa fa-chevron-right" aria-hidden="true"></i></p>
