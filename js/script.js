@@ -1811,6 +1811,7 @@ function loadD3Visualization(visualization) {
             loadWaveVisualization();
             break;
         case "bubbles":
+            initVisualization(25, 0);
             loadBubblesVisualization();
             break;
     }
@@ -1852,23 +1853,35 @@ function initVisualization(bufferLength, fftSize) {
 function loadBarVisualization() {
 
     // update svg
-    svg = d3.select('#svg-container').append('svg').attr('height', 495).attr('width', 660);
+    svg = d3.select('#svg-container')
+        // add svg element to DOM
+        .append('svg')
+        // match height and width to parent dimensions
+        .attr('height', 495)
+        .attr('width', 660);
 
-    //
+    // select virtual rects
     svg.selectAll('rect')
+        // add soundData
         .data(soundData)
+        // data join
         .enter()
+        // add rect
         .append('rect')
+        // for every data point set x value
         .attr('x', function (d, i) {
             return i * (660 / soundData.length);
         })
+        // set width of bars
         .attr('width', 660 / soundData.length - 1);
 
+    // start barchart visualization loop
     runBarVisualization();
 }
 
 /**
- *
+ * function to continously loop barchart animation
+ * while sounddata is available
  */
 function runBarVisualization() {
 
@@ -1879,12 +1892,15 @@ function runBarVisualization() {
 
     svg.selectAll('rect')
         .data(soundData)
+        // update height of bars
         .attr('y', function(d) {
             return 495 - d;
         })
         .attr('height', function(d) {
             return d;
         })
+        // fill with color (if only a static color is used this can
+        // be moved to loadBarVisualization method for better performance)
         .attr('fill', "#00D1B2");
 }
 
@@ -1896,21 +1912,68 @@ function runWaveVisualization() {
     
 }
 
+/**
+ * function to load Bubble Visualization
+ */
 function loadBubblesVisualization() {
-    
-    var svg = d3.select("#svg-container")
-        .append("svg")
-        .attr("width", 200)
-        .attr("height", 200);
 
-    var circle = svg.append("circle")
-        .attr("cx", 30)
-        .attr("cy", 30)
+    // update svg
+    svg = d3.select("#svg-container")
+        .append("svg")
+        .attr("height", 495)
+        .attr("width", 660);
+
+    // select virtual circles
+    svg.selectAll("circle")
+        .data(soundData)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d, i) {
+            // Center
+            // return Math.floor(660/2);
+            // random pos
+            // return Math.floor(Math.random()*660+1);
+            return (i * (660 / soundData.length)) + 15;
+        })
+        .attr("cy", function () {
+            // Center
+            return Math.floor(495/2);
+            // random pos
+            // return Math.floor(Math.random()*495+1);
+        })
         .attr("r", 20);
+
+
+    runBubblesVisualization();
 }
 
+/**
+ * function to continously loop barchart animation
+ * while sounddata is available
+ */
 function runBubblesVisualization() {
-    
+
+    // requestAnimationFrame will make sure loop doesn't run too fast
+    requestAnimationFrame(runBubblesVisualization);
+
+    analyser.getByteFrequencyData(soundData);
+    //analyser.getByteTimeDomainData(soundData);
+
+    svg.selectAll("circle")
+        .data(soundData)
+        .attr("r", function (d) {
+            return d/15;
+        })
+        .attr("fill", function (d) {
+            /*
+            var red = 0;
+            var green = d;
+            var blue = d/2;
+
+            return ("rgb(" + red + "," + green + ", " + blue +")");
+        */
+            return "#00D1B2";
+        });
 }
 
 
