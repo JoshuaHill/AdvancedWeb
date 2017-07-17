@@ -9,9 +9,9 @@
  *******************************************************************************/
 // gallery pictures
 var galerie = [
-    "../images/gallery/placeholder1.png",
-    "../images/gallery/placeholder2.png",
-    "../images/gallery/placeholder3.png"
+    "../images/gallery/hello1.png",
+    "../images/gallery/hello2.png",
+    "../images/gallery/hello3.png"
 ];
 
 // audio files
@@ -134,7 +134,7 @@ var visualizations = [
     }
 ];
 
-
+var volume = 1;
 var soundData = null;
 var analyser = null;
 var svg = null;
@@ -165,10 +165,13 @@ function getSound(volume, audioSource) {
             // update player controls
             document.getElementById('time-right').innerHTML = convertTime(sound.duration());
             document.getElementById('play-pause').setAttribute("class", "fa fa-pause");
+
+             document.getElementById("text-scroll").setAttribute("class", "is-hidden");
+             document.getElementById('paused').setAttribute("class", "is-hidden");
             // update initial svg
             if((visPointer == 0 && visual.visualization == "") || (visPointer > 1 && (visual.visualization == "" || visual.visualization == "none"))) {
-                document.getElementById('loading').setAttribute("class", "is-hidden");
-                document.getElementById('paused').setAttribute("class", "is-hidden");
+                // document.getElementById('loading').setAttribute("class", "is-hidden");
+                // document.getElementById('paused').setAttribute("class", "is-hidden");
             } else {
                 // updateBarVisualization();
             }
@@ -1165,9 +1168,9 @@ function loadHome() {
         range: "min",
         min: 0,
         max: 100,
-        value: 100,
+        value: volume*100,
         slide: function( event, ui ) {
-            var volume = (ui.value/100);
+            volume = (ui.value/100);
             Howler.volume(volume);
             document.getElementById('volume').innerHTML = ui.value + "%";
         }
@@ -1561,7 +1564,7 @@ function loadMusicTblClickhandlders() {
                     // set new row to active
                     document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
                     // play new sound
-                    getSound(0.5, audioFiles[i].path);
+                    getSound(1, audioFiles[i].path);
                     sound.play();
                 }
             // if no sound is loaded
@@ -1577,7 +1580,7 @@ function loadMusicTblClickhandlders() {
                 // set new row to active
                 document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
                 // play new sound
-                getSound(0.5, audioFiles[i].path);
+                getSound(1, audioFiles[i].path);
                 sound.play();
             }
 
@@ -1677,7 +1680,7 @@ $('#btn-gal-first').click(function () {
     stopGalleryPlayback();
 
     document.getElementById('gal-img-counter').innerHTML = 1;
-    document.getElementById('gal-image').setAttribute('src', '../images/gallery/placeholder1.png');
+    document.getElementById('gal-image').setAttribute('src', '../images/gallery/hello1.png');
 });
 
 // startet die automatische Wiedergabe der Slideshow
@@ -1885,8 +1888,12 @@ function loadD3Visualization(visualization) {
  */
 function initVisualization(bufferLength, fftSize) {
 
-    // create Analyser node
-    analyser = Howler.ctx.createAnalyser();
+    // create Analyser node if not already existing
+    if(analyser == null) {
+        analyser = Howler.ctx.createAnalyser();
+    }
+
+
     // connect Analyser to Master Gain
     Howler.masterGain.connect(analyser);
     analyser.connect(Howler.ctx.destination);
