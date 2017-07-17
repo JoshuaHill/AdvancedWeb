@@ -66,7 +66,7 @@ var visPages = [
     "home/createvisual.html",
     "home/createbackground.html",
     "home/createtext.html",
-    "home/createcolor.html",
+    // "home/createcolor.html",
     "home/createfinished.html"
 ];
 var visPointer = 0;
@@ -1164,12 +1164,15 @@ function loadHome() {
             visPointer = 3;
             loadHome();
         });
+        /*
         $('#bc-color').on('click', function () {
             visPointer = 4;
             loadHome();
         });
+        */
         $('#bc-done').on('click', function () {
-            visPointer = 5;
+            visPointer = 4;
+            // visPointer = 5;
             loadHome();
         });
     });
