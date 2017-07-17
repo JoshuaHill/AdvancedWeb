@@ -138,6 +138,7 @@ var visualizations = [
 var soundData = null;
 var analyser = null;
 var svg = null;
+var svgText = null;
 
 // svg animation
 var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\"-10%\" dur=\"15s\" repeatCount=\"indefinite\" />";
@@ -1420,6 +1421,10 @@ function createTable() {
  */
 function loadTextClickhandlers() {
 
+    if(visual.text.color != "" && visual.text.color != null) {
+        document.getElementById("color").setAttribute("value", visual.text.color);
+    }
+
     if(visual.text.title != "" && visual.text.title != null) {
         document.getElementById("check-title").checked = true;
     }
@@ -1434,6 +1439,20 @@ function loadTextClickhandlers() {
         document.getElementById("text-input-description").setAttribute("class", "");
         document.getElementById("text-input").setAttribute("value", visual.text.custom_text);
     }
+
+    $("#color").on("click", function () {
+       var color = $(this).val();
+        visual.text.color = color;
+
+        updateSvgText();
+    });
+
+    $("#color").on("change", function () {
+        var color = $(this).val();
+        visual.text.color = color;
+
+        updateSvgText();
+    });
 
     $("#check-title").on("change", function () {
         if($(this).is(":checked")) {
@@ -1914,6 +1933,13 @@ function loadBarVisualization() {
         // set width of bars
         .attr('width', 660 / soundData.length - 1);
 
+    svgText = svg.selectAll("text")
+        .data(soundData)
+        .enter();
+
+
+    setSvgText();
+
     // start barchart visualization loop
     runBarVisualization();
 }
@@ -1995,40 +2021,12 @@ function loadBubblesVisualization() {
         })
         .attr("r", 20);
 
-    if(visual.text.title != "" && visual.text.title != null) {
-
-        console.log(visual.text.title);
-        svg.selectAll("text")
-            // .data(soundData)
-            // .enter()
-            .append("text")
-            // 20px font size
-            // .attr("x", (330 - (6 * visual.text.custom_text.length)))
-            .attr("x", 5)
-            .attr("y", 20)
-            .text(visual.text.title)
-            .attr("font-family", "Lucida Console, Monaco, monospace")
-            .attr("font-size", 20)
-            .attr("fill", "red");
-    }
+    svgText = svg.selectAll("text")
+        .data(soundData)
+        .enter();
 
 
-    if(visual.text.custom_text != "" && visual.text.custom_text != null) {
-
-        svg.selectAll("text")
-            .data(soundData)
-            .enter()
-            .append("text")
-                // 20px font size
-            // .attr("x", (330 - (6 * visual.text.custom_text.length)))
-            .attr("x", getSvgTextCenter(visual.text.custom_text))
-            .attr("y", 200)
-            .text(visual.text.custom_text)
-            .attr("font-family", "Lucida Console, Monaco, monospace")
-            .attr("font-size", getSvgTextSize(visual.text.custom_text))
-            .attr("fill", "red");
-    }
-
+    setSvgText();
 
     runBubblesVisualization();
 }
@@ -2079,12 +2077,19 @@ function updateSvgText() {
         // D3 Visualization
     } else {
         document.getElementById("svg-container").innerHTML = "";
-        loadBubblesVisualization();
+        loadD3Visualization(visual.visualization);
         setSvgBackground();
 
     }
 }
 
+
+/**
+ * function to get appropriate text size depending on text length
+ *
+ * @param text
+ * @returns {*}
+ */
 function getSvgTextSize(text) {
 
     var size;
@@ -2102,6 +2107,13 @@ function getSvgTextSize(text) {
     return size;
 }
 
+
+/**
+ * function to get the center point for aligning text in animation
+ *
+ * @param text
+ * @returns {*}
+ */
 function getSvgTextCenter(text) {
 
     var center;
@@ -2119,7 +2131,58 @@ function getSvgTextCenter(text) {
     return center;
 }
 
+/**
+ * function to add svg to animation
+ */
+function setSvgText() {
 
+    var color;
+
+    if(visual.text.color != "" && visual.text.color != null) {
+        color = visual.text.color;
+    } else {
+        color = "red";
+    }
+
+    if(visual.text.title != "" && visual.text.title != null) {
+
+        svgText
+            .append("text")
+            .attr("x", 5)
+            .attr("y", 20)
+            .attr("font-family", "Lucida Console, Monaco, monospace")
+            .attr("font-size", 20)
+            .attr("fill", color)
+            .text(visual.text.title);
+
+    }
+
+    if(visual.text.duration != "" && visual.text.duration != null) {
+
+        svgText
+            .append("text")
+            .attr("x", 600)
+            .attr("y", 20)
+            .attr("font-family", "Lucida Console, Monaco, monospace")
+            .attr("font-size", 20)
+            .attr("fill", color)
+            .text(convertTime(visual.text.duration));
+
+    }
+
+
+    if(visual.text.custom_text != "" && visual.text.custom_text != null) {
+
+        svgText
+            .append("text")
+            .attr("x", getSvgTextCenter(visual.text.custom_text))
+            .attr("y", 200)
+            .attr("font-family", "Lucida Console, Monaco, monospace")
+            .attr("font-size", getSvgTextSize(visual.text.custom_text))
+            .attr("fill", color)
+            .text(visual.text.custom_text);
+    }
+}
 
 
 /*******************************************************************************
