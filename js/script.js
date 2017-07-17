@@ -66,7 +66,7 @@ var visPages = [
     "home/createvisual.html",
     "home/createbackground.html",
     "home/createtext.html",
-    // "home/createcolor.html",
+    "home/createcolor.html",
     "home/createfinished.html"
 ];
 var visPointer = 0;
@@ -209,45 +209,6 @@ function getAudioData() {
 
 }
 
-
-
-
-
-
-// WEBAUDIO API TEST
-// works fine too, but lack of caching and fallback to html5
-/*
-
-var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-var source;
-var songLength;
-var channelData = [];
-var request;
-
-function getData() {
-    source = audioCtx.createBufferSource();
-    request = new XMLHttpRequest();
-    request.open('GET', '../audio/classy.mp3', true);
-    request.responseType = 'arraybuffer';
-    request.onload = function() {
-        var audioData = request.response;
-        audioCtx.decodeAudioData(audioData, function(buffer) {
-                myBuffer = buffer;
-                channelData = buffer.getChannelData(1);
-                console.log(channelData);
-                songLength = buffer.duration;
-                source.buffer = myBuffer;
-                source.playbackRate.value = 1;
-                source.connect(audioCtx.destination);
-                //source.loop = true;
-                // loopstartControl.setAttribute('max', Math.floor(songLength));
-                //loopendControl.setAttribute('max', Math.floor(songLength));
-            },
-            function(e){"Error with decoding audio data" + e.err});
-    }
-    request.send();
-}
-*/
 
 /*******************************************************************************
  *
@@ -1172,15 +1133,12 @@ function loadHome() {
             visPointer = 3;
             loadHome();
         });
-        /*
         $('#bc-color').on('click', function () {
             visPointer = 4;
             loadHome();
         });
-        */
         $('#bc-done').on('click', function () {
-            visPointer = 4;
-            // visPointer = 5;
+            visPointer = 5;
             loadHome();
         });
     });
@@ -1453,6 +1411,7 @@ function loadVisTblClickhandlers() {
 }
 
 
+
 /**
  * function to load clickhandlers for music table
  */
@@ -1585,44 +1544,7 @@ function convertTime(time) {
     return timeString;
 }
 
-/**
- function draw() {
-    console.log("DRAW");
-    var canvas = document.getElementById("canvas");
-    if(canvas.getContext) {
-        console.log("YES");
-        var canvasContext = canvas.getContext("2d");
 
-        drawVisual = requestAnimationFrame(draw);
-        analyser.getByteTimeDomainData(dataArray);
-        canvasContext.fillStyle = 'rgb(255, 255, 255)';
-        canvasContext.fillRect(0, 0, 400, 300);
-        canvasContext.lineWidth = 4;
-        canvasContext.strokeStyle = 'rgb(3, 209, 178)';
-        canvasContext.beginPath();
-        var sliceWidth = 400 * 1.0 / bufferLength;
-        var x = 0;
-
-        for (var i = 0; i < bufferLength; i++) {
-            var v = dataArray[i] / 128.0;
-            var y = v * 300 / 2;
-
-            if(i===0) {
-                canvasContext.moveTo(x, y);
-            } else {
-                canvasContext.lineTo(x, y);
-            }
-
-            x += sliceWidth;
-        }
-
-        canvasContext.lineTo(canvasContext.width, canvasContext.height/2);
-        canvasContext.stroke();
-
-    }
-
-};
-**/
 
 /*******************************************************************************
  *
@@ -1655,8 +1577,6 @@ $('#btn-gal-play').on('click', function () {
         }
     }
 
-
-
     setTimeout(function () {
 
     }, 3000);
@@ -1664,7 +1584,6 @@ $('#btn-gal-play').on('click', function () {
     if(galPlayback == true) {
         galleryPlayback(ctr);
     }
-
 
 });
 
@@ -1775,8 +1694,6 @@ function checkCookie(cname) {
  * Localization
  *
  *******************************************************************************/
-
-
 
 /**
  * loadLocale() utilizes i18next Framework to load locale for currently set language.
@@ -1939,7 +1856,7 @@ function loadWaveVisualization() {
         .attr("width", 660);
 
     // select virtual paths
-    
+
 }
 
 /**
