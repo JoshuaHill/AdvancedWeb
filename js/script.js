@@ -103,16 +103,24 @@ var visual = {
 
 var visualizations = [
     {
-        name: "none"
+        name: "none",
+        description: "none"
     },
     {
-        name: "bars"
+        name: "logo",
+        description: "Spinning Logo"
     },
     {
-        name: "waves"
+        name: "bars",
+        description: "Equalizer Bars"
     },
     {
-        name: "bubbles"
+        name: "waves",
+        description: "Soundwaves"
+    },
+    {
+        name: "bubbles",
+        description: "Bubbles"
     }
 ];
 
@@ -1372,7 +1380,11 @@ function createTable() {
         var td = document.createElement('td');
 
         // get file name
-        var name = tableData[i].name;
+        if(tableData == audioFiles) {
+            var name = tableData[i].name;
+        } else {
+            var name = tableData[i].description;
+        }
         // create text node from file name
         var text = document.createTextNode(name);
         // add text node to td
@@ -1801,10 +1813,19 @@ function loadLocale() {
  *
  *******************************************************************************/
 
+/**
+ * This function is called to determine and load the visualization, that was
+ * chosen by the user.
+ *
+ * @param visualization
+ */
 function loadD3Visualization(visualization) {
 
     switch(visualization) {
         case "none":
+            break;
+        case "logo":
+            loadSvg("../images/0001-0200.svg", "svg-container");
             break;
         case "bars":
             initVisualization(50, 0);
@@ -1883,8 +1904,7 @@ function loadBarVisualization() {
 }
 
 /**
- * function to continously loop barchart animation
- * while sounddata is available
+ * function to continuously loop barchart animation
  */
 function runBarVisualization() {
 
@@ -1907,10 +1927,24 @@ function runBarVisualization() {
         .attr('fill', "#00D1B2");
 }
 
+/**
+ * function to load Wave Visualization
+ */
 function loadWaveVisualization() {
 
+    // update svg
+    svg = d3.select("#svg-container")
+        .append("svg")
+        .attr("height", 495)
+        .attr("width", 660);
+
+    // select virtual paths
+    
 }
 
+/**
+ * function to continuously loop wave visualization
+ */
 function runWaveVisualization() {
     
 }
@@ -1951,8 +1985,7 @@ function loadBubblesVisualization() {
 }
 
 /**
- * function to continously loop barchart animation
- * while sounddata is available
+ * function to continuously loop barchart animation
  */
 function runBubblesVisualization() {
 
