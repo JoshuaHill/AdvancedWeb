@@ -73,7 +73,10 @@ var visPointer = 0;
 
 // visual json
 var visual = {
-    "music":"",
+    "music": {
+        "title":"",
+        "duration":""
+    },
     "visualization":"",
     "background": {
         "type": {
@@ -88,7 +91,9 @@ var visual = {
         }
     },
     "text": {
-        "text":"",
+        "title":"",
+        "duration": "",
+        "custom_text":"",
         "color":"",
         "position":""
     },
@@ -104,23 +109,28 @@ var visual = {
 var visualizations = [
     {
         name: "none",
-        description: "none"
+        name_long: "none",
+        description: "Keine Animation."
     },
     {
         name: "logo",
-        description: "Spinning Logo"
+        name_long: "Spinning Logo",
+        description: "Ein sich drehendes Muse:Viz Logo."
     },
     {
         name: "bars",
-        description: "Equalizer Bars"
+        name_long: "Equalizer Bars",
+        description: "Klassische Equalizer Darstellung."
     },
     {
         name: "waves",
-        description: "Soundwaves"
+        name_long: "Soundwaves",
+        description: "Ton in Wellenform dargestellt."
     },
     {
         name: "bubbles",
-        description: "Bubbles"
+        name_long: "Bubbles",
+        description: "Bläschen, die ihre Größe zur Musik ändern."
     }
 ];
 
@@ -1104,6 +1114,11 @@ function loadHome() {
             loadBackgroundSetup();
         }
 
+        // load clickhandler for text
+        if(visPointer == 3) {
+            loadTextClickhandlers();
+        }
+
         // Clickhandler for forward button
         $('#create-forward').on('click', function () {
             visPointer++;
@@ -1238,24 +1253,28 @@ function loadBackgroundSetup() {
     $('#color1').on('click', function () {
         var color_one = $(this).val();
         visual.background.color_one = color_one;
-
+        setSvgBackground();
+        /*
         if(visual.background.type.name != "gradient") {
             // set background-color
             $('svg').css("background-color", color_one);
         } else {
             createGradient();
         }
+        */
     });
     $('#color1').on('change', function () {
         var color_one = $(this).val();
         visual.background.color_one = color_one;
-
+        setSvgBackground();
+        /*
         if(visual.background.type.name != "gradient") {
             // set background-color
             $('svg').css("background-color", color_one);
         } else {
             createGradient();
         }
+        */
     });
 
     // Select direction of gradient
@@ -1289,35 +1308,51 @@ function loadBackgroundSetup() {
         createGradient();
     });
 
-    // function to create gradient and add set it as background
-    function createGradient() {
-        if(visual.background.type.name == "gradient" && visual.background.color_one != ""
-            && visual.background.color_two != "" && visual.background.direction.name != "") {
 
-            console.log("CREATING GRADIENT");
-            /*
-            var cssSafari = "-webkit-linear-gradient(left, " + visual.background.color_one + ", " + visual.background.color_two
-                + ");";;
+}
 
+/**
+ * Function to set background of SVG
+ */
+function setSvgBackground() {
 
-            var cssOpera = "-o-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
-                + ");";;
-
-            var cssFirefox = "-moz-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
-                + ");";; ;
-            */
-
-            var cssStd = "linear-gradient(to " + visual.background.direction.name + ", "  + visual.background.color_one + ", " + visual.background.color_two
-             + ")";
-
-            $('svg').css("background", cssStd);
-
-        } else {
-            return;
-        }
+    if(visual.background.type != "gradient") {
+        $('svg').css("background-color", visual.background.color_one);
+    } else {
+        createGradient();
     }
 }
 
+
+/**
+ * function to create gradient and add set it as background
+ */
+function createGradient() {
+    if(visual.background.type.name == "gradient" && visual.background.color_one != ""
+        && visual.background.color_two != "" && visual.background.direction.name != "") {
+
+        console.log("CREATING GRADIENT");
+        /*
+         var cssSafari = "-webkit-linear-gradient(left, " + visual.background.color_one + ", " + visual.background.color_two
+         + ");";;
+
+
+         var cssOpera = "-o-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
+         + ");";;
+
+         var cssFirefox = "-moz-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
+         + ");";; ;
+         */
+
+        var cssStd = "linear-gradient(to " + visual.background.direction.name + ", "  + visual.background.color_one + ", " + visual.background.color_two
+            + ")";
+
+        $('svg').css("background", cssStd);
+
+    } else {
+        return;
+    }
+}
 
 /**
  * Function to create a table with all mp3 files or visualizations
@@ -1341,7 +1376,7 @@ function createTable() {
         if(tableData == audioFiles) {
             var name = tableData[i].name;
         } else {
-            var name = tableData[i].description;
+            var name = tableData[i].name_long;
         }
         // create text node from file name
         var text = document.createTextNode(name);
@@ -1379,7 +1414,70 @@ function createTable() {
 
 }
 
+/**
+ * function to load clickhandlers for Text Subpage of
+ * create Visualizations part
+ */
+function loadTextClickhandlers() {
 
+    if(visual.text.title != "" && visual.text.title != null) {
+        document.getElementById("check-title").checked = true;
+    }
+
+    if(visual.text.duration != "" && visual.text.duration != null) {
+        document.getElementById("check-duration").checked = true;
+    }
+
+    if(visual.text.custom_text != "" && visual.text.custom_text != null) {
+        document.getElementById("check-text").checked = true;
+        document.getElementById("text-input-field").setAttribute("class", "field");
+        document.getElementById("text-input-description").setAttribute("class", "");
+        document.getElementById("text-input").setAttribute("value", visual.text.custom_text);
+    }
+
+    $("#check-title").on("change", function () {
+        if($(this).is(":checked")) {
+            visual.text.title = visual.music.title;
+        } else {
+            visual.text.title = "";
+        }
+        updateSvgText();
+    });
+
+    $("#check-duration").on("change", function () {
+        if($(this).is(":checked")) {
+            visual.text.duration = visual.music.duration;
+        } else {
+            visual.text.duration = "";
+        }
+        updateSvgText();
+    });
+
+    $("#check-text").on("change", function () {
+       if($(this).is(":checked")) {
+           document.getElementById("text-input-field").setAttribute("class", "field");
+           document.getElementById("text-input-description").setAttribute("class", "");
+
+           $("#text-input").on("input", function () {
+               var text = $(this).val();
+               visual.text.custom_text = text;
+               //console.log(text);
+               updateSvgText();
+           });
+       } else {
+           document.getElementById("text-input-field").setAttribute("class", "field is-hidden");
+           document.getElementById("text-input-description").setAttribute("class", "is-hidden");
+           visual.text.custom_text = "";
+           updateSvgText();
+       }
+    });
+
+}
+
+
+/**
+ * function to load clickhandlers for Visualizations table
+ */
 function loadVisTblClickhandlers() {
 
     // if there was a visual selected before, show in table
@@ -1411,15 +1509,14 @@ function loadVisTblClickhandlers() {
 }
 
 
-
 /**
  * function to load clickhandlers for music table
  */
 function loadMusicTblClickhandlders() {
 
     // if there was a track selected before, show in table
-    if(visual.music != "") {
-        document.getElementById(visual.music).setAttribute("class", "is-selected");
+    if(visual.music.title != "") {
+        document.getElementById(visual.music.title).setAttribute("class", "is-selected");
     }
 
     for(let i = 0; i < audioFiles.length; i++) {
@@ -1430,7 +1527,7 @@ function loadMusicTblClickhandlders() {
                 // stop sound
                 sound.stop();
                 // if last clicked soundfile doesn't equal currently clicked soundfile
-                if(visual.music != audioFiles[i].name) {
+                if(visual.music.title != audioFiles[i].name) {
                     // if visualization hasn't been chosen yet
                     if(visual.visualization == "") {
                         // display current track name and duration of track
@@ -1439,8 +1536,8 @@ function loadMusicTblClickhandlders() {
                         document.getElementById('loading').setAttribute("class", "");
                         // remove active from old row
                     }
-                    if(visual.music != "") {
-                        document.getElementById(visual.music).setAttribute("class", "");
+                    if(visual.music.title != "") {
+                        document.getElementById(visual.music.title).setAttribute("class", "");
                     }
                     // set new row to active
                     document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
@@ -1466,10 +1563,11 @@ function loadMusicTblClickhandlders() {
             }
 
             // if the same track was clicked twice clear lastClick
-            if(visual.music == audioFiles[i].name) {
+            if(visual.music.title == audioFiles[i].name) {
                 visual.music = '';
             } else {
-                visual.music = audioFiles[i].name;
+                visual.music.title = audioFiles[i].name;
+                visual.music.duration = audioFiles[i].duration;
             }
 
         });
@@ -1897,6 +1995,40 @@ function loadBubblesVisualization() {
         })
         .attr("r", 20);
 
+    if(visual.text.title != "" && visual.text.title != null) {
+
+        console.log(visual.text.title);
+        svg.selectAll("text")
+            // .data(soundData)
+            // .enter()
+            .append("text")
+            // 20px font size
+            // .attr("x", (330 - (6 * visual.text.custom_text.length)))
+            .attr("x", 5)
+            .attr("y", 20)
+            .text(visual.text.title)
+            .attr("font-family", "Lucida Console, Monaco, monospace")
+            .attr("font-size", 20)
+            .attr("fill", "red");
+    }
+
+
+    if(visual.text.custom_text != "" && visual.text.custom_text != null) {
+
+        svg.selectAll("text")
+            .data(soundData)
+            .enter()
+            .append("text")
+                // 20px font size
+            // .attr("x", (330 - (6 * visual.text.custom_text.length)))
+            .attr("x", getSvgTextCenter(visual.text.custom_text))
+            .attr("y", 200)
+            .text(visual.text.custom_text)
+            .attr("font-family", "Lucida Console, Monaco, monospace")
+            .attr("font-size", getSvgTextSize(visual.text.custom_text))
+            .attr("fill", "red");
+    }
+
 
     runBubblesVisualization();
 }
@@ -1927,6 +2059,64 @@ function runBubblesVisualization() {
         */
             return "#00D1B2";
         });
+
+
+
+}
+
+
+/**
+ * This function changes the text displayed in animation
+ */
+function updateSvgText() {
+
+    // No Visualization
+    if(visual.visualization == "" || visual.visualization == "none") {
+
+        // Logo Visualization (non D3)
+    } else if(visual.visualization == "logo") {
+
+        // D3 Visualization
+    } else {
+        document.getElementById("svg-container").innerHTML = "";
+        loadBubblesVisualization();
+        setSvgBackground();
+
+    }
+}
+
+function getSvgTextSize(text) {
+
+    var size;
+
+    // maximum size
+    if(text.length <= 13) {
+        size = 80;
+    // minimum size
+    } else if(text.length > 54) {
+        size = 12;
+    } else {
+        size = Math.floor(1040 / text.length);
+    }
+
+    return size;
+}
+
+function getSvgTextCenter(text) {
+
+    var center;
+
+    // maximum size
+    if(text.length <= 13) {
+        center = 330 - (Math.floor(330 / 13) * text.length);
+        // minimum size
+    } else if(text.length > 54) {
+        center = 330 - ((330 / 90) * text.length);
+    } else {
+        center = (330 - ((330 / text.length) * text.length)) + 330 / text.length;
+    }
+
+    return center;
 }
 
 
