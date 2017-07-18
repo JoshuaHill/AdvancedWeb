@@ -12,6 +12,15 @@
         <animate attributeName="fill" values="#00D1B2;#57D1BB;#89D1BB;#B8D1C2;#89D1BB;#57D1BB" dur="1.2s" repeatCount="indefinite" />
         Paused
     </text>
+    <text class="is-hidden" id="svg-title" x="30" y="0" fill="#FF0000" font-size="30" font-family="Lucida Console, Monaco, monospace">
+
+    </text>
+    <text class="is-hidden" id="svg-duration" x="850" y="0" fill="#FF0000" font-size="30" font-family="Lucida Console, Monaco, monospace">
+
+    </text>
+    <text class="is-hidden" id="svg-custom" x="5" y="550" fill="#FF0000" font-size="40" font-family="Lucida Console, Monaco, monospace">
+
+    </text>
 
     <g id="RenderLayer_LineSet" inkscape:groupmode="lineset" inkscape:label="RenderLayer_LineSet">
         <g id="frame_0001" inkscape:groupmode="frame" inkscape:label="frame_0001">

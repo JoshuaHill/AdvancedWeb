@@ -169,9 +169,9 @@ function getSound(volume, audioSource) {
              document.getElementById("text-scroll").setAttribute("class", "is-hidden");
              document.getElementById('paused').setAttribute("class", "is-hidden");
             // update initial svg
-            if((visPointer == 0 && visual.visualization == "") || (visPointer > 1 && (visual.visualization == "" || visual.visualization == "none"))) {
-                // document.getElementById('loading').setAttribute("class", "is-hidden");
-                // document.getElementById('paused').setAttribute("class", "is-hidden");
+            if(visPointer == 0 && visual.visualization == "") {
+                document.getElementById('loading').setAttribute("class", "is-hidden");
+                document.getElementById('paused').setAttribute("class", "is-hidden");
             } else {
                 // updateBarVisualization();
             }
@@ -186,8 +186,11 @@ function getSound(volume, audioSource) {
          onpause: function () {
             // update player controls
             document.getElementById('play-pause').setAttribute("class", "fa fa-play");
-            // update svg
-            document.getElementById('paused').setAttribute("class", "");
+            // update initial svg
+             if(visPointer == 0 && visual.visualization == "") {
+                 document.getElementById('paused').setAttribute("class", "");
+             }
+
          },
          onstop: function () {
             // update player controls
@@ -1102,7 +1105,7 @@ $('#stopBtn').click(function () {
  */
 function loadHome() {
 
-    if(document.getElementById('svg-container').innerHTML == "") {
+    if(document.getElementById('svg-container').innerHTML == "" && visual.visualization == "") {
      loadSvg("../images/0001-0200.svg", "svg-container");
     }
 
@@ -1860,9 +1863,12 @@ function loadD3Visualization(visualization) {
 
     switch(visualization) {
         case "none":
+            initVisualization(1, 0);
+            loadEmptyVisualization();
             break;
         case "logo":
             loadSvg("../images/0001-0200.svg", "svg-container");
+            document.getElementById("text-scroll").setAttribute("class", "is-hidden");
             break;
         case "bars":
             initVisualization(50, 0);
@@ -1911,6 +1917,41 @@ function initVisualization(bufferLength, fftSize) {
     // update DataArray
     soundData = new Uint8Array(bufferLength);
 }
+
+function loadEmptyVisualization() {
+
+    // update svg
+    svg = d3.select('#svg-container')
+        // add svg element to DOM
+        .append('svg')
+        // match height and width to parent dimensions
+        .attr('height', 495)
+        .attr('width', 660);
+
+    svgText = svg.selectAll("text")
+        .data(soundData)
+        .enter();
+
+
+    setSvgText();
+
+}
+
+/*
+function loadLogoVisualization() {
+
+    loadSvg("../images/0001-0200.svg", "svg-container");
+    document.getElementById("text-scroll").setAttribute("class", "is-hidden");
+
+    svg = d3.select("svg");
+
+    svgText = svg.selectAll("text")
+        .data(soundData)
+        .enter();
+
+    setSvgText();
+}
+*/
 
 /**
  * function to load Bar Visualization
@@ -2075,15 +2116,57 @@ function runBubblesVisualization() {
  */
 function updateSvgText() {
 
-    // No Visualization
-    if(visual.visualization == "" || visual.visualization == "none") {
+    // Logo Visualization (non D3)
+    if(visual.visualization == "logo") {
+        
+        if(visual.text.title != "") {
+            document.getElementById("svg-title").innerHTML = visual.text.title;
+            document.getElementById("svg-title").setAttribute("fill", visual.text.color);
+            document.getElementById("svg-title").setAttribute("class", "");
+        } else {
+            document.getElementById("svg-title").setAttribute("class", "is-hidden");
+        }
 
-        // Logo Visualization (non D3)
-    } else if(visual.visualization == "logo") {
+        if(visual.text.duration != "") {
+            document.getElementById("svg-duration").innerHTML = convertTime(visual.text.duration);
+            document.getElementById("svg-duration").setAttribute("fill", visual.text.color);
+            document.getElementById("svg-duration").setAttribute("class", "");
+        } else {
+            document.getElementById("svg-duration").setAttribute("class", "is-hidden");
+        }
 
-        // D3 Visualization
+        if(visual.text.custom_text != "") {
+            var textCenter;
+
+            if(visual.text.custom_text.length <= 13) {
+                textCenter = getSvgTextCenter(visual.text.custom_text) + 100;
+            } else if(visual.text.custom_text.length > 54) {
+                textCenter = getSvgTextCenter(visual.text.custom_text) - 50;
+            } else if(visual.text.custom_text.length < 27) {
+                textCenter = getSvgTextCenter(visual.text.custom_text) + 75;
+            } else if(visual.text.custom_text.length < 40){
+                textCenter = getSvgTextCenter(visual.text.custom_text) + 50;
+            } else if(visual.text.custom_text.length < 51) {
+                textCenter = getSvgTextCenter(visual.text.custom_text) + 25;
+            } else {
+                textCenter = getSvgTextCenter(visual.text.custom_text);
+            }
+
+
+            document.getElementById("svg-custom").innerHTML = visual.text.custom_text;
+            document.getElementById("svg-custom").setAttribute("fill", visual.text.color);
+            document.getElementById("svg-custom").setAttribute("font-size", getSvgTextSize(visual.text.custom_text) + 10);
+            document.getElementById("svg-custom").setAttribute("x", textCenter);
+            document.getElementById("svg-custom").setAttribute("class", "");
+        } else {
+            document.getElementById("svg-custom").setAttribute("class", "is-hidden");
+        }
+
+    // D3 Visualization
     } else {
+        // clear svg
         document.getElementById("svg-container").innerHTML = "";
+
         loadD3Visualization(visual.visualization);
         setSvgBackground();
 
