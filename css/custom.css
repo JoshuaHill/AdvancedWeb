@@ -323,3 +323,27 @@
 #table-body tr {
     cursor: pointer;
 }
+
+#dropzone {
+    position: absolute;
+    width: 50%;
+    height: 20%;
+    bottom: 18%;
+    left: 25%;
+    background-color: #ededed;
+    border-width: thick;
+    border-color: #00D1B2;
+    border-style: dashed;
+    color: #99aec0;
+
+}
+
+#dropzone:hover {
+    background-color: #e9f0e8;
+    color: #5e6e80;
+    border-color: #00DD00;
+}
+
+#drop-icon{
+    padding-top: 23px;
+}

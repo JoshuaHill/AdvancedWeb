@@ -167,10 +167,12 @@ function getSound(volume, audioSource) {
             document.getElementById('time-right').innerHTML = convertTime(sound.duration());
             document.getElementById('play-pause').setAttribute("class", "fa fa-pause");
 
-             document.getElementById("text-scroll").setAttribute("class", "");
-             document.getElementById('paused').setAttribute("class", "is-hidden");
+             // enable clickhandlers
+             loadMusicTblClickhandlders();
+
             // update initial svg
             if(visPointer == 0 && visual.visualization == "") {
+                document.getElementById("text-scroll").setAttribute("class", "");
                 document.getElementById('loading').setAttribute("class", "is-hidden");
                 document.getElementById('paused').setAttribute("class", "is-hidden");
             } else {
@@ -181,7 +183,6 @@ function getSound(volume, audioSource) {
             requestAnimationFrame(updateProgress);
          },
          onload: function () {
-             // getAudioData();
 
          },
          onpause: function () {
@@ -1124,6 +1125,11 @@ function loadHome() {
             });
         }
 
+        // initialize drag&drop
+        if(visPointer == 0) {
+            initDragDrop();
+        }
+
         // loadclickhandler for background
         if(visPointer == 2) {
             loadBackgroundSetup();
@@ -1211,6 +1217,92 @@ function loadHome() {
             document.getElementById('volume').innerHTML = ui.value + "%";
         }
     });
+}
+
+
+function initDragDrop() {
+    var dropzone = document.getElementById("dropzone");
+    dropzone.addEventListener('dragover', handleDragOver, false);
+    dropzone.addEventListener('drop', selectFile, false);
+}
+
+function selectFile(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    var selectedFile = e.dataTransfer.files[0];
+    console.log("Name: " + selectedFile.name);
+    console.log("Type: " + selectedFile.type);
+    console.log("Size: " + selectedFile.size);
+    console.log(selectedFile.length);
+
+    checkFileValidity(selectedFile);
+    
+}
+
+function handleDragOver(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy";
+}
+
+function checkFileValidity(file) {
+
+    var typeValid;
+    var sizeValid;
+
+    if(file.type == "audio/mp3" || file.type == "audio/ogg") {
+        // file type is valid
+        typeValid = true;
+    } else {
+        // invalid file type
+        typeValid = false;
+    }
+
+    if(file.size <= 5242880) {
+        // file size is valid
+        sizeValid = true;
+    } else {
+        // invalid file size
+        sizeValid = false;
+    }
+
+    // if file is valid
+    if(typeValid && sizeValid) {
+
+        var reader = new FileReader();
+        reader.onload = function (event) {
+
+            if(sound != null) {
+                sound.stop();
+            }
+
+            getSound(1, event.target.result);
+            sound.play();
+
+            //audioFiles[3].path = event.target.result;
+            //audioFiles[3].name = file.name;
+            var newSound =
+            {
+                "name":file.name.replace(/[^a-zA-Z0-9- ]/g, ""),
+                "path":event.target.result,
+                "duration": 0
+            };
+            if(audioFiles.length <= 3) {
+                audioFiles.push(newSound);
+            } else {
+                audioFiles[3] = newSound;
+            }
+
+            document.getElementById("table-body").innerHTML = "";
+            createTable();
+
+        };
+        reader.readAsDataURL(file);
+
+
+
+    }
 }
 
 
@@ -1440,7 +1532,8 @@ function createTable() {
 
 
         // add id to tr
-        tr.setAttribute("id", tableData[i].name);
+        var id = tableData[i].name.replace(/[ ]/g, "");
+        tr.setAttribute("id", id);
 
         // add tr to tablebody
         document.getElementById("table-body").appendChild(tr);
@@ -1454,6 +1547,124 @@ function createTable() {
 
 }
 
+
+/**
+ * function to load clickhandlers for Visualizations table
+ */
+function loadVisTblClickhandlers() {
+
+    // if there was a visual selected before, show in table
+    if(visual.visualization != "") {
+        document.getElementById(visual.visualization).setAttribute("class", "is-selected");
+    }
+
+    for(let i = 0; i < visualizations.length; i++) {
+        $('#' + visualizations[i].name).on('click', function () {
+            if(visual.visualization != visualizations[i].name) {
+                // remove active from old row
+                if(visual.visualization != "") {
+                    document.getElementById(visual.visualization).setAttribute("class", "");
+                }
+                // set new row to active
+                document.getElementById(visualizations[i].name).setAttribute("class", "is-selected");
+                // load visualization
+                console.log("loadVis: " + visualizations[i].name);
+
+                document.getElementById("svg-container").innerHTML = "";
+                loadD3Visualization(visualizations[i].name);
+            }
+
+
+            visual.visualization = visualizations[i].name;
+
+        });
+    }
+}
+
+
+/**
+ * function to load clickhandlers for music table
+ */
+function loadMusicTblClickhandlders() {
+
+    // if there was a track selected before, show in table
+    if(visual.music.title != "" && visual.music.title != null) {
+        document.getElementById(visual.music.title).setAttribute("class", "is-selected");
+    }
+
+    for(let i = 0; i < audioFiles.length; i++) {
+        var id = audioFiles[i].name.replace(/[ ]/g, "");
+        $('#' + id).on('click', function () {
+            // disable clickhandlers
+            disableMusicTblClickhandlers();
+            // fade out warning
+            $('#no-song-warning').fadeOut(1000);
+            // if sound is loaded
+            if(sound != null) {
+                console.log("SOUND LOADED");
+                // stop sound
+                sound.stop();
+                // if last clicked soundfile doesn't equal currently clicked soundfile
+                if(visual.music.title != audioFiles[i].name) {
+                    // if visualization hasn't been chosen yet
+                    if(visual.visualization == "") {
+                        // display current track name and duration of track
+                        document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
+                        // show loading message
+                        document.getElementById('loading').setAttribute("class", "");
+                        // remove active from old row
+                    }
+                    if(visual.music.title != "" && visual.music.title != null) {
+                        document.getElementById(visual.music.title.replace(/[ ]/g, "")).setAttribute("class", "");
+                    }
+                    // set new row to active
+                    document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
+                    // play new sound
+                    getSound(1, audioFiles[i].path);
+                    sound.play();
+                } else {
+                    sound.stop();
+                    loadMusicTblClickhandlders();
+                }
+            // if no sound is loaded
+            } else {
+                console.log("SOUND -N O T- LOADED");
+                // if visualization hasn't been chosen yet
+                if(visual.visualization == "") {
+                    // display current track name and duration of track
+                    document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
+                    // show loading message
+                    document.getElementById('loading').setAttribute("class", "");
+                }
+                // remove all actives
+                for(let j = 0; j < audioFiles.length; j++) {
+                    document.getElementById(audioFiles[j].name.replace(/[ ]/g, "")).setAttribute("class", "");
+                }
+                // set new row to active
+                document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
+                // play new sound
+                getSound(1, audioFiles[i].path);
+                sound.play();
+            }
+
+            // if the same track was clicked twice clear lastClick
+            if(visual.music.title == audioFiles[i].name) {
+                // visual.music.title = '';
+            } else {
+                visual.music.title = audioFiles[i].name;
+                visual.music.duration = audioFiles[i].duration;
+            }
+
+        });
+    }
+}
+
+function disableMusicTblClickhandlers() {
+    for(let i = 0; i < audioFiles.length; i++) {
+        var id = audioFiles[i].name.replace(/[ ]/g, "");
+        $('#' + id).unbind();
+    }
+}
 /**
  * function to load clickhandlers for Text Subpage of
  * create Visualizations part
@@ -1533,106 +1744,7 @@ function loadTextClickhandlers() {
 }
 
 
-/**
- * function to load clickhandlers for Visualizations table
- */
-function loadVisTblClickhandlers() {
 
-    // if there was a visual selected before, show in table
-    if(visual.visualization != "") {
-        document.getElementById(visual.visualization).setAttribute("class", "is-selected");
-    }
-
-    for(let i = 0; i < visualizations.length; i++) {
-        $('#' + visualizations[i].name).on('click', function () {
-            if(visual.visualization != visualizations[i].name) {
-                // remove active from old row
-                if(visual.visualization != "") {
-                    document.getElementById(visual.visualization).setAttribute("class", "");
-                }
-                // set new row to active
-                document.getElementById(visualizations[i].name).setAttribute("class", "is-selected");
-                // load visualization
-                console.log("loadVis: " + visualizations[i].name);
-
-                document.getElementById("svg-container").innerHTML = "";
-                loadD3Visualization(visualizations[i].name);
-            }
-
-
-            visual.visualization = visualizations[i].name;
-
-        });
-    }
-}
-
-
-/**
- * function to load clickhandlers for music table
- */
-function loadMusicTblClickhandlders() {
-
-    // if there was a track selected before, show in table
-    if(visual.music.title != "") {
-        document.getElementById(visual.music.title).setAttribute("class", "is-selected");
-    }
-
-    for(let i = 0; i < audioFiles.length; i++) {
-        $('#' + audioFiles[i].name).on('click', function () {
-            // fade out warning
-            $('#no-song-warning').fadeOut(1000);
-            // if sound is loaded
-            if(sound != null) {
-                console.log("SOUND LOADED");
-                // stop sound
-                sound.stop();
-                // if last clicked soundfile doesn't equal currently clicked soundfile
-                if(visual.music.title != audioFiles[i].name) {
-                    // if visualization hasn't been chosen yet
-                    if(visual.visualization == "") {
-                        // display current track name and duration of track
-                        document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
-                        // show loading message
-                        document.getElementById('loading').setAttribute("class", "");
-                        // remove active from old row
-                    }
-                    if(visual.music.title != "") {
-                        document.getElementById(visual.music.title).setAttribute("class", "");
-                    }
-                    // set new row to active
-                    document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
-                    // play new sound
-                    getSound(1, audioFiles[i].path);
-                    sound.play();
-                }
-            // if no sound is loaded
-            } else {
-                console.log("SOUND -N O T- LOADED");
-                // if visualization hasn't been chosen yet
-                if(visual.visualization == "") {
-                    // display current track name and duration of track
-                    document.getElementById('text-scroll').innerHTML = svgScrollAni + audioFiles[i].name + " [" + convertTime(audioFiles[i].duration) + "]";
-                    // show loading message
-                    document.getElementById('loading').setAttribute("class", "");
-                }
-                // set new row to active
-                document.getElementById(audioFiles[i].name).setAttribute("class", "is-selected");
-                // play new sound
-                getSound(1, audioFiles[i].path);
-                sound.play();
-            }
-
-            // if the same track was clicked twice clear lastClick
-            if(visual.music.title == audioFiles[i].name) {
-                visual.music = '';
-            } else {
-                visual.music.title = audioFiles[i].name;
-                visual.music.duration = audioFiles[i].duration;
-            }
-
-        });
-    }
-}
 
 /**
  * Clickhandler for play/pause button
@@ -1645,6 +1757,15 @@ $('#play-pause').on('click', function () {
             sound.play();
         }
     }
+});
+
+/**
+ * Clickhandler for repeat button
+ */
+$("#play-stop").on("click", function () {
+   if(sound != null) {
+       sound.stop();
+   }
 });
 
 
@@ -1971,21 +2092,6 @@ function loadEmptyVisualization() {
 
 }
 
-/*
-function loadLogoVisualization() {
-
-    loadSvg("../images/0001-0200.svg", "svg-container");
-    document.getElementById("text-scroll").setAttribute("class", "is-hidden");
-
-    svg = d3.select("svg");
-
-    svgText = svg.selectAll("text")
-        .data(soundData)
-        .enter();
-
-    setSvgText();
-}
-*/
 
 /**
  * function to load Bar Visualization
