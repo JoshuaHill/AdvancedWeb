@@ -1,3 +1,24 @@
 body {
     filter: invert(100%);
 }
+
+#svg-container {
+    filter: invert(100%);
+    background-color: white;
+}
+
+.colorpicker {
+    filter: invert(100%);
+}
+
+.create-notification {
+    filter: invert(100%);
+}
+
+.field {
+    filter: invert(100%);
+}
+
+#open {
+    filter: invert(100%);
+}

@@ -11,7 +11,8 @@
 var galerie = [
     "../images/gallery/hello1.png",
     "../images/gallery/hello2.png",
-    "../images/gallery/hello3.png"
+    "../images/gallery/hello3.png",
+    "../images/gallery/hello4.png"
 ];
 
 // audio files
@@ -2366,6 +2367,10 @@ $(document).ready(function() {
             }
 
         }
+    }
+
+    if(window.location.href == "http://localhost:3000/index.html") {
+        document.getElementById("gal-img-length").innerHTML = galerie.length.toString();
     }
 
     /**
