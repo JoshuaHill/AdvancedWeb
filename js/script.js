@@ -166,7 +166,7 @@ function getSound(volume, audioSource) {
             document.getElementById('time-right').innerHTML = convertTime(sound.duration());
             document.getElementById('play-pause').setAttribute("class", "fa fa-pause");
 
-             document.getElementById("text-scroll").setAttribute("class", "is-hidden");
+             document.getElementById("text-scroll").setAttribute("class", "");
              document.getElementById('paused').setAttribute("class", "is-hidden");
             // update initial svg
             if(visPointer == 0 && visual.visualization == "") {
@@ -1106,7 +1106,7 @@ $('#stopBtn').click(function () {
 function loadHome() {
 
     if(document.getElementById('svg-container').innerHTML == "" && visual.visualization == "") {
-     loadSvg("../images/0001-0200.svg", "svg-container");
+     loadSvg("../images/logo-static.svg", "svg-container");
     }
 
     $('#create-controls').load(visPages[visPointer], function () {
@@ -1902,7 +1902,6 @@ function loadD3Visualization(visualization) {
             break;
         case "logo":
             loadSvg("../images/0001-0200.svg", "svg-container");
-            document.getElementById("text-scroll").setAttribute("class", "is-hidden");
             break;
         case "bars":
             initVisualization(50, 0);
@@ -2152,10 +2151,17 @@ function updateSvgText() {
 
     // Logo Visualization (non D3)
     if(visual.visualization == "logo") {
+
+        var color;
+        if(visual.text.color != "") {
+            color = visual.text.color;
+        } else {
+            color = "red";
+        }
         
         if(visual.text.title != "") {
             document.getElementById("svg-title").innerHTML = visual.text.title;
-            document.getElementById("svg-title").setAttribute("fill", visual.text.color);
+            document.getElementById("svg-title").setAttribute("fill", color);
             document.getElementById("svg-title").setAttribute("class", "");
         } else {
             document.getElementById("svg-title").setAttribute("class", "is-hidden");
@@ -2163,7 +2169,7 @@ function updateSvgText() {
 
         if(visual.text.duration != "") {
             document.getElementById("svg-duration").innerHTML = convertTime(visual.text.duration);
-            document.getElementById("svg-duration").setAttribute("fill", visual.text.color);
+            document.getElementById("svg-duration").setAttribute("fill", color);
             document.getElementById("svg-duration").setAttribute("class", "");
         } else {
             document.getElementById("svg-duration").setAttribute("class", "is-hidden");
@@ -2188,7 +2194,7 @@ function updateSvgText() {
 
 
             document.getElementById("svg-custom").innerHTML = visual.text.custom_text;
-            document.getElementById("svg-custom").setAttribute("fill", visual.text.color);
+            document.getElementById("svg-custom").setAttribute("fill", color);
             document.getElementById("svg-custom").setAttribute("font-size", getSvgTextSize(visual.text.custom_text) + 10);
             document.getElementById("svg-custom").setAttribute("x", textCenter);
             document.getElementById("svg-custom").setAttribute("class", "");
