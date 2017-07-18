@@ -216,6 +216,14 @@
     left: 2%;
 }
 
+.create-notification {
+    box-shadow: 5px 5px 10px grey;
+    width: 50%;
+    position: absolute;
+    bottom: 180px;
+    left: 25%;
+}
+
 .create-nav {
     color: black;
     alignment: center;

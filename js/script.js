@@ -1114,6 +1114,13 @@ function loadHome() {
         // create table for music or visualization
         if(visPointer == 0 || visPointer == 1) {
             createTable();
+            
+            $(".delete").on("click", function () {
+                $('#no-song-warning').fadeOut(1000, "swing", function () {
+                    this.setAttribute("class", "notification is-danger create-notification is-hidden");
+                    this.removeAttribute("style");
+                });
+            });
         }
 
         // loadclickhandler for background
@@ -1128,8 +1135,13 @@ function loadHome() {
 
         // Clickhandler for forward button
         $('#create-forward').on('click', function () {
-            visPointer++;
-            loadHome();
+            if((visPointer == 0 && visual.music.title == "") || (visPointer == 1 && visual.visualization == "")) {
+                document.getElementById("no-song-warning").setAttribute("class", "notification is-danger create-notification");
+            } else {
+                visPointer++;
+                loadHome();
+            }
+            
         });
 
         // Clickhandler for back button
@@ -1144,24 +1156,44 @@ function loadHome() {
             loadHome();
         });
         $('#bc-visual').on('click', function () {
-            visPointer = 1;
-            loadHome();
+            if(visPointer == 0 && visual.music.title == "") {
+                document.getElementById("no-song-warning").setAttribute("class", "notification is-danger create-notification");
+            } else {
+                visPointer = 1;
+                loadHome();
+            }
         });
         $('#bc-background').on('click', function () {
-            visPointer = 2;
-            loadHome();
+            if((visPointer == 0 && visual.music.title == "") || (visPointer == 1 && visual.visualization == "")) {
+                document.getElementById("no-song-warning").setAttribute("class", "notification is-danger create-notification");
+            } else {
+                visPointer = 2;
+                loadHome();
+            }
         });
         $('#bc-text').on('click', function () {
-            visPointer = 3;
-            loadHome();
+            if((visPointer == 0 && visual.music.title == "") || (visPointer == 1 && visual.visualization == "")) {
+                document.getElementById("no-song-warning").setAttribute("class", "notification is-danger create-notification");
+            } else {
+                visPointer = 3;
+                loadHome();
+            }
         });
         $('#bc-color').on('click', function () {
-            visPointer = 4;
-            loadHome();
+            if((visPointer == 0 && visual.music.title == "") || (visPointer == 1 && visual.visualization == "")) {
+                document.getElementById("no-song-warning").setAttribute("class", "notification is-danger create-notification");
+            } else {
+                visPointer = 4;
+                loadHome();
+            }
         });
         $('#bc-done').on('click', function () {
-            visPointer = 5;
-            loadHome();
+            if((visPointer == 0 && visual.music.title == "") || (visPointer == 1 && visual.visualization == "")) {
+                document.getElementById("no-song-warning").setAttribute("class", "notification is-danger create-notification");
+            } else {
+                visPointer = 5;
+                loadHome();
+            }
         });
     });
 
@@ -1546,6 +1578,8 @@ function loadMusicTblClickhandlders() {
 
     for(let i = 0; i < audioFiles.length; i++) {
         $('#' + audioFiles[i].name).on('click', function () {
+            // fade out warning
+            $('#no-song-warning').fadeOut(1000);
             // if sound is loaded
             if(sound != null) {
                 console.log("SOUND LOADED");
