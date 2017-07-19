@@ -157,7 +157,7 @@ var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\
  * @param volume (e.g. 0.5), audioSource
  * @returns sound
  */
-function getSound(volume, audioSource) {
+function getSound(volume, audioSource, getDuration) {
 
      sound = new Howl({
          src: [audioSource],
@@ -169,6 +169,10 @@ function getSound(volume, audioSource) {
 
              // enable clickhandlers
              loadMusicTblClickhandlders();
+
+             if(getDuration == true) {
+                 document.getElementById("table-body").lastChild.lastChild.innerHTML = convertTime(sound.duration());
+             }
 
             // update initial svg
             if(visPointer == 0 && visual.visualization == "") {
@@ -183,6 +187,7 @@ function getSound(volume, audioSource) {
             requestAnimationFrame(updateProgress);
          },
          onload: function () {
+
 
          },
          onpause: function () {
@@ -1220,6 +1225,10 @@ function loadHome() {
 }
 
 
+/**
+ * Function to initialize drag&drop functionality.
+ * This function attaches EventListeners to the drag&drop div
+ */
 function initDragDrop() {
     var dropzone = document.getElementById("dropzone");
     dropzone.addEventListener('dragover', handleDragOver, false);
@@ -1273,12 +1282,15 @@ function checkFileValidity(file) {
         var reader = new FileReader();
         reader.onload = function (event) {
 
+            /*
             if(sound != null) {
                 sound.stop();
             }
 
+
             getSound(1, event.target.result);
             sound.play();
+            */
 
             //audioFiles[3].path = event.target.result;
             //audioFiles[3].name = file.name;
@@ -1299,8 +1311,6 @@ function checkFileValidity(file) {
 
         };
         reader.readAsDataURL(file);
-
-
 
     }
 }
@@ -1589,7 +1599,7 @@ function loadMusicTblClickhandlders() {
 
     // if there was a track selected before, show in table
     if(visual.music.title != "" && visual.music.title != null) {
-        document.getElementById(visual.music.title).setAttribute("class", "is-selected");
+        document.getElementById(visual.music.title.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
     }
 
     for(let i = 0; i < audioFiles.length; i++) {
@@ -1599,6 +1609,14 @@ function loadMusicTblClickhandlders() {
             disableMusicTblClickhandlers();
             // fade out warning
             $('#no-song-warning').fadeOut(1000);
+
+            var getDuration;
+            if(audioFiles[i].duration == 0) {
+                getDuration = true;
+            } else {
+                getDuration = false;
+            }
+
             // if sound is loaded
             if(sound != null) {
                 console.log("SOUND LOADED");
@@ -1620,7 +1638,8 @@ function loadMusicTblClickhandlders() {
                     // set new row to active
                     document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
                     // play new sound
-                    getSound(1, audioFiles[i].path);
+
+                    getSound(1, audioFiles[i].path, getDuration);
                     sound.play();
                 } else {
                     sound.stop();
@@ -1643,7 +1662,7 @@ function loadMusicTblClickhandlders() {
                 // set new row to active
                 document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
                 // play new sound
-                getSound(1, audioFiles[i].path);
+                getSound(1, audioFiles[i].path, getDuration);
                 sound.play();
             }
 
