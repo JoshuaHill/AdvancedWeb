@@ -1351,6 +1351,22 @@ function checkFileValidity(file) {
     }
 
     function loadCustomSound() {
+
+        console.log(document.querySelector("#table-body > tr:nth-child(2)").innerHTML);
+
+        var activeSong = document.querySelector("#table-body > tr:nth-child(4)");
+        // check if custom song exists
+        if(activeSong != null) {
+            console.log("custom song exists");
+            // check if custom song is active
+            if(activeSong.getAttribute("class") == "is-selected") {
+                console.log("custom song is active");
+                sound.stop();
+                activeSong.setAttribute("class", "");
+            }
+        }
+
+
         var reader = new FileReader();
         reader.onload = function (event) {
 
@@ -1668,9 +1684,13 @@ function loadVisTblClickhandlers() {
  */
 function loadMusicTblClickhandlders() {
 
+    var element = null;
     // if there was a track selected before, show in table
     if(visual.music.title != "" && visual.music.title != null) {
-        document.getElementById(visual.music.title.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
+        element = document.getElementById(visual.music.title.replace(/[ ]/g, ""));
+        if(element != null) {
+            element.setAttribute("class", "is-selected");
+        }
     }
 
     for(let i = 0; i < audioFiles.length; i++) {
@@ -1704,7 +1724,9 @@ function loadMusicTblClickhandlders() {
                         // remove active from old row
                     }
                     if(visual.music.title != "" && visual.music.title != null) {
-                        document.getElementById(visual.music.title.replace(/[ ]/g, "")).setAttribute("class", "");
+                        if(element != null) {
+                            element.setAttribute("class", "is-selected");
+                        }
                     }
                     // set new row to active
                     document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
