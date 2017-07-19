@@ -7,6 +7,22 @@
  * Global Variables
  *
  *******************************************************************************/
+
+// production variable
+var systemEnvironment = [
+    {
+        "name":"mars",
+        "url":"https://mars.iuk.hdm-stuttgart.de/~jh147/AdvancedWeb/html"
+    },
+    {
+        "name":"local",
+        "url":"http://localhost:3000"
+    }
+];
+
+var sysEnvSet = 1;
+
+
 // gallery pictures
 var galerie = [
     "../images/gallery/hello1.png",
@@ -14,6 +30,7 @@ var galerie = [
     "../images/gallery/hello3.png",
     "../images/gallery/hello4.png"
 ];
+
 
 // audio files
 var audioFiles = [
@@ -49,6 +66,25 @@ var darkCssTheme = $("<link>", {
 
 // Browser info
 var browserLanguage = navigator.language;
+var browserInfo = [];
+var appCodeName = "appCodeName: " + navigator.appCodeName;
+var appName = "appName: " + navigator.appName;
+var appVersion = "appVersion: " + navigator.appVersion;
+var product = "product: " + navigator.product;
+var userAgent = "userAgent: " + navigator.userAgent;
+var windowInnerWidth = "inner width: " + window.innerWidth;
+var windowInnerHeight = "inner height: " + window.innerHeight;
+var screenTotalWidth = "total width: " + screen.width;
+var screenTotalHeight = "total height: " + screen.height;
+browserInfo.push(appCodeName);
+browserInfo.push(appName);
+browserInfo.push(appVersion);
+browserInfo.push(product);
+browserInfo.push(userAgent);
+browserInfo.push(windowInnerWidth);
+browserInfo.push(windowInnerHeight);
+browserInfo.push(screenTotalWidth);
+browserInfo.push(screenTotalHeight);
 
 // Variable für kontext-sensitives Formular
 var formContext = "mail";
@@ -2558,18 +2594,17 @@ function setSvgText() {
  *******************************************************************************/
 
 // Load on Startup
-// TODO alle localhost locations auf produktivsystem evtl anpassen
 $(document).ready(function() {
     // Check if Cookies are disabled
     if(navigator.cookieEnabled == false) {
         // if location is index or home show warning modal
-        if(window.location.href == "http://localhost:3000/index.html" || window.location.href == "http://localhost:3000/home.html") {
+        if(window.location.href == systemEnvironment[sysEnvSet].url + "/index.html" || window.location.href == systemEnvironment[sysEnvSet].url + "/home.html") {
             var modalDiv = document.createElement("div");
             $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-start.html", function() {
                 loadModalClickhandlers();
             });
         // if location is settings show danger modal
-        } else if(window.location.href == "http://localhost:3000/settings.html") {
+        } else if(window.location.href == systemEnvironment[sysEnvSet].url + "/settings.html") {
             var modalDiv = document.createElement("div");
             $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-settings.html", function() {
                 loadModalClickhandlers();
@@ -2604,28 +2639,28 @@ $(document).ready(function() {
         }
     }
 
-    if(window.location.href == "http://localhost:3000/index.html") {
+    if(window.location.href == systemEnvironment[sysEnvSet].url + "/index.html") {
         document.getElementById("gal-img-length").innerHTML = galerie.length.toString();
     }
 
     /**
      * Home Page startup
      */
-    if(window.location.href == "http://localhost:3000/home.html") {
+    if(window.location.href == systemEnvironment[sysEnvSet].url + "/home.html") {
         loadHome();
     }
 
     /**
      * Settings Page startup
      */
-    if(window.location.href == "http://localhost:3000/settings.html") {
+    if(window.location.href == systemEnvironment[sysEnvSet].url + "/settings.html") {
         loadSettingClickhandlers();
     }
 
     /**
      * About Page startup
      */
-    if(window.location.href == "http://localhost:3000/about.html") {
+    if(window.location.href == systemEnvironment[sysEnvSet].url + "/about.html") {
         loadImprint();
     }
 
@@ -2637,6 +2672,11 @@ $(document).ready(function() {
     var waitEle = document.getElementsByClassName("wait");
     for(let i = 0; i < waitEle.length; i++) {
         waitEle[i].style.visibility = "visible";
+    }
+
+    //TODO test area
+    for(let i = 0; i < browserInfo.length; i++) {
+        console.log(browserInfo[i]);
     }
 
 });
