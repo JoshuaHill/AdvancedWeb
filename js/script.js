@@ -1122,7 +1122,7 @@ function loadHome() {
         if(visPointer == 0 || visPointer == 1) {
             createTable();
             
-            $(".delete").on("click", function () {
+            $("#no-song-warning > .delete").on("click", function () {
                 $('#no-song-warning').fadeOut(1000, "swing", function () {
                     this.setAttribute("class", "notification is-danger create-notification is-hidden");
                     this.removeAttribute("style");
@@ -1243,7 +1243,6 @@ function selectFile(e) {
     console.log("Name: " + selectedFile.name);
     console.log("Type: " + selectedFile.type);
     console.log("Size: " + selectedFile.size);
-    console.log(selectedFile.length);
 
     checkFileValidity(selectedFile);
     
@@ -1276,21 +1275,94 @@ function checkFileValidity(file) {
         sizeValid = false;
     }
 
+    if(typeValid == false) {
+        console.log("filetype invalid");
+
+        var fileTypeError = document.getElementById("file-type-error");
+
+        if(fileTypeError == null) {
+            fileTypeError = document.createElement("div");
+            fileTypeError.setAttribute("class", "notification is-danger create-notification");
+            fileTypeError.setAttribute("id", "file-type-error");
+
+            fileTypeError.innerHTML = "<button class=\"delete\"></button>" +
+                "<strong>Falsches Dateiformat!</strong> <br>" +
+                "Es werden nur .mp3 und .ogg Dateien unterstützt.";
+
+            document.getElementById("create-controls").appendChild(fileTypeError);
+        } else {
+            fileTypeError.setAttribute("class", "notification is-danger create-notification");
+        }
+
+        $("#file-type-error > .delete").on("click", function () {
+            $("#file-type-error").fadeOut(1000, "swing", function () {
+                this.setAttribute("class", "notification is-danger create-notification is-hidden");
+                this.removeAttribute("style");
+            });
+        });
+
+    } else if(sizeValid == false) {
+        console.log("file size warning");
+
+        var fileSizeWarning = document.getElementById("file-size-warning");
+
+        if(fileSizeWarning == null) {
+            fileSizeWarning = document.createElement("div");
+            fileSizeWarning.setAttribute("class", "notification is-warning create-notification");
+            fileSizeWarning.setAttribute("id", "file-size-warning");
+
+            fileSizeWarning.innerHTML = "<button class=\"delete\"></button>" +
+                "<strong>Große Datei!</strong> <br>" +
+                "Die Dateigröße übersteigt die empfohlene Maximalgröße von <strong>5MB</strong>.<br>" +
+                "Zu große Dateien können zum Erreichen des Arbeitsspeicherlimits führen. Trotzdem fortfahren?<br>" +
+                "<button class=\"button\" id=\"ok-btn\">Ok</button>  <button class=\"button\" id=\"cancel-btn\">Abbrechen</button>";
+
+            document.getElementById("create-controls").appendChild(fileSizeWarning);
+        } else {
+            fileSizeWarning.setAttribute("class", "notification is-warning create-notification");
+        }
+
+        $("#file-size-warning > .delete").on("click", function () {
+            $("#file-size-warning").fadeOut(1000, "swing", function () {
+                this.setAttribute("class", "notification is-warning create-notification is-hidden");
+                this.removeAttribute("style");
+            });
+        });
+        $("#cancel-btn").on("click", function () {
+            $("#file-size-warning").fadeOut(1000, "swing", function () {
+                this.setAttribute("class", "notification is-warning create-notification is-hidden");
+                this.removeAttribute("style");
+            });
+        });
+        $("#ok-btn").on("click", function () {
+            $("#file-size-warning").fadeOut(1000, "swing", function () {
+                this.setAttribute("class", "notification is-warning create-notification is-hidden");
+                this.removeAttribute("style");
+            });
+
+            sizeValid = true;
+            loadCustomSound();
+        });
+    }
+
     // if file is valid
     if(typeValid && sizeValid) {
+        loadCustomSound();
+    }
 
+    function loadCustomSound() {
         var reader = new FileReader();
         reader.onload = function (event) {
 
             /*
-            if(sound != null) {
-                sound.stop();
-            }
+             if(sound != null) {
+             sound.stop();
+             }
 
 
-            getSound(1, event.target.result);
-            sound.play();
-            */
+             getSound(1, event.target.result);
+             sound.play();
+             */
 
             //audioFiles[3].path = event.target.result;
             //audioFiles[3].name = file.name;
@@ -1311,7 +1383,6 @@ function checkFileValidity(file) {
 
         };
         reader.readAsDataURL(file);
-
     }
 }
 
@@ -1678,12 +1749,20 @@ function loadMusicTblClickhandlders() {
     }
 }
 
+
+/**
+ * function to unbind all clickhandlers from music selection table.
+ * This function gets called to prevent user input, while a sound file
+ * is still loading.
+ */
 function disableMusicTblClickhandlers() {
     for(let i = 0; i < audioFiles.length; i++) {
         var id = audioFiles[i].name.replace(/[ ]/g, "");
         $('#' + id).unbind();
     }
 }
+
+
 /**
  * function to load clickhandlers for Text Subpage of
  * create Visualizations part
@@ -1763,8 +1842,6 @@ function loadTextClickhandlers() {
 }
 
 
-
-
 /**
  * Clickhandler for play/pause button
  */
@@ -1778,8 +1855,9 @@ $('#play-pause').on('click', function () {
     }
 });
 
+
 /**
- * Clickhandler for repeat button
+ * Clickhandler for stop button
  */
 $("#play-stop").on("click", function () {
    if(sound != null) {
