@@ -170,8 +170,18 @@ function getSound(volume, audioSource, getDuration) {
              // enable clickhandlers
              loadMusicTblClickhandlders();
 
+             // update duration for custom sounds
              if(getDuration == true) {
                  document.getElementById("table-body").lastChild.lastChild.innerHTML = convertTime(sound.duration());
+                 if(audioFiles[3] != null) {
+                     audioFiles[3].duration = sound.duration();
+                     visual.music.duration = sound.duration();
+                     var textScroll = document.getElementById('text-scroll');
+                     if(textScroll != null) {
+                         textScroll.innerHTML = svgScrollAni + audioFiles[3].name + " [" + convertTime(audioFiles[3].duration) + "]";
+                     }
+
+                 }
              }
 
             // update initial svg
