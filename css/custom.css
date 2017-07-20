@@ -317,6 +317,10 @@
     font-weight: bold;
 }
 
+#svg-box {
+    padding: 0px;
+}
+
 /**
 * Home - Music - Table
 **/

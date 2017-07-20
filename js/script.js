@@ -2184,20 +2184,25 @@ function loadD3Visualization(visualization) {
         case "none":
             initVisualization(1, 0);
             loadEmptyVisualization();
+            resizeSvg();
             break;
         case "logo":
             loadSvg("../images/0001-0200.svg", "svg-container");
+            resizeSvg();
             break;
         case "bars":
             initVisualization(50, 0);
             loadBarVisualization();
+            resizeSvg();
             break;
         case "waves":
             loadWaveVisualization();
+            // resizeSvg();
             break;
         case "bubbles":
             initVisualization(25, 0);
             loadBubblesVisualization();
+            resizeSvg();
             break;
     }
 
@@ -2582,6 +2587,21 @@ function setSvgText() {
             .attr("fill", color)
             .text(visual.text.custom_text);
     }
+}
+
+/**
+ * function to make svgs responsive
+ * based on https://stackoverflow.com/a/9539361
+ */
+function resizeSvg() {
+    var svgSelect = $("svg"),
+        aspect = svgSelect.width() / svgSelect.height(),
+        container = svgSelect.parent();
+    $(window).on("resize", function() {
+        var targetWidth = container.width();
+        svgSelect.attr("width", targetWidth);
+        svgSelect.attr("height", Math.round(targetWidth / aspect));
+    }).trigger("resize");
 }
 
 
