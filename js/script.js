@@ -1538,7 +1538,23 @@ function loadBackgroundSetup() {
                 document.getElementById('gradient-direction-info').setAttribute("class", "");
                 document.getElementById('gradient-color-info').setAttribute("class", "");
 
+
+                var value = $("#direction").val();
+
+                if(value.localeCompare("Von Links") == 0) {
+                    visual.background.direction.name = "right";
+                } else if (value.localeCompare("Von Rechts") == 0) {
+                    visual.background.direction.name = "left";
+                } else if (value.localeCompare("Von Oben") == 0) {
+                    visual.background.direction.name = "bottom";
+                } else if (value.localeCompare("Von Unten") == 0) {
+                    visual.background.direction.name = "top";
+                }
+
+                visual.background.direction.text = value;
+                visual.background.color_two = $('#color2').val();
             }
+            setSvgBackground();
     });
 
     // Select color1
@@ -1585,19 +1601,22 @@ function loadBackgroundSetup() {
 
         visual.background.direction.text = val;
 
-        createGradient();
+        // createGradient();
+        setSvgBackground();
     });
 
     // select color2
     $('#color2').on('click', function () {
         var color_two = $(this).val();
         visual.background.color_two = color_two;
-        createGradient();
+        // createGradient();
+        setSvgBackground();
     });
     $('#color2').on('change', function () {
         var color_two = $(this).val();
         visual.background.color_two = color_two;
-        createGradient();
+        // createGradient();
+        setSvgBackground();
     });
 
 
@@ -1608,7 +1627,7 @@ function loadBackgroundSetup() {
  */
 function setSvgBackground() {
 
-    if(visual.background.type != "gradient") {
+    if(visual.background.type.name != "gradient") {
         $('svg').css("background-color", visual.background.color_one);
     } else {
         createGradient();
@@ -1731,7 +1750,8 @@ function loadVisTblClickhandlers() {
                 console.log("loadVis: " + visualizations[i].name);
 
                 document.getElementById("svg-container").innerHTML = "";
-                loadD3Visualization(visualizations[i].name);
+                visual.visualization = visualizations[i].name;
+                loadVisualization(visualizations[i].name);
             }
 
 
@@ -1977,6 +1997,8 @@ function loadOptionsClickhandlers() {
         visual.options.color = color;
 
         // change svg color
+        loadVisualization(visual.visualization);
+       // setSvgBackground();
     });
 
     $("#color").on("click", function () {
@@ -1984,6 +2006,8 @@ function loadOptionsClickhandlers() {
         visual.options.color = color;
 
         // change svg color
+        loadVisualization(visual.visualization);
+        // setSvgBackground();
     });
 
     $(".input").on("input", function () {
@@ -1991,9 +2015,12 @@ function loadOptionsClickhandlers() {
 
         if(bufferLength < 1 || bufferLength > 200) {
             // out of bounds error
+            
         } else {
             visual.options.buffer_length = bufferLength;
             // update svg
+            loadVisualization(visual.visualization);
+            // setSvgBackground();
         }
 
     });
@@ -2274,21 +2301,45 @@ function loadLocale() {
  *
  * @param visualization
  */
-function loadD3Visualization(visualization) {
+function loadVisualization(visualization) {
+
+    // clear SVG
+    document.getElementById("svg-container").innerHTML = "";
+
+    var bufferLength = visual.options.buffer_length;
+
+    if(bufferLength == "" || bufferLength == null) {
+
+        if(visualization == "bars") {
+            bufferLength = 50;
+        } else if(visualization == "bubbles") {
+            bufferLength = 25;
+        } else {
+            bufferLength = 0;
+        }
+
+    } else {
+        bufferLength = parseInt(bufferLength);
+    }
+
 
     switch(visualization) {
         case "none":
             initVisualization(1, 0);
             loadEmptyVisualization();
+            setSvgBackground();
             resizeSvg();
             break;
         case "logo":
             loadSvg("../images/0001-0200.svg", "svg-container");
+            setSvgBackground();
+            updateSvgText();
             resizeSvg();
             break;
         case "bars":
-            initVisualization(50, 0);
+            initVisualization(bufferLength, 0);
             loadBarVisualization();
+            setSvgBackground();
             resizeSvg();
             break;
         case "waves":
@@ -2296,8 +2347,9 @@ function loadD3Visualization(visualization) {
             // resizeSvg();
             break;
         case "bubbles":
-            initVisualization(25, 0);
+            initVisualization(bufferLength, 0);
             loadBubblesVisualization();
+            setSvgBackground();
             resizeSvg();
             break;
     }
@@ -2401,6 +2453,14 @@ function loadBarVisualization() {
  */
 function runBarVisualization() {
 
+    var fillColor;
+
+    if(visual.options.color != "" && visual.options.color != null) {
+        fillColor = visual.options.color;
+    } else {
+        fillColor = "#00D1B2";
+    }
+
     // requestAnimationFrame will make sure loop doesn't run too fast
     requestAnimationFrame(runBarVisualization);
 
@@ -2417,7 +2477,7 @@ function runBarVisualization() {
         })
         // fill with color (if only a static color is used this can
         // be moved to loadBarVisualization method for better performance)
-        .attr('fill', "#00D1B2");
+        .attr('fill', fillColor);
 }
 
 /**
@@ -2488,6 +2548,14 @@ function loadBubblesVisualization() {
  */
 function runBubblesVisualization() {
 
+    var fillColor;
+
+    if(visual.options.color != "" && visual.options.color != null) {
+        fillColor = visual.options.color;
+    } else {
+        fillColor = "#00D1B2";
+    }
+
     // requestAnimationFrame will make sure loop doesn't run too fast
     requestAnimationFrame(runBubblesVisualization);
 
@@ -2507,7 +2575,7 @@ function runBubblesVisualization() {
 
             return ("rgb(" + red + "," + green + ", " + blue +")");
         */
-            return "#00D1B2";
+            return fillColor;
         });
 
 
@@ -2575,11 +2643,8 @@ function updateSvgText() {
 
     // D3 Visualization
     } else {
-        // clear svg
-        document.getElementById("svg-container").innerHTML = "";
-
-        loadD3Visualization(visual.visualization);
-        setSvgBackground();
+        loadVisualization(visual.visualization);
+       // setSvgBackground();
 
     }
 }
