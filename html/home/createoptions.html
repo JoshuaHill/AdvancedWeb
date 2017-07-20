@@ -1,4 +1,4 @@
-<h1 class="title">Farben</h1>
+<h1 class="title">Optionen</h1>
 <hr>
 <div class="columns fullheight">
     <div class="column is-6">
@@ -7,34 +7,13 @@
                 <p class="chevron-btn" id="create-back"><i class="fa fa-chevron-left" aria-hidden="true"></i></p>
             </div>
             <div class="column is-11">
-                <div class="field">
-                    <p class="control">
-                        <span class="select">
-                          <select>
-                            <option>Kein</option>
-                            <option>Dateiname</option>
-                            <option>Eigener</option>
-                          </select>
-                        </span>
-                    </p>
-                </div>
 
                 <input type="color" class="colorpicker" id="color" value="#ff0000">
                 <br>
                 <br>
                 <div class="field">
                     <p class="control">
-                        <span class="select">
-                          <select>
-                            <option>Oben</option>
-                            <option>Unten</option>
-                          </select>
-                        </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control">
-                        <input class="input" type="text" placeholder="Text input">
+                        <input class="input" type="text" placeholder="Zahl eingeben">
                     </p>
                 </div>
 
@@ -44,13 +23,11 @@
     <div class="column is-6">
         <div class="columns fullheight">
             <div class="column is-11">
-                <p>Text wählen</p>
-                <br>
-                <p>Farbe wählen</p>
-                <br>
-                <p>Position wählen</p>
-                <br>
-                <p>Text eingeben</p>
+                <div id="options-text">
+                    <p>Farbe der Visualisierung</p>
+                    <br>
+                    <p id="buffer-text">Bufferlänge <span id="buffer-length"></span></p>
+                </div>
             </div>
             <div class="column is-1 create-nav">
                 <p class="chevron-btn" id="create-forward"><i class="fa fa-chevron-right" aria-hidden="true"></i></p>

@@ -134,9 +134,9 @@ var visual = {
         "color":"",
         "position":""
     },
-    "color": {
-        "color_one":"",
-        "color_two":""
+    "options": {
+        "color":"",
+        "buffer_length":""
     }
 
 };
@@ -159,11 +159,11 @@ var visualizations = [
         name_long: "Equalizer Bars",
         description: "Klassische Equalizer Darstellung."
     },
-    {
+    /*{
         name: "waves",
         name_long: "Soundwaves",
         description: "Ton in Wellenform dargestellt."
-    },
+    },*/
     {
         name: "bubbles",
         name_long: "Bubbles",
@@ -1202,6 +1202,11 @@ function loadHome() {
         if(visPointer == 3) {
             loadTextClickhandlers();
         }
+        
+        // load clickhandler for options
+        if(visPointer == 4) {
+            loadOptionsClickhandlers();
+        }
 
         // Clickhandler for forward button
         $('#create-forward').on('click', function () {
@@ -1916,6 +1921,85 @@ function loadTextClickhandlers() {
            updateSvgText();
        }
     });
+
+}
+
+
+function loadOptionsClickhandlers() {
+    
+    var visualization = visual.visualization;
+
+    if(visual.options.color != "" && visual.options.color != null) {
+        document.getElementById("color").setAttribute("value", visual.options.color);
+    }
+
+    if(visual.options.buffer_length != "" && visual.options.buffer_length != null) {
+        document.getElementsByClassName("input")[0].setAttribute("value", visual.options.buffer_length);
+    }
+
+    // if no visualization
+    if(visualization == null || visualization == "" || visualization == "none") {
+        // hide all elements
+        document.getElementById("color").setAttribute("class", "colorpicker is-hidden");
+        document.getElementsByClassName("field")[0].setAttribute("class", "field is-hidden");
+        document.getElementById("options-text").setAttribute("class", "is-hidden");
+    } else if(visual.visualization == "logo") {
+        // hide buffer length
+        document.getElementsByClassName("field")[0].setAttribute("class", "field is-hidden");
+        document.getElementById("buffer-text").setAttribute("class", "is-hidden");
+        // unhide color if hidden
+        document.getElementById("color").setAttribute("class", "colorpicker ");
+        document.getElementById("options-text").setAttribute("class", "");
+    } else {
+        // unhide all elements
+        document.getElementById("color").setAttribute("class", "colorpicker ");
+        document.getElementById("options-text").setAttribute("class", "");
+        document.getElementsByClassName("field")[0].setAttribute("class", "field");
+        document.getElementById("buffer-text").setAttribute("class", "");
+
+        if(visual.visualization == "bars") {
+            document.getElementById("buffer-length").innerHTML = "1 - 200 (Standard = 50)";
+            if(visual.options.buffer_length == "") {
+                document.getElementsByClassName("input")[0].setAttribute("value", visual.options.buffer_length);
+                visual.options.buffer_length = "50";
+            }
+        } else if(visual.visualization == "bubbles") {
+            document.getElementById("buffer-length").innerHTML = "1 - 200 (Standard = 25)";
+            if(visual.options.buffer_length == "") {
+                document.getElementsByClassName("input")[0].setAttribute("value", visual.options.buffer_length);
+                visual.options.buffer_length = "25";
+            }
+        }
+    }
+
+    $("#color").on("change", function () {
+        var color = $(this).val();
+        visual.options.color = color;
+
+        // change svg color
+    });
+
+    $("#color").on("click", function () {
+        var color = $(this).val();
+        visual.options.color = color;
+
+        // change svg color
+    });
+
+    $(".input").on("input", function () {
+       var bufferLength = $(this).val();
+
+        if(bufferLength < 1 || bufferLength > 200) {
+            // out of bounds error
+        } else {
+            visual.options.buffer_length = bufferLength;
+            // update svg
+        }
+
+    });
+
+
+
 
 }
 
