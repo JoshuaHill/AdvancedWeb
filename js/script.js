@@ -1159,7 +1159,8 @@ $('#stopBtn').click(function () {
 function loadHome() {
 
     if(document.getElementById('svg-container').innerHTML == "" && visual.visualization == "") {
-     loadSvg("../images/logo-static.svg", "svg-container");
+        loadSvg("../images/logo-static.svg", "svg-container");
+        resizeSvg();
     }
 
     $('#create-controls').load(visPages[visPointer], function () {
