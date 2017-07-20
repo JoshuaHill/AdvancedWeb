@@ -286,6 +286,9 @@ function getAudioData() {
  *
  *******************************************************************************/
 
+/**
+ * function to load clickhandler for modals
+ */
 function loadModalClickhandlers() {
     // close modal btn oben rechts im browser
     $('.modal-close').on('click', function () {
@@ -302,6 +305,14 @@ function loadModalClickhandlers() {
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
     });
 
+}
+
+
+function showModal(htmlpath) {
+    var modalDiv = document.createElement("div");
+    $(document.body.appendChild(modalDiv)).load(htmlpath, function() {
+        loadModalClickhandlers();
+    });
 }
 
 
@@ -2618,16 +2629,10 @@ $(document).ready(function() {
     if(navigator.cookieEnabled == false) {
         // if location is index or home show warning modal
         if(window.location.href == systemEnvironment[sysEnvSet].url + "/index.html" || window.location.href == systemEnvironment[sysEnvSet].url + "/home.html") {
-            var modalDiv = document.createElement("div");
-            $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-start.html", function() {
-                loadModalClickhandlers();
-            });
+            showModal("modals/cookie-disabled-start.html");
         // if location is settings show danger modal
         } else if(window.location.href == systemEnvironment[sysEnvSet].url + "/settings.html") {
-            var modalDiv = document.createElement("div");
-            $(document.body.appendChild(modalDiv)).load("modals/cookies-disabled-settings.html", function() {
-                loadModalClickhandlers();
-            });
+            showModal("modals/cookie-disabled-settings.html");
         }
     // if cookies are enabled check if cookies are set
     } else {
@@ -2666,7 +2671,16 @@ $(document).ready(function() {
      * Home Page startup
      */
     if(window.location.href == systemEnvironment[sysEnvSet].url + "/home.html") {
+        if(window.innerWidth < 1192) {
+            showModal("modals/low-screen-width.html");
+            $(window).on("resize", function() {
+               if(window.innerWidth >= 1192) {
+                   document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+               }
+            });
+        }
         loadHome();
+
     }
 
     /**
