@@ -103,7 +103,7 @@ var visPages = [
     "home/createvisual.html",
     "home/createbackground.html",
     "home/createtext.html",
-    "home/createcolor.html",
+    "home/createoptions.html",
     "home/createfinished.html"
 ];
 var visPointer = 0;
@@ -1249,7 +1249,7 @@ function loadHome() {
                 loadHome();
             }
         });
-        $('#bc-color').on('click', function () {
+        $('#bc-options').on('click', function () {
             if((visPointer == 0 && visual.music.title == "") || (visPointer == 1 && visual.visualization == "")) {
                 document.getElementById("no-song-warning").setAttribute("class", "notification is-danger create-notification");
             } else {
