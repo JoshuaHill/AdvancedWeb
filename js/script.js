@@ -1770,9 +1770,7 @@ function loadMusicTblClickhandlders() {
                         // remove active from old row
                     }
                     if(visual.music.title != "" && visual.music.title != null) {
-                        if(element != null) {
-                            element.setAttribute("class", "is-selected");
-                        }
+                        document.getElementById(visual.music.title.replace(/[ ]/g, "")).setAttribute("class", "");
                     }
                     // set new row to active
                     document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
