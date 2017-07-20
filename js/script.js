@@ -312,6 +312,7 @@ function showModal(htmlpath) {
     var modalDiv = document.createElement("div");
     $(document.body.appendChild(modalDiv)).load(htmlpath, function() {
         loadModalClickhandlers();
+        document.getElementById("current-display-width").innerHTML = window.innerWidth.toString();
     });
 }
 
@@ -1208,6 +1209,10 @@ function loadHome() {
             loadOptionsClickhandlers();
         }
 
+        if(visPointer == 5) {
+            convertVisualToUrl();
+        }
+
         // Clickhandler for forward button
         $('#create-forward').on('click', function () {
             if((visPointer == 0 && visual.music.title == "") || (visPointer == 1 && visual.visualization == "")) {
@@ -1945,6 +1950,9 @@ function loadTextClickhandlers() {
 }
 
 
+/**
+ * function to load clickhandlers for options subsection
+ */
 function loadOptionsClickhandlers() {
     
     var visualization = visual.visualization;
@@ -2206,7 +2214,14 @@ function stopGalleryPlayback() {
 }
 
 
+function convertVisualToUrl() {
+    var recursiveEncoded = $.param(visual);
+    var recursiveDecoded = decodeURIComponent($.param(visual));
 
+    console.log("VIS OBJ: " + visual);
+    console.log("REC ENC: " + recursiveEncoded);
+    console.log("REC DEC: " + recursiveDecoded);
+}
 
 
 /*******************************************************************************
