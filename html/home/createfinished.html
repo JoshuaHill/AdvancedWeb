@@ -1,5 +1,23 @@
 <h1 class="title">Fertig</h1>
 <hr>
+<div class="notification is-success">
+    <p id="share-link">Die erstellte Visualisierung kann über <strong><a id="create-link">diesen Link</a></strong> geteilt werden.<br></p>
+</div>
+<div class="notification is-danger is-hidden" id="long-url">
+    <p>
+        Der generierte Link zum teilen der Visualisierung beträgt <strong><span id="url-length"></span> Zeichen</strong>. <br>
+        Die maximale Zeichenanzahl beträgt <strong>2000 Zeichen</strong>. <br><br>
+        Die Zeichenanzahl kann reduziert werden, <br>
+        indem der eigene Text reduziert oder weggelassen wird.
+    </p>
+</div>
+<div class="notification is-danger is-hidden" id="custom-song">
+    <p>
+        Visualisierungen mit eigenen Songs können nicht über einen Link geteilt werden.
+        Um die Visualisierung teilen zu können muss einer der drei zur Verfügung gestellten
+        Songs <strong>"chill"</strong>, <strong>"classy"</strong> oder <strong>"upbeat"</strong> verwendet werden.
+    </p>
+</div>
 <div class="columns fullheight">
     <div class="column is-6">
         <div class="columns fullheight">
@@ -22,6 +40,8 @@
         </div>
     </div>
 </div>
+
+
 
 <div class="create-progress">
     <progress class="progress is-primary" value="100" max="100">100%</progress>

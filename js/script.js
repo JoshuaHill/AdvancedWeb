@@ -2213,14 +2213,34 @@ function stopGalleryPlayback() {
     $('#btn-gal-play').removeClass('selected');
 }
 
-
+/**
+ * This function creates a url from the visual object
+ */
 function convertVisualToUrl() {
     var recursiveEncoded = $.param(visual);
-    var recursiveDecoded = decodeURIComponent($.param(visual));
+    var url;
 
-    console.log("VIS OBJ: " + visual);
-    console.log("REC ENC: " + recursiveEncoded);
-    console.log("REC DEC: " + recursiveDecoded);
+    url = systemEnvironment[sysEnvSet].url + "/home.html?" + recursiveEncoded;
+
+    // just a precaution, length should normally not be > 2000
+    if(url.length > 2000) {
+        document.getElementById("url-length").innerHTML = url.length.toString();
+        document.getElementById("long-url").setAttribute("class", "");
+        document.getElementById("share-link").setAttribute("class", "is-hidden");
+    } else {
+        document.getElementById("long-url").setAttribute("class", "is-hidden");
+    }
+
+    // no sharing of custom music possible since it is all in the frontend
+    if(audioFiles[3] != null && visual.music.title == audioFiles[3].name) {
+        document.getElementById("custom-song").setAttribute("class", "");
+        document.getElementById("share-link").setAttribute("class", "is-hidden");
+    } else {
+        document.getElementById("share-link").setAttribute("class", "");
+    }
+
+    document.getElementById("create-link").setAttribute("href", url);
+
 }
 
 
@@ -2787,6 +2807,27 @@ function resizeSvg() {
  *
  *******************************************************************************/
 
+/**
+ * function to load up saved visualization
+ */
+function loadSavedVisualization() {
+
+    var soundPath;
+
+    for(let i = 0; i < audioFiles.length; i++) {
+        if(visual.music.title == audioFiles[i].name){
+            soundPath = audioFiles[i].path;
+        }
+    }
+
+    getSound(1, soundPath, false);
+    loadHome();
+    loadVisualization(visual.visualization);
+    sound.play();
+
+}
+
+
 // Load on Startup
 $(document).ready(function() {
     // Check if Cookies are disabled
@@ -2844,8 +2885,29 @@ $(document).ready(function() {
             });
         }
         loadHome();
-
     }
+
+    /**
+     * load custom visualization from url string
+     */
+
+    if(window.location.href.startsWith(systemEnvironment[sysEnvSet].url + "/home.html?")) {
+
+        var encodedUrl = window.location.href.split("?")[1];
+        visual = deparam(encodedUrl);
+
+        if(window.innerWidth < 1192) {
+            showModal("modals/low-screen-width.html");
+            $(window).on("resize", function() {
+                if(window.innerWidth >= 1192) {
+                    document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+                }
+            });
+        }
+
+        loadSavedVisualization();
+    }
+
 
     /**
      * Settings Page startup
