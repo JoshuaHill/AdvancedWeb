@@ -24,7 +24,7 @@ var systemEnvironment = [
     }
 ];
 
-var sysEnvSet = 0;
+var sysEnvSet = 2;
 
 
 // gallery pictures
