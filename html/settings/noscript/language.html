@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Muse:Viz - Settings</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--
+    <link rel="stylesheet" type="text/css" href="../css/bulma.min.css">
+    -->
+    <link rel="stylesheet" type="text/css" href="../../css/bulma043.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/custom.css">
+</head>
+
+<style>
+    .wait {
+        visibility: hidden;
+    }
+</style>
+
+<body class="wait">
+<section class="hero is-fullheight is-default is-bold">
+    <div class="hero-head">
+        <div class="container">
+            <nav class="nav has-shadow">
+                <div class="container">
+                    <div class="nav-left">
+                        <a class="nav-item" href="index.html">
+                            <img src="../../images/museviz.png" alt="muse:viz">
+                        </a>
+                    </div>
+            <span class="nav-toggle">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+                    <div class="nav-right nav-menu">
+                        <a class="nav-item is-tab" href="../../home.html">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span class="nav-text">Home</span>
+                        </a>
+                        <a class="nav-item is-tab is-active" href="../../settings.html">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <span class="nav-text" data-i18n="nav-menu.settings">Einstellungen</span>
+                        </a>
+                        <a class="nav-item is-tab" href="../../contact.html">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <span class="nav-text" data-i18n="nav-menu.contact">Kontakt</span>
+                        </a>
+                        <a class="nav-item is-tab" href="../../about.html">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            <span class="nav-text">About</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="title-bar">
+        <h1 class="title is-1" data-i18n="title-bar.settings">Einstellungen</h1>
+    </div>
+    <div class="tabs is-boxed about-tabs">
+        <ul>
+            <li id="settings-display">
+                <a href="display.html">
+                    <span class="tabs-text" data-i18n="tabs.display">Darstellung</span>
+                </a>
+            </li>
+            <li class="is-active" id="settings-language">
+                <a href="language.html">
+                    <span class="tabs-text" data-i18n="tabs.language">Sprache</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns" id="settings-content">
+                <!-- Add Content here -->
+                <div class="column is-6">
+
+                    <div class="field is-grouped-centered">
+                        <p class="control">
+            <span class="select is-medium">
+              <select id="lang-sel">
+                <option>German</option>
+                <option>English</option>
+              </select>
+            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="column is-6 test">
+
+                    <div class="notification no-js is is-danger">
+                        <h2 class="subtitle">
+                            JavaScript ist deaktiviert!
+                        </h2>
+                        <p>
+                            Um Einstellungen vornehmen zu können, muss JavaScript aktiviert sein.
+                        </p>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p><span class="icon is-small"><i class="fa fa-copyright"></i></span>Joshua Hill 2017</p>
+                <p><span data-i18n="footer.github">Quelltext auf Github anschauen. </span>
+                    <a class="icon" href="https://github.com/JoshuaHill/AdvancedWeb">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </p>
+                <p>
+                    <a href="../../about.html" data-i18n="tabs.imprint">Impressum</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</section>
+
+<!-- D3 JS -->
+<script src="../js/d3.min.js"></script>
+<!-- Howler -->
+<script src="../js/howler/howler.min.js"></script>
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+<!-- i18next for jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/8.1.0/i18next.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-i18next/1.2.0/jquery-i18next.min.js" ></script>
+<script src="../js/i18nextXHRBackend.min.js"></script>
+<!-- custom script -->
+<script src="../js/script.js"></script>
+
+<noscript>
+    <style type="text/css">.wait { visibility: visible; }</style>
+    <style type="text/css">.is-hidden { display: block !important;}</style>
+</noscript>
+
+</body>
+</html>

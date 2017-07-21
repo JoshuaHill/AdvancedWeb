@@ -9,17 +9,14 @@
     <!--
     <link rel="stylesheet" type="text/css" href="../css/bulma.min.css">
     -->
-    <link rel="stylesheet" type="text/css" href="../css/bulma043.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/base.css">
-    <link rel="stylesheet" type="text/css" href="../css/custom.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bulma043.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/custom.css">
 </head>
 
 <style>
     .wait {
         visibility: hidden;
-    }
-    .no-js {
-        display: none !important;
     }
 </style>
 
@@ -31,7 +28,7 @@
                 <div class="container">
                     <div class="nav-left">
                         <a class="nav-item" href="index.html">
-                            <img src="../images/museviz.png" alt="muse:viz">
+                            <img src="../../images/museviz.png" alt="muse:viz">
                         </a>
                     </div>
             <span class="nav-toggle">
@@ -40,19 +37,19 @@
               <span></span>
             </span>
                     <div class="nav-right nav-menu">
-                        <a class="nav-item is-tab" href="home.html">
+                        <a class="nav-item is-tab" href="../../home.html">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span class="nav-text">Home</span>
                         </a>
-                        <a class="nav-item is-tab" href="settings.html">
+                        <a class="nav-item is-tab" href="../../settings.html">
                             <i class="fa fa-cog" aria-hidden="true"></i>
                             <span class="nav-text" data-i18n="nav-menu.settings">Einstellungen</span>
                         </a>
-                        <a class="nav-item is-tab is-active" href="contact.html">
+                        <a class="nav-item is-tab is-active" href="../../contact.html">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                             <span class="nav-text" data-i18n="nav-menu.contact">Kontakt</span>
                         </a>
-                        <a class="nav-item is-tab" href="about.html">
+                        <a class="nav-item is-tab" href="../../about.html">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                             <span class="nav-text">About</span>
                         </a>
@@ -67,24 +64,18 @@
         <h1 class="title is-1" data-i18n="title-bar.contact">Kontakt</h1>
     </div>
     <div class="tabs is-boxed about-tabs">
-            <ul>
-                <li class="is-active" id="contact-mail">
-                    <a class="js-ok">
-                        <span class="tabs-text">Mail</span>
-                    </a>
-                    <a class="no-js" href="contact/noscript/mail.html">
-                        <span class="tabs-text">Mail</span>
-                    </a>
-                </li>
-                <li id="contact-phone">
-                    <a class="js-ok">
-                        <span  class="tabs-text" data-i18n="tabs.phone">Telefon</span>
-                    </a>
-                    <a class="no-js" href="contact/noscript/phone.html">
-                        <span  class="tabs-text" data-i18n="tabs.phone">Telefon</span>
-                    </a>
-                </li>
-            </ul>
+        <ul>
+            <li class="is-active" id="contact-mail">
+                <a href="mail.html">
+                    <span class="tabs-text">Mail</span>
+                </a>
+            </li>
+            <li id="contact-phone">
+                <a href="phone.html">
+                    <span  class="tabs-text" data-i18n="tabs.phone">Telefon</span>
+                </a>
+            </li>
+        </ul>
     </div>
     <div class="hero-body">
         <div class="container has-text-centered">
@@ -97,26 +88,26 @@
                                 <div class="field">
                                     <label class="label" style="text-align: left">Antwort per:</label>
                                     <p class="control">
-                                        <span class="select">
-                                          <select>
-                                            <option selected="selected">Mail</option>
-                                            <option>Telefon</option>
-                                          </select>
-                                        </span>
+            <span class="select">
+              <select>
+                <option selected="selected">Mail</option>
+                <option>Telefon</option>
+              </select>
+            </span>
                                     </p>
                                 </div>
                                 <div class="field">
                                     <label class="label" style="text-align: left">Name</label>
                                     <p class="control has-icons-left has-icons-right">
                                         <input name="formName" id="input-name" class="input" type="text" placeholder="Text input" value="name">
-                                    <span class="icon is-small is-left">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                        <span id="warning-name" class="is-hidden">
-                                            <span class="icon is-small is-right">
-                                                <i class="fa fa-warning"></i>
-                                            </span>
-                                        </span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-user"></i>
+                </span>
+                <span id="warning-name" class="is-hidden">
+                    <span class="icon is-small is-right">
+                        <i class="fa fa-warning"></i>
+                    </span>
+                </span>
                                     </p>
                                     <p class="help is-danger" id="error-name"></p>
                                 </div>
@@ -125,14 +116,14 @@
                                     <label class="label" style="text-align: left">Telefon Nummer</label>
                                     <p class="control has-icons-left has-icons-right">
                                         <input name="formPhone" id="input-phone" class="input" type="text" placeholder="Text input" value="+49">
-                                    <span class="icon is-small is-left">
-                                        <i class="fa fa-phone"></i>
-                                    </span>
-                                        <span id="warning-phone" class="is-hidden">
-                                            <span class="icon is-small is-right">
-                                                <i class="fa fa-warning"></i>
-                                            </span>
-                                        </span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-phone"></i>
+                </span>
+                    <span id="warning-phone" class="is-hidden">
+                        <span class="icon is-small is-right">
+                            <i class="fa fa-warning"></i>
+                        </span>
+                    </span>
                                     </p>
                                     <p class="help is-danger" id="error-phone"></p>
                                 </div>
@@ -141,14 +132,14 @@
                                     <label class="label" style="text-align: left">Email</label>
                                     <p class="control has-icons-left has-icons-right">
                                         <input name="formEmail" id="input-email" class="input" type="text" placeholder="Email input" value="mail@">
-                                    <span class="icon is-small is-left">
-                                        <i class="fa fa-envelope"></i>
-                                    </span>
-                                        <span id="warning-email" class="is-hidden">
-                                            <span class="icon is-small is-right">
-                                                <i class="fa fa-warning"></i>
-                                            </span>
-                                        </span>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                </span>
+                    <span id="warning-email" class="is-hidden">
+                        <span class="icon is-small is-right">
+                            <i class="fa fa-warning"></i>
+                        </span>
+                    </span>
                                     </p>
                                     <p class="help is-danger" id="error-email"></p>
                                 </div>
@@ -157,11 +148,11 @@
                                     <label class="label" style="text-align: left">Betreff</label>
                                     <p class="control has-icons-right">
                                         <input name="formSubject" id="input-subject" class="input" type="text" placeholder="Betreff">
-                                        <span id="warning-subject" class="is-hidden">
-                                            <span class="icon is-small is-right">
-                                                <i class="fa fa-warning"></i>
-                                            </span>
-                                        </span>
+            <span id="warning-subject" class="is-hidden">
+                <span class="icon is-small is-right">
+                    <i class="fa fa-warning"></i>
+                </span>
+            </span>
                                     </p>
                                     <p class="help is-danger" id="error-subject"></p>
                                 </div>
@@ -170,11 +161,11 @@
                                     <label class="label" style="text-align: left">Nachricht</label>
                                     <p class="control has-icons-right">
                                         <textarea name="formMessage" id="input-message" class="textarea" placeholder="Nachricht"></textarea>
-                                        <span id="warning-message" class="is-hidden">
-                                            <span class="icon is-small is-right">
-                                                <i class="fa fa-warning"></i>
-                                            </span>
-                                        </span>
+            <span id="warning-message" class="is-hidden">
+                <span class="icon is-small is-right">
+                    <i class="fa fa-warning"></i>
+                </span>
+            </span>
                                     </p>
                                     <p class="help is-danger" id="error-message"></p>
                                 </div>
@@ -202,7 +193,7 @@
                     </a>
                 </p>
                 <p>
-                    <a href="about.html" data-i18n="tabs.imprint">Impressum</a>
+                    <a href="../../about.html" data-i18n="tabs.imprint">Impressum</a>
                 </p>
             </div>
         </div>
@@ -228,8 +219,6 @@
 
 <noscript>
     <style type="text/css">.wait { visibility: visible; }</style>
-    <style type="text/css">.no-js { display: block !important;}</style>
-    <style type="text/css">.js-ok { display: none !important;}</style>
 </noscript>
 
 </body>

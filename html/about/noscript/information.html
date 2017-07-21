@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Muse:Viz - About</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--
+    <link rel="stylesheet" type="text/css" href="../css/bulma.min.css">
+    -->
+    <link rel="stylesheet" type="text/css" href="../../css/bulma043.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/custom.css">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-ui.min.css">
+</head>
+
+<style>
+    .wait {
+        visibility: hidden;
+    }
+
+</style>
+
+<body class="wait">
+<section class="hero is-fullheight is-default is-bold">
+    <div class="hero-head">
+        <div class="container">
+            <nav class="nav has-shadow">
+                <div class="container">
+                    <div class="nav-left">
+                        <a class="nav-item" href="index.html">
+                            <img src="../../images/museviz.png" alt="muse:viz">
+                        </a>
+                    </div>
+            <span class="nav-toggle">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+                    <div class="nav-right nav-menu">
+                        <a class="nav-item is-tab" href="../../home.html">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span class="nav-text">Home</span>
+                        </a>
+                        <a class="nav-item is-tab" href="../../settings.html">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <span class="nav-text" data-i18n="nav-menu.settings">Einstellungen</span>
+                        </a>
+                        <a class="nav-item is-tab" href="../../contact.html">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <span class="nav-text" data-i18n="nav-menu.contact">Kontakt</span>
+                        </a>
+                        <a class="nav-item is-tab is-active" href="../../about.html">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            <span class="nav-text">About</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="title-bar">
+        <h1 class="title is-1">About</h1>
+    </div>
+    <div class="tabs is-boxed about-tabs">
+        <ul>
+            <li id="about-imprint">
+                <a href="imprint.html">
+                    <span class="tabs-text" data-i18n="tabs.imprint">Impressum</span>
+                </a>
+            </li>
+            <li id="about-privacy">
+                <a href="privacy.html">
+                    <span  class="tabs-text" data-i18n="tabs.privacy">Datenschutzerklärung</span>
+                </a>
+            </li>
+            <li class="is-active" id="about-info">
+                <a href="information.html">
+                    <span class="tabs-text" data-i18n="tabs.info">Informationen zur Website</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns">
+                <div class="column is-half is-offset-one-quarter">
+                    <div id="about-subsection">
+                        <!-- load content here -->
+                        <div id="accordion">
+                            <h3>Was ist Muse:Viz?</h3>
+                            <div>
+                                <p>
+                                    Muse:Viz ist eine Webapplikation, die es dem Nutzer ermöglicht Visualisierungen für seine Musik zu erstellen.
+                                </p>
+                            </div>
+                            <h3>Warum Muse:Viz?</h3>
+                            <div>
+                                <p>
+                                    Muse:Viz wurde im Rahmen der Veranstaltung Advanced Web Programming an der Hochschule der Medien erstellt und soll ein Beispiel für moderne
+                                    Webprogrammierung mit einem Schwerpunkt auf Visualisierung darstellen.
+                                </p>
+                            </div>
+                            <h3>Verwendete Libraries</h3>
+                            <div>
+                                <ul>
+                                    <li class="lib-list">
+                                        <a href="http://bulma.io">
+                                            <article class="media">
+                                                <figure class="media-left">
+                                                    <p class="image is-64x64">
+                                                        <img src="../../images/logos/bulma-logo-small.png">
+                                                    </p>
+                                                </figure>
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <p>
+                                                            <strong>Bulma</strong>
+                                                            <br>
+                                                            Bulma is an open source CSS framework based on Flexbox and built with Sass. It's 100% responsive, fully modular, and available for free.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </a>
+                                    </li>
+                                    <li class="lib-list">
+                                        <a href="https://jquery.com/">
+                                            <article class="media">
+                                                <figure class="media-left">
+                                                    <p class="image is-64x64">
+                                                        <img src="../../images/logos/jquery-logo-small.png">
+                                                    </p>
+                                                </figure>
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <p>
+                                                            <strong>jQuery</strong>
+                                                            <br>
+                                                            jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </a>
+                                    </li>
+                                    <li class="lib-list">
+                                        <a href="https://jqueryui.com/">
+                                            <article class="media">
+                                                <figure class="media-left">
+                                                    <p class="image is-64x64">
+                                                        <img src="../../images/logos/jqueryui-logo-small.png">
+                                                    </p>
+                                                </figure>
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <p>
+                                                            <strong>jQuery UI</strong>
+                                                            <br>
+                                                            jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </a>
+                                    </li>
+                                    <li class="lib-list">
+                                        <a href="https://d3js.org/">
+                                            <article class="media">
+                                                <figure class="media-left">
+                                                    <p class="image is-64x64">
+                                                        <img src="../../images/logos/d3-logo-small.png">
+                                                    </p>
+                                                </figure>
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <p>
+                                                            <strong>D3.js</strong>
+                                                            <br>
+                                                            D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </a>
+                                    </li>
+                                    <li class="lib-list">
+                                        <a href="https://howlerjs.com/">
+                                            <article class="media">
+                                                <figure class="media-left">
+                                                    <p class="image is-64x64">
+                                                        <img src="../../images/logos/howler-logo-small.png">
+                                                    </p>
+                                                </figure>
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <p>
+                                                            <strong>Howler.js</strong>
+                                                            <br>
+                                                            howler.js is an audio library for the modern web. It defaults to Web Audio API and falls back to HTML5 Audio. This makes working with audio in JavaScript easy and reliable across all platforms.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p><span class="icon is-small"><i class="fa fa-copyright"></i></span>Joshua Hill 2017</p>
+                <p><span data-i18n="footer.github">Quelltext auf Github anschauen. </span>
+                    <a class="icon" href="https://github.com/JoshuaHill/AdvancedWeb">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </p>
+                <p>
+                    <a href="../../about.html" data-i18n="tabs.imprint">Impressum</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</section>
+
+
+<!-- D3 JS -->
+<script src="../js/d3.min.js"></script>
+<!-- Howler -->
+<script src="../js/howler/howler.min.js"></script>
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+<!-- Jquery UI -->
+<script src="../js/jquery-ui.min.js"></script>
+<!-- i18next for jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/8.1.0/i18next.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-i18next/1.2.0/jquery-i18next.min.js" ></script>
+<script src="../js/i18nextXHRBackend.min.js"></script>
+<!-- custom script -->
+<script src="../js/script.js"></script>
+
+<script>
+    $( "#accordion" ).accordion({
+        heightStyle: "content"
+    });
+</script>
+
+<noscript>
+    <style type="text/css">.wait { visibility: visible; }</style>
+</noscript>
+
+</body>
+</html>
