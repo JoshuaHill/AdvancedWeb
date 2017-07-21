@@ -24,7 +24,7 @@ var systemEnvironment = [
     }
 ];
 
-var sysEnvSet = 2;
+var sysEnvSet = 0;
 
 
 // gallery pictures
@@ -392,8 +392,6 @@ $('#settings-language').on('click', function(event) {
     document.getElementById('settings-display').setAttribute("class", "");
     this.setAttribute("class", "is-active");
     loadSettingsLangContent();
-
-
 
 });
 
