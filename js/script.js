@@ -163,11 +163,6 @@ var visualizations = [
         name_long: "Equalizer Bars",
         description: "Klassische Equalizer Darstellung."
     },
-    /*{
-        name: "waves",
-        name_long: "Soundwaves",
-        description: "Ton in Wellenform dargestellt."
-    },*/
     {
         name: "bubbles",
         name_long: "Bubbles",
@@ -283,7 +278,6 @@ function loadModalClickhandlers() {
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
         modalActive = false;
 
-        console.log("closeeeeeee");
         if(modalQueue.length > 0) {
             document.body.removeChild(document.getElementById("modal-div"));
             showModal(modalQueue[modalQueue.length-1]);
@@ -297,7 +291,6 @@ function loadModalClickhandlers() {
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
         modalActive = false;
 
-        console.log("deleeeete");
         if(modalQueue.length > 0) {
             document.body.removeChild(document.getElementById("modal-div"));
             showModal(modalQueue[modalQueue.length-1]);
@@ -312,7 +305,6 @@ function loadModalClickhandlers() {
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
         modalActive = false;
 
-        console.log("OKKKKK");
         if(modalQueue.length > 0) {
             document.body.removeChild(document.getElementById("modal-div"));
             showModal(modalQueue[modalQueue.length-1]);
@@ -322,6 +314,7 @@ function loadModalClickhandlers() {
     });
 
 }
+
 
 /**
  * function to show modals
@@ -333,26 +326,13 @@ function showModal(htmlpath) {
     var modalDiv = document.getElementById("modal-div");
 
     if((modalDiv == null || modalDiv == "") && modalActive == false){
-        console.log("modal-div is null");
         // do nothing
     } else if(modalActive == false) {
-        console.log("modalActive is false");
         // remove old modal from dom
         document.body.removeChild(modalDiv);
     } else {
-        console.log("modalActive is true");
-        console.log(html);
+        // add modal to queue
         modalQueue.push(html);
-
-        /*
-        while(modalActive == true) {
-            // do nothing while other modal still active
-         console.log("loopy");
-        }
-        */
-
-        //remove old modal from dom
-
     }
 
     // create new modal
@@ -396,8 +376,6 @@ $('#settings-display').on('click', function (event) {
     document.getElementById('settings-language').setAttribute("class", "");
     this.setAttribute("class", "is-active");
 
-   // var ck = document.cookie;
-   // console.log(ck);
 
     $('#settings-content').load("settings/display.html", function() {
         loadSettingClickhandlers();
@@ -1453,7 +1431,6 @@ function checkFileValidity(file) {
     }
 
     if(typeValid == false) {
-        console.log("filetype invalid");
 
         var fileTypeError = document.getElementById("file-type-error");
 
@@ -1479,7 +1456,6 @@ function checkFileValidity(file) {
         });
 
     } else if(sizeValid == false) {
-        console.log("file size warning");
 
         var fileSizeWarning = document.getElementById("file-size-warning");
 
@@ -1529,15 +1505,11 @@ function checkFileValidity(file) {
 
     function loadCustomSound() {
 
-        console.log(document.querySelector("#table-body > tr:nth-child(2)").innerHTML);
-
         var activeSong = document.querySelector("#table-body > tr:nth-child(4)");
         // check if custom song exists
         if(activeSong != null) {
-            console.log("custom song exists");
             // check if custom song is active
             if(activeSong.getAttribute("class") == "is-selected") {
-                console.log("custom song is active");
                 sound.stop();
                 activeSong.setAttribute("class", "");
             }
@@ -1734,19 +1706,6 @@ function createGradient() {
     if(visual.background.type.name == "gradient" && visual.background.color_one != ""
         && visual.background.color_two != "" && visual.background.direction.name != "") {
 
-        console.log("CREATING GRADIENT");
-        /*
-         var cssSafari = "-webkit-linear-gradient(left, " + visual.background.color_one + ", " + visual.background.color_two
-         + ");";;
-
-
-         var cssOpera = "-o-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
-         + ");";;
-
-         var cssFirefox = "-moz-linear-gradient(right, " + visual.background.color_one + ", " + visual.background.color_two
-         + ");";; ;
-         */
-
         var cssStd = "linear-gradient(to " + visual.background.direction.name + ", "  + visual.background.color_one + ", " + visual.background.color_two
             + ")";
 
@@ -1838,8 +1797,6 @@ function loadVisTblClickhandlers() {
                 }
                 // set new row to active
                 document.getElementById(visualizations[i].name).setAttribute("class", "is-selected");
-                // load visualization
-                console.log("loadVis: " + visualizations[i].name);
 
                 document.getElementById("svg-container").innerHTML = "";
                 visual.visualization = visualizations[i].name;
@@ -1885,7 +1842,6 @@ function loadMusicTblClickhandlders() {
 
             // if sound is loaded
             if(sound != null) {
-                console.log("SOUND LOADED");
                 // stop sound
                 sound.stop();
                 // if last clicked soundfile doesn't equal currently clicked soundfile
@@ -1913,7 +1869,6 @@ function loadMusicTblClickhandlders() {
                 }
             // if no sound is loaded
             } else {
-                console.log("SOUND -N O T- LOADED");
                 // if visualization hasn't been chosen yet
                 if(visual.visualization == "") {
                     // display current track name and duration of track
@@ -2023,7 +1978,6 @@ function loadTextClickhandlers() {
            $("#text-input").on("input", function () {
                var text = $(this).val();
                visual.text.custom_text = text;
-               //console.log(text);
                updateSvgText();
            });
        } else {
@@ -2245,7 +2199,10 @@ $('#btn-gal-play').on('click', function () {
 
 });
 
-// zeigt das nächste Bild der Galerie an
+
+/**
+ * clickhandler to show next gallery picture
+ */
 $('#btn-gal-forward').click(function () {
     stopGalleryPlayback();
 
@@ -2257,7 +2214,10 @@ $('#btn-gal-forward').click(function () {
     }
 });
 
-// zeigt das vorhergehende Bild an
+
+/**
+ * clickhandler to show last gallery picture
+ */
 $('#btn-gal-rewind').click(function () {
     stopGalleryPlayback();
 
@@ -2269,11 +2229,20 @@ $('#btn-gal-rewind').click(function () {
     }
 });
 
-// pausiert die Wiedergabe der Diashow
+
+/**
+ * clickhandler to pause gallery playback
+ */
 $('#btn-gal-pause').click(function () {
     stopGalleryPlayback();
 });
 
+
+/**
+ * function to run gallery playback
+ *
+ * @param ctr
+ */
 function galleryPlayback(ctr) {
 
     if(ctr+1 < galerie.length && galPlayback == true) {
@@ -2285,12 +2254,23 @@ function galleryPlayback(ctr) {
     }
 
 }
-//
+
+
+/**
+ * function to set gallery image and update counter
+ *
+ * @param counter
+ * @param image
+ */
 function setGalleryImage(counter, image) {
     document.getElementById('gal-img-counter').innerHTML = counter;
     document.getElementById('gal-image').setAttribute('src', galerie[image]);
 }
 
+
+/**
+ * function to stop gallery playback
+ */
 function stopGalleryPlayback() {
     galPlayback = false;
     clearTimeout(galleryImageTimeout);
@@ -2383,11 +2363,7 @@ function getCookie(cname) {
  */
 function checkCookie(cname) {
     var cVal = getCookie(cname);
-    if (cVal != "") {
-        console.log("Cookie '" + cname + "' is set with value '" + cVal + "'.");
-    } else {
-        console.log("Cookie '" + cname + "' not set.");
-    }
+
     return cVal;
 }
 
@@ -2481,10 +2457,6 @@ function loadVisualization(visualization) {
             loadBarVisualization();
             setSvgBackground();
             resizeSvg();
-            break;
-        case "waves":
-            loadWaveVisualization();
-            // resizeSvg();
             break;
         case "bubbles":
             initVisualization(bufferLength, 0);
@@ -2624,30 +2596,6 @@ function runBarVisualization() {
         // fill with color (if only a static color is used this can
         // be moved to loadBarVisualization method for better performance)
         .attr('fill', fillColor);
-}
-
-
-/**
- * function to load unfinished Wave Visualization
- */
-function loadWaveVisualization() {
-
-    // update svg
-    svg = d3.select("#svg-container")
-        .append("svg")
-        .attr("height", 495)
-        .attr("width", 660);
-
-    // select virtual paths
-
-}
-
-
-/**
- * function to continuously loop unfinished wave visualization
- */
-function runWaveVisualization() {
-    
 }
 
 
@@ -2993,7 +2941,6 @@ $(document).ready(function() {
 
         var appVersionSafari = navigator.appVersion.match(/([0-9]*)\.([0-9])\s([A-Z])\w+/g);
 
-        console.log(appVersionSafari);
         if(appVersionSafari != "" && appVersionSafari != null) {
             if(appVersionSafari[0].startsWith("11") == false) {
                 showModal("modals/old-safari.html");
@@ -3067,11 +3014,6 @@ $(document).ready(function() {
     var waitEle = document.getElementsByClassName("wait");
     for(let i = 0; i < waitEle.length; i++) {
         waitEle[i].style.visibility = "visible";
-    }
-
-    //TODO test area
-    for(let i = 0; i < browserInfo.length; i++) {
-        console.log(browserInfo[i]);
     }
 
 });
