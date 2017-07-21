@@ -19,6 +19,9 @@
     .wait {
         visibility: hidden;
     }
+    .no-js {
+        visibility: hidden;
+    }
 </style>
 
 <body class="wait">
@@ -63,33 +66,33 @@
     <div class="hero-body">
 
         <div class="container has-text-centered">
+
             <div class="columns">
 
                 <div class="column is-6 is-fullheight" id="create-visual">
                     <!-- load visualization here -->
                     <div class="box is-fullheight" id="svg-box">
 
-                        <div id="svg-container"></div>
+                        <div id="svg-container">
 
+                            <div class="no-js">
+                               <img src="../images/white_frowning_face.png" alt="sad face">
+                            </div>
+
+                        </div>
                     </div>
+                </div>
 
-
-<!--
-                    <canvas id="canvas" width="400" height="600">
-                        <div class="wait">
+                <div class="column is-6 is-fullheight">
+                    <div class="box is-fullheight" id="create-controls">
+                        <!-- load controls here -->
+                        <div class="no-js">
                             <h1 class="title">JavaScript ist deaktiviert.</h1>
                             <p>
                                 Um dieses Element korrekt darstellen zu können, muss JavaScript aktiviert sein.
                                 Ohne aktiviertes JavaScript ist die Website nur sehr eingeschränkt nutzbar.
                             </p>
                         </div>
-                    </canvas>
--->
-                </div>
-
-                <div class="column is-6 is-fullheight">
-                    <div class="box is-fullheight" id="create-controls">
-                        <!-- load controls here -->
                     </div>
                 </div>
             </div>
@@ -103,15 +106,7 @@
                                     <div id="progressbar-two">
                                     </div>
                                 </div>
-                                <!--
-                                <p class="player-controls">
-                                    <span id="time-left">0:00</span>
-                                    <span id="player-play">Play</span>
-                                    <span id="play-pause">Pause</span>
-                                    <span id="player-stop">Stop</span>
-                                    <span id="time-right">1:47</span>
-                                </p>
-                                -->
+
 
                                 <div class="columns">
                                     <div class="column is-4">
@@ -138,19 +133,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-            <!--
-            <p class="has-text-centered">
-                <a class="button is-large" id="playBtn">
-                    Play
-                </a>
-                <a class="button is-large" id="stopBtn">
-                    Stop
-                </a>
-            </p>
-            -->
 
         </div>
 
@@ -195,6 +177,7 @@
 
 <noscript>
     <style type="text/css">.wait { visibility: visible; }</style>
+    <style type="text/css">.no-js { visibility: visible; }</style>
 </noscript>
 
 </body>

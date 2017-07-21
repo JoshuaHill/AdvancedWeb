@@ -107,7 +107,7 @@ var visPages = [
     "home/createfinished.html"
 ];
 // Current Page indicator
-var visPointer = 1;
+var visPointer = 0;
 
 // visual json obj
 var visual = {
@@ -1253,7 +1253,8 @@ function messageCheck(message) {
  */
 function loadHome() {
 
-    if(document.getElementById('svg-container').innerHTML == "" && visual.visualization == "") {
+    if(visual.visualization == "") {
+        document.getElementById('svg-container').innerHTML = "";
         loadSvg("../images/logo-static.svg", "svg-container");
         resizeSvg();
     }
@@ -2987,9 +2988,10 @@ $(document).ready(function() {
         window.location.href.startsWith(systemEnvironment[sysEnvSet].url + "/home.html")) {
 
         var appVersionSafari = navigator.appVersion.match(/([0-9]*)\.([0-9])\s([A-Z])\w+/g);
-        
+
+        console.log(appVersionSafari);
         if(appVersionSafari != "" && appVersionSafari != null) {
-            if(appVersionSafari.startsWith("11") == false) {
+            if(appVersionSafari[0].startsWith("11") == false) {
                 showModal("modals/old-safari.html");
             }
         }
