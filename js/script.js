@@ -106,9 +106,10 @@ var visPages = [
     "home/createoptions.html",
     "home/createfinished.html"
 ];
+// Current Page indicator
 var visPointer = 0;
 
-// visual json
+// visual json obj
 var visual = {
     "music": {
         "title":"",
@@ -141,8 +142,7 @@ var visual = {
 
 };
 
-
-
+// Array of all Visualizations
 var visualizations = [
     {
         name: "none",
@@ -171,14 +171,18 @@ var visualizations = [
     }
 ];
 
+// global sound related variables
 var volume = 1;
 var soundData = null;
 var analyser = null;
+
+// global svg related variables
 var svg = null;
 var svgText = null;
 
 // svg animation
 var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\"-10%\" dur=\"15s\" repeatCount=\"indefinite\" />";
+
 
 
 /*******************************************************************************
@@ -256,28 +260,6 @@ function getSound(volume, audioSource, getDuration) {
      });
 }
 
-/**
- * getAudioData() returns a dataArray containing
- * frequency data of a sound
- *
- * @returns {Uint8Array}
- */
-function getAudioData() {
-    // create Analyser node
-    analyser = Howler.ctx.createAnalyser();
-    // connect Analyser to Master Gain
-    Howler.masterGain.connect(analyser);
-    analyser.connect(Howler.ctx.destination);
-
-    // set Fast Fourier Transform Size of Analyser
-    analyser.fftSize = 2048;
-    // set bufferLength to frequency bin count
-    // var bufferLength = analyser.frequencyBinCount;
-    var bufferLength = 100;
-    // create DataArray
-    frequencyData = new Uint8Array(bufferLength);
-
-}
 
 
 /*******************************************************************************
@@ -307,7 +289,11 @@ function loadModalClickhandlers() {
 
 }
 
-
+/**
+ * function to show modals
+ *
+ * @param htmlpath
+ */
 function showModal(htmlpath) {
     var modalDiv = document.createElement("div");
     $(document.body.appendChild(modalDiv)).load(htmlpath, function() {
@@ -318,13 +304,15 @@ function showModal(htmlpath) {
 
 
 
-
 /*******************************************************************************
  *
  * Settings-Page
  *
  *******************************************************************************/
 
+/**
+ * clickhandler for settings display
+ */
 $('#settings-display').on('click', function (event) {
     // set correct menu item to active
     document.getElementById('settings-language').setAttribute("class", "");
@@ -340,7 +328,9 @@ $('#settings-display').on('click', function (event) {
 });
 
 
-
+/**
+ * clickhandler for settings language
+ */
 $('#settings-language').on('click', function(event) {
     // set correct menu item to active
     document.getElementById('settings-display').setAttribute("class", "");
@@ -351,6 +341,10 @@ $('#settings-language').on('click', function(event) {
 
 });
 
+
+/**
+ * function to load content for Settings -> Language subpage
+ */
 function loadSettingsLangContent() {
     $('#settings-content').load("settings/language.html", function() {
         // document.getElementById('detected-lang').innerHTML = browserLanguage;
@@ -382,6 +376,9 @@ function loadSettingsLangContent() {
 }
 
 
+/**
+ * Function to load clickhandlers for settings menu
+ */
 function loadSettingClickhandlers() {
     /**
      * Schrift
@@ -826,13 +823,16 @@ function loadSettingClickhandlers() {
 }
 
 
+
 /*******************************************************************************
  *
  * About-Page
  *
  *******************************************************************************/
 
-// clickhandler for informations about website subsection
+/**
+ * clickhandler for informations about website subsection
+  */
 $('#about-info').on('click', function(event) {
     // Set correct menu item to active
     document.getElementById('about-imprint').setAttribute("class", "");
@@ -849,12 +849,18 @@ $('#about-info').on('click', function(event) {
     });
 });
 
-// clickhandler for Imprint subsection
+
+/**
+ * clickhandler for Imprint subsection
+ */
 $('#about-imprint').on('click', function(event) {
     loadImprint();
 });
 
-// clickhandler for privacy subsection
+
+/**
+ * clickhandler for privacy subsection
+ */
 $('#about-privacy').on('click', function(event) {
     // Set correct menu item to active
     document.getElementById('about-info').setAttribute("class", "");
@@ -868,6 +874,10 @@ $('#about-privacy').on('click', function(event) {
     });
 });
 
+
+/**
+ * function to load imprint
+ */
 function loadImprint() {
     // Set correct menu item to active
     document.getElementById('about-info').setAttribute("class", "");
@@ -888,6 +898,9 @@ function loadImprint() {
  *
  *******************************************************************************/
 
+/**
+ * clickhandler for contact by mail
+ */
 $('#contact-mail').on('click', function (event) {
     // set menu item to active
     document.getElementById('contact-phone').setAttribute("class", "");
@@ -898,9 +911,12 @@ $('#contact-mail').on('click', function (event) {
 
     });
 
-
 });
 
+
+/**
+ * clickhandler for contact by phone
+ */
 $('#contact-phone').on('click', function (event) {
     // set menu item to active
     document.getElementById('contact-mail').setAttribute("class", "");
@@ -922,6 +938,11 @@ $('#contact-phone').on('click', function (event) {
     }
 });
 
+
+/**
+ * change event handler to dynamically enable/disable content
+ * based on user input
+ */
 $("select").change(function () {
     var value = "";
     $("select option:selected").each(function() {
@@ -937,6 +958,7 @@ $("select").change(function () {
        }
     });
 });
+
 
 /**
  * validateForm() checks wether entered E-Mail, phone etc.
@@ -1030,6 +1052,7 @@ function validateForm() {
     
 }
 
+
 /**
  * phoneCheck(phone) checks phone input for validity
  *
@@ -1054,6 +1077,7 @@ function phoneCheck(phone) {
     return statusMsg;
 }
 
+
 /**
  * emailCheck(email) checks email input for validity
  *
@@ -1072,6 +1096,7 @@ function emailCheck(email) {
 
     return statusMsg;
 };
+
 
 /**
  * nameCheck(name) checks name input for validity
@@ -1095,6 +1120,7 @@ function nameCheck(name) {
     return statusMsg;
 };
 
+
 /**
  * subjectCheck(subject) checks subject input for validity
  *
@@ -1116,6 +1142,7 @@ function subjectCheck(subject) {
 
     return statusMsg;
 };
+
 
 /**
  * messageCheck(message) checks message input for validity
@@ -1140,30 +1167,12 @@ function messageCheck(message) {
 }
 
 
+
 /*******************************************************************************
  *
  * Home-Page
  *
  *******************************************************************************/
-
-/**
- * Music / Visualization Controls
- */
-
-$('#playBtn').click(function () {
-    // sound.stop();
-    // sound.play();
-
-    // draw();
-    // getData();
-    // source.start(0);
-
-});
-
-$('#stopBtn').click(function () {
-    // sound.stop();
-    // source.stop();
-});
 
 /**
  * Function to load up the content for the home screen
@@ -1296,6 +1305,8 @@ function loadHome() {
 /**
  * Function to initialize drag&drop functionality.
  * This function attaches EventListeners to the drag&drop div
+ *
+ * based on: https://wiki.selfhtml.org/wiki/JavaScript/File_Upload#Auswahl_mit_Drag_und_Drop
  */
 function initDragDrop() {
     var dropzone = document.getElementById("dropzone");
@@ -1303,25 +1314,44 @@ function initDragDrop() {
     dropzone.addEventListener('drop', selectFile, false);
 }
 
+
+/**
+ * function to get dropped file
+ *
+ * based on: https://wiki.selfhtml.org/wiki/JavaScript/File_Upload#Auswahl_mit_Drag_und_Drop
+ *
+ * @param e
+ */
 function selectFile(e) {
     e.stopPropagation();
     e.preventDefault();
 
     var selectedFile = e.dataTransfer.files[0];
-    console.log("Name: " + selectedFile.name);
-    console.log("Type: " + selectedFile.type);
-    console.log("Size: " + selectedFile.size);
 
     checkFileValidity(selectedFile);
     
 }
 
+
+/**
+ * function to handle dragover
+ *
+ * based on: https://wiki.selfhtml.org/wiki/JavaScript/File_Upload#Auswahl_mit_Drag_und_Drop
+ *
+ * @param e
+ */
 function handleDragOver(e) {
     e.stopPropagation();
     e.preventDefault();
     e.dataTransfer.dropEffect = "copy";
 }
 
+
+/**
+ * Function to check validity of user "uploaded" file
+ *
+ * @param file
+ */
 function checkFileValidity(file) {
 
     var typeValid;
@@ -1434,22 +1464,9 @@ function checkFileValidity(file) {
             }
         }
 
-
         var reader = new FileReader();
         reader.onload = function (event) {
 
-            /*
-             if(sound != null) {
-             sound.stop();
-             }
-
-
-             getSound(1, event.target.result);
-             sound.play();
-             */
-
-            //audioFiles[3].path = event.target.result;
-            //audioFiles[3].name = file.name;
             var newSound =
             {
                 "name":file.name.replace(/[^a-zA-Z0-9- ]/g, ""),
@@ -1473,7 +1490,7 @@ function checkFileValidity(file) {
 
 /**
  * loadBackgroundSetup() handles setting up
- * background 
+ * background subsection of create visual / home page
  */
 function loadBackgroundSetup() {
 
@@ -1580,14 +1597,6 @@ function loadBackgroundSetup() {
         var color_one = $(this).val();
         visual.background.color_one = color_one;
         setSvgBackground();
-        /*
-        if(visual.background.type.name != "gradient") {
-            // set background-color
-            $('svg').css("background-color", color_one);
-        } else {
-            createGradient();
-        }
-        */
     });
 
     // Select direction of gradient
@@ -1606,7 +1615,6 @@ function loadBackgroundSetup() {
 
         visual.background.direction.text = val;
 
-        // createGradient();
         setSvgBackground();
     });
 
@@ -1614,13 +1622,13 @@ function loadBackgroundSetup() {
     $('#color2').on('click', function () {
         var color_two = $(this).val();
         visual.background.color_two = color_two;
-        // createGradient();
+
         setSvgBackground();
     });
     $('#color2').on('change', function () {
         var color_two = $(this).val();
         visual.background.color_two = color_two;
-        // createGradient();
+
         setSvgBackground();
     });
 
@@ -2032,10 +2040,6 @@ function loadOptionsClickhandlers() {
         }
 
     });
-
-
-
-
 }
 
 
@@ -2082,6 +2086,7 @@ function updateProgress() {
     }
 }
 
+
 /**
  * function to load external svg to dom
  *
@@ -2098,6 +2103,7 @@ function loadSvg(svg, div) {
         .appendChild(xhr.responseXML.documentElement);
     
 }
+
 
 /**
  * Helper function to convert time in seconds
@@ -2213,6 +2219,7 @@ function stopGalleryPlayback() {
     $('#btn-gal-play').removeClass('selected');
 }
 
+
 /**
  * This function creates a url from the visual object
  */
@@ -2251,7 +2258,13 @@ function convertVisualToUrl() {
  *
  *******************************************************************************/
 
-// function to create new cookies or update existing ones
+/**
+ * Function to create new cookies or update existing ones
+ *
+ * @param cname
+ * @param cvalue
+ * @param exdays
+ */
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -2259,7 +2272,13 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-// function to get the value of a specific cookie
+
+/**
+ * function to get the value of a specific cookie
+ *
+ * @param cname
+ * @returns {*}
+ */
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -2276,7 +2295,13 @@ function getCookie(cname) {
     return "";
 }
 
-// function to check if a cookie is set
+
+/**
+ * function to check if a cookie is set
+ *
+ * @param cname
+ * @returns {*}
+ */
 function checkCookie(cname) {
     var cVal = getCookie(cname);
     if (cVal != "") {
@@ -2322,6 +2347,7 @@ function loadLocale() {
             $('.footer').localize();
         });
 }
+
 
 
 /*******************************************************************************
@@ -2424,6 +2450,11 @@ function initVisualization(bufferLength, fftSize) {
     soundData = new Uint8Array(bufferLength);
 }
 
+
+/**
+ * This function is called, when the user selects "none"
+ * as Visualization. It creates an empty svg with d3.
+ */
 function loadEmptyVisualization() {
 
     // update svg
@@ -2483,6 +2514,7 @@ function loadBarVisualization() {
     runBarVisualization();
 }
 
+
 /**
  * function to continuously loop barchart animation
  */
@@ -2515,8 +2547,9 @@ function runBarVisualization() {
         .attr('fill', fillColor);
 }
 
+
 /**
- * function to load Wave Visualization
+ * function to load unfinished Wave Visualization
  */
 function loadWaveVisualization() {
 
@@ -2530,12 +2563,14 @@ function loadWaveVisualization() {
 
 }
 
+
 /**
- * function to continuously loop wave visualization
+ * function to continuously loop unfinished wave visualization
  */
 function runWaveVisualization() {
     
 }
+
 
 /**
  * function to load Bubble Visualization
@@ -2578,6 +2613,7 @@ function loadBubblesVisualization() {
     runBubblesVisualization();
 }
 
+
 /**
  * function to continuously loop barchart animation
  */
@@ -2612,8 +2648,6 @@ function runBubblesVisualization() {
         */
             return fillColor;
         });
-
-
 
 }
 
@@ -2679,9 +2713,8 @@ function updateSvgText() {
     // D3 Visualization
     } else {
         loadVisualization(visual.visualization);
-       // setSvgBackground();
-
     }
+
 }
 
 
@@ -2731,6 +2764,7 @@ function getSvgTextCenter(text) {
 
     return center;
 }
+
 
 /**
  * function to add svg to animation
@@ -2785,6 +2819,7 @@ function setSvgText() {
     }
 }
 
+
 /**
  * function to make svgs responsive
  * based on https://stackoverflow.com/a/9539361
@@ -2799,6 +2834,7 @@ function resizeSvg() {
         svgSelect.attr("height", Math.round(targetWidth / aspect));
     }).trigger("resize");
 }
+
 
 
 /*******************************************************************************
@@ -2828,7 +2864,9 @@ function loadSavedVisualization() {
 }
 
 
-// Load on Startup
+/**
+ * Startup function
+ */
 $(document).ready(function() {
     // Check if Cookies are disabled
     if(navigator.cookieEnabled == false) {
@@ -2890,7 +2928,6 @@ $(document).ready(function() {
     /**
      * load custom visualization from url string
      */
-
     if(window.location.href.startsWith(systemEnvironment[sysEnvSet].url + "/home.html?")) {
 
         var encodedUrl = window.location.href.split("?")[1];
