@@ -24,7 +24,7 @@ var systemEnvironment = [
     }
 ];
 
-var sysEnvSet = 2;
+var sysEnvSet = 0;
 
 
 // gallery pictures
@@ -146,6 +146,8 @@ var visual = {
 
 };
 
+var loadedVisual = false;
+
 // Array of all Visualizations
 var visualizations = [
     {
@@ -227,18 +229,24 @@ function getSound(volume, audioSource, getDuration) {
 
             // update initial svg
             if(visPointer == 0 && visual.visualization == "") {
-                document.getElementById("text-scroll").setAttribute("class", "");
+                var textScroll = document.getElementById('text-scroll');
+                if(textScroll != null) {
+                    textScroll.innerHTML = svgScrollAni + visual.music.title + " [" + convertTime(visual.music.duration) + "]";
+                }
+                textScroll.setAttribute("class", "");
                 document.getElementById('loading').setAttribute("class", "is-hidden");
                 document.getElementById('paused').setAttribute("class", "is-hidden");
-            } else {
+            } else if(visPointer == 0 && loadedVisual == true) {
                 // updateBarVisualization();
+                loadedVisual = false;
+                loadVisualization(visual.visualization);
+                loadHome();
             }
 
             // update progress bar
             requestAnimationFrame(updateProgress);
          },
          onload: function () {
-
 
          },
          onpause: function () {
@@ -1858,7 +1866,7 @@ function loadMusicTblClickhandlders() {
                     // set new row to active
                     document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
                     // play new sound
-
+                    loadLoadingScreen();
                     getSound(1, audioFiles[i].path, getDuration);
                     sound.play();
                 } else {
@@ -1880,6 +1888,8 @@ function loadMusicTblClickhandlders() {
                 }
                 // set new row to active
                 document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
+
+                loadLoadingScreen();
                 // play new sound
                 getSound(1, audioFiles[i].path, getDuration);
                 sound.play();
@@ -2867,6 +2877,21 @@ function resizeSvg() {
 }
 
 
+/**
+ * loading screen
+ */
+function loadLoadingScreen() {
+
+    loadedVisual = true;
+
+    document.getElementById("svg-container").innerHTML = "";
+    loadSvg("../images/logo-static.svg", "svg-container");
+    resizeSvg();
+    document.getElementById("loading").setAttribute("class", "");
+    document.getElementById("text-scroll").setAttribute("class", "is-hidden");
+}
+
+
 
 /*******************************************************************************
  *
@@ -2881,6 +2906,8 @@ function loadSavedVisualization() {
 
     var soundPath;
 
+    loadLoadingScreen();
+
     for(let i = 0; i < audioFiles.length; i++) {
         if(visual.music.title == audioFiles[i].name){
             soundPath = audioFiles[i].path;
@@ -2889,7 +2916,7 @@ function loadSavedVisualization() {
 
     getSound(1, soundPath, false);
     loadHome();
-    loadVisualization(visual.visualization);
+
     sound.play();
 
 }
