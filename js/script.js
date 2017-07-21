@@ -1934,6 +1934,8 @@ function loadTextClickhandlers() {
         document.getElementById("text-input-field").setAttribute("class", "field");
         document.getElementById("text-input-description").setAttribute("class", "");
         document.getElementById("text-input").setAttribute("value", visual.text.custom_text);
+
+        getTextInput();
     }
 
     $("#color").on("click", function () {
@@ -1973,11 +1975,7 @@ function loadTextClickhandlers() {
            document.getElementById("text-input-field").setAttribute("class", "field");
            document.getElementById("text-input-description").setAttribute("class", "");
 
-           $("#text-input").on("input", function () {
-               var text = $(this).val();
-               visual.text.custom_text = text;
-               updateSvgText();
-           });
+           getTextInput();
        } else {
            document.getElementById("text-input-field").setAttribute("class", "field is-hidden");
            document.getElementById("text-input-description").setAttribute("class", "is-hidden");
@@ -1985,6 +1983,14 @@ function loadTextClickhandlers() {
            updateSvgText();
        }
     });
+
+    function getTextInput() {
+        $("#text-input").on("input", function () {
+            var text = $(this).val();
+            visual.text.custom_text = text;
+            updateSvgText();
+        });
+    }
 
 }
 
