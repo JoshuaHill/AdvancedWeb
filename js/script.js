@@ -107,7 +107,7 @@ var visPages = [
     "home/createfinished.html"
 ];
 // Current Page indicator
-var visPointer = 0;
+var visPointer = 1;
 
 // visual json obj
 var visual = {
@@ -183,7 +183,9 @@ var svgText = null;
 // svg animation
 var svgScrollAni = "<animate attributeName=\"x\" begin=\"0s\" from=\"100%\" to=\"-10%\" dur=\"15s\" repeatCount=\"indefinite\" />";
 
-
+// indicator wether modal is currently active
+var modalActive = false;
+var modalQueue = [];
 
 /*******************************************************************************
  *
@@ -275,16 +277,44 @@ function loadModalClickhandlers() {
     // close modal btn oben rechts im browser
     $('.modal-close').on('click', function () {
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+        modalActive = false;
+
+        console.log("closeeeeeee");
+        if(modalQueue.length > 0) {
+            document.body.removeChild(document.getElementById("modal-div"));
+            showModal(modalQueue[modalQueue.length-1]);
+            modalQueue.pop();
+        }
+
     });
 
     // close modal button oben rechts am popup
     $('.delete').on('click', function () {
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+        modalActive = false;
+
+        console.log("deleeeete");
+        if(modalQueue.length > 0) {
+            document.body.removeChild(document.getElementById("modal-div"));
+            showModal(modalQueue[modalQueue.length-1]);
+            modalQueue.pop();
+        }
+
+
     });
 
     // OK button
     $('#modal-ok-btn').on('click', function () {
         document.getElementsByClassName('modal')[0].setAttribute("class", "modal");
+        modalActive = false;
+
+        console.log("OKKKKK");
+        if(modalQueue.length > 0) {
+            document.body.removeChild(document.getElementById("modal-div"));
+            showModal(modalQueue[modalQueue.length-1]);
+            modalQueue.pop();
+        }
+
     });
 
 }
@@ -295,11 +325,55 @@ function loadModalClickhandlers() {
  * @param htmlpath
  */
 function showModal(htmlpath) {
-    var modalDiv = document.createElement("div");
-    $(document.body.appendChild(modalDiv)).load(htmlpath, function() {
-        loadModalClickhandlers();
-        document.getElementById("current-display-width").innerHTML = window.innerWidth.toString();
-    });
+    var html = htmlpath;
+    var modalDiv = document.getElementById("modal-div");
+
+    if((modalDiv == null || modalDiv == "") && modalActive == false){
+        console.log("modal-div is null");
+        // do nothing
+    } else if(modalActive == false) {
+        console.log("modalActive is false");
+        // remove old modal from dom
+        document.body.removeChild(modalDiv);
+    } else {
+        console.log("modalActive is true");
+        console.log(html);
+        modalQueue.push(html);
+
+        /*
+        while(modalActive == true) {
+            // do nothing while other modal still active
+         console.log("loopy");
+        }
+        */
+
+        //remove old modal from dom
+
+    }
+
+    // create new modal
+    modalDiv = document.createElement("div");
+    modalDiv.setAttribute("id", "modal-div");
+
+    // load new modal
+    if(modalActive == false) {
+        loadModal();
+    }
+
+    modalActive = true;
+
+    function loadModal() {
+
+        $(document.body.appendChild(modalDiv)).load(html, function() {
+
+            loadModalClickhandlers();
+            if(htmlpath == "modals/low-screen-width.html") {
+                document.getElementById("current-display-width").innerHTML = window.innerWidth.toString();
+            }
+
+        });
+    }
+
 }
 
 
@@ -2872,10 +2946,10 @@ $(document).ready(function() {
     if(navigator.cookieEnabled == false) {
         // if location is index or home show warning modal
         if(window.location.href == systemEnvironment[sysEnvSet].url + "/index.html" || window.location.href == systemEnvironment[sysEnvSet].url + "/home.html") {
-            showModal("modals/cookie-disabled-start.html");
+            showModal("modals/cookies-disabled-start.html");
         // if location is settings show danger modal
         } else if(window.location.href == systemEnvironment[sysEnvSet].url + "/settings.html") {
-            showModal("modals/cookie-disabled-settings.html");
+            showModal("modals/cookies-disabled-settings.html");
         }
     // if cookies are enabled check if cookies are set
     } else {
@@ -2906,6 +2980,25 @@ $(document).ready(function() {
         }
     }
 
+    /**
+     * Index + Home old Safari Warning
+     */
+    if(window.location.href == systemEnvironment[sysEnvSet].url + "/index.html" ||
+        window.location.href.startsWith(systemEnvironment[sysEnvSet].url + "/home.html")) {
+
+        var appVersionSafari = navigator.appVersion.match(/([0-9]*)\.([0-9])\s([A-Z])\w+/g);
+        
+        if(appVersionSafari != "" && appVersionSafari != null) {
+            if(appVersionSafari.startsWith("11") == false) {
+                showModal("modals/old-safari.html");
+            }
+        }
+    }
+
+
+    /**
+     * Index Page Startup
+     */
     if(window.location.href == systemEnvironment[sysEnvSet].url + "/index.html") {
         document.getElementById("gal-img-length").innerHTML = galerie.length.toString();
     }
