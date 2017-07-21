@@ -215,7 +215,9 @@ function getSound(volume, audioSource, getDuration) {
 
              // update duration for custom sounds
              if(getDuration == true) {
-                 document.getElementById("table-body").lastChild.lastChild.innerHTML = convertTime(sound.duration());
+                 if(visPointer == 0) {
+                     document.getElementById("table-body").lastChild.lastChild.innerHTML = convertTime(sound.duration());
+                 }
                  if(audioFiles[3] != null) {
                      audioFiles[3].duration = sound.duration();
                      visual.music.duration = sound.duration();
@@ -1861,7 +1863,10 @@ function loadMusicTblClickhandlders() {
                         // remove active from old row
                     }
                     if(visual.music.title != "" && visual.music.title != null) {
-                        document.getElementById(visual.music.title.replace(/[ ]/g, "")).setAttribute("class", "");
+                        var titleRow = document.getElementById(visual.music.title.replace(/[ ]/g, ""));
+                        if(titleRow != null) {
+                            titleRow.setAttribute("class", "");
+                        }
                     }
                     // set new row to active
                     document.getElementById(audioFiles[i].name.replace(/[ ]/g, "")).setAttribute("class", "is-selected");
