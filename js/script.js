@@ -15,12 +15,16 @@ var systemEnvironment = [
         "url":"https://mars.iuk.hdm-stuttgart.de/~jh147/AdvancedWeb/html"
     },
     {
-        "name":"local",
+        "name":"local_node",
         "url":"http://localhost:3000"
+    },
+    {
+        "name":"local_python",
+        "url":"http://localhost:8000/html"
     }
 ];
 
-var sysEnvSet = 1;
+var sysEnvSet = 2;
 
 
 // gallery pictures
